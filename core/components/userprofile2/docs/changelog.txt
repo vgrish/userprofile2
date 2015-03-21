@@ -1,0 +1,5 @@
+Changelog for userprofile2.
+
+1.0.0-beta
+==============
+- initial release.
