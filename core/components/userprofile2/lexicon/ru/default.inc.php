@@ -7,6 +7,19 @@ foreach ($files as $file) {
 
 
 $_lang['userprofile2'] = 'UserProfile2';
-$_lang['userprofile2_menu_desc'] = 'Пример расширения для разработки.';
-$_lang['userprofile2_intro_msg'] = 'Вы можете выделять сразу несколько предметов при помощи Shift или Ctrl.';
+$_lang['up2_menu_desc'] = 'Профиль пользователя';
+
+$_lang['up2_settings'] = 'Настройки';
+
+$_lang['up2_tabs'] = 'Вкладки';
+$_lang['up2_tabs_intro'] = 'Интро';
+
+$_lang['up2_fields'] = 'Поля';
+$_lang['up2_fields_intro'] = 'Интро';
+
+$_lang['up2_setting'] = 'Настройки';
+$_lang['up2_setting_intro'] = 'Интро';
+
+$_lang['up2_lexicon'] = 'Лексиконы';
+$_lang['up2_lexicon_intro'] = 'Интро';
 

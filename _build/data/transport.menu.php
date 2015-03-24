@@ -4,9 +4,9 @@ $menus = array();
 
 $tmp = array(
 	'userprofile2' => array(
-		'description' => 'userprofile2_menu_desc',
+		'description' => 'up2_menu_desc',
 		'action' => array(
-			'controller' => 'index',
+			'controller' => 'controllers/mgr/settings',
 		),
 	),
 );

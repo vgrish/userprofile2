@@ -1,1 +1,0 @@
-<div id="userprofile2-panel-home-div"></div>
