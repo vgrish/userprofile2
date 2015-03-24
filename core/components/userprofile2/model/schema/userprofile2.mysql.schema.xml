@@ -55,6 +55,30 @@
 		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
 		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
 
+		<composite alias="Fields" class="up2Filds" local="id" foreign="type" cardinality="many" owner="local" />
+
+	</object>
+
+	<object class="up2Filds" table="up2_fields" extends="xPDOSimpleObject">
+		<field key="name_in" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="name_out" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="tab" dbtype="tinyint" precision="3" phptype="integer" attributes="unsigned" null="true" default="0" />
+		<field key="type" dbtype="tinyint" precision="3" phptype="integer" attributes="unsigned" null="true" default="0" />
+		<field key="css" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="value" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="required" dbtype="tinyint" precision="1" phptype="integer" null="true" default="0" />
+		<field key="editable" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
+		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
+		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
+
+		<index alias="tab" name="tab" primary="false" unique="false" type="BTREE" >
+			<column key="tab" length="" collation="A" null="false" />
+		</index>
+		<index alias="type" name="type" primary="false" unique="false" type="BTREE" >
+			<column key="type" length="" collation="A" null="false" />
+		</index>
+
+		<aggregate alias="TypeField" class="up2TypeFild" local="type" foreign="id" owner="foreign" cardinality="one" />
 
 	</object>
 
