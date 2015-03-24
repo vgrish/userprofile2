@@ -21,6 +21,13 @@ if ($object->xpdo) {
 					'version_minor:>=' => 9,
 					//'service_url' => 'modx.com'
 				),
+				'VirtualPage' => array(
+					'version_major' => 1,
+					'version_minor:>=' => 0,
+					//'service_url' => 'modstore.pro'
+				),
+
+				//
 			);
 			foreach ($packages as $package => $options) {
 				$query = array('package_name' => $package);
@@ -28,6 +35,7 @@ if ($object->xpdo) {
 					$query = array_merge($query, $options);
 					unset($query['service_url']);
 				}
+
 				if (!$modx->getObject('transport.modTransportPackage', $query)) {
 					$modx->log(modX::LOG_LEVEL_INFO, 'Trying to install <b>' . $package . '</b>. Please wait...');
 
@@ -84,6 +92,7 @@ function installPackage($packageName, $options) {
 
 	if (!empty($response)) {
 		$foundPackages = simplexml_load_string($response->response);
+
 		foreach ($foundPackages as $foundPackage) {
 			/** @var modTransportPackage $foundPackage */
 			if ($foundPackage->name == $packageName) {
