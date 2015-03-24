@@ -45,4 +45,17 @@
 
 	</object>
 
+
+
+	<object class="up2TypeFild" table="up2_type_field" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="type_in" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="type_out" dbtype="varchar" precision="100" phptype="string" null="false" />
+
+		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
+		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
+
+
+	</object>
+
 </model>

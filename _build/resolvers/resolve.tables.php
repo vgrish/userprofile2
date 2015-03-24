@@ -13,6 +13,8 @@ if ($object->xpdo) {
 			$manager = $modx->getManager();
 			$objects = array(
 				'up2Profile',
+				'up2TypeFild',
+
 			);
 			foreach ($objects as $tmp) {
 				$manager->createObjectContainer($tmp);

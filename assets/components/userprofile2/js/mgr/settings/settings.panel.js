@@ -29,7 +29,19 @@ userprofile2.panel.Settings = function(config) {
             , border: true
             , hideMode: 'offsets'
 
+			//
+
             , items: [{
+				title: _('up2_type_field')
+				, items: [{
+					html: '<p>' + _('up2_type_field_intro') + '</p>'
+					, border: false
+					, bodyCssClass: 'panel-desc'
+					, bodyStyle: 'margin-bottom: 10px'
+				}, {
+					xtype: 'userprofile2-grid-type-field'
+				}]
+			},{
                 title: _('up2_fields')
                 , items: [{
                     html: '<p>' + _('up2_fields_intro') + '</p>'

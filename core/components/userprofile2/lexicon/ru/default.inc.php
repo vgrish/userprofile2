@@ -23,3 +23,6 @@ $_lang['up2_setting_intro'] = 'Интро';
 $_lang['up2_lexicon'] = 'Лексиконы';
 $_lang['up2_lexicon_intro'] = 'Интро';
 
+$_lang['up2_type_field'] = 'Тип поля';
+$_lang['up2_type_field_intro'] = 'Интро';
+
