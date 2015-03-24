@@ -5,20 +5,18 @@ if ($object->xpdo) {
 	$modx =& $object->xpdo;
 
 	switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+		case xPDOTransport::ACTION_UPGRADE:
 		case xPDOTransport::ACTION_INSTALL:
 			$modelPath = $modx->getOption('userprofile2_core_path', null, $modx->getOption('core_path') . 'components/userprofile2/') . 'model/';
 			$modx->addPackage('userprofile2', $modelPath);
 
 			$manager = $modx->getManager();
 			$objects = array(
-				'userprofile2Item',
+				'up2Profile',
 			);
 			foreach ($objects as $tmp) {
 				$manager->createObjectContainer($tmp);
 			}
-			break;
-
-		case xPDOTransport::ACTION_UPGRADE:
 			break;
 
 		case xPDOTransport::ACTION_UNINSTALL:

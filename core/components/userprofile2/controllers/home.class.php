@@ -33,7 +33,7 @@ class userprofile2HomeManagerController extends userprofile2MainController {
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/misc/utils.js');
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/widgets/items.grid.js');
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/widgets/items.windows.js');
-		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/widgets/home.panel.js');
+		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/widgets/home.user.panel.js');
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/sections/home.js');
 		$this->addHtml('<script type="text/javascript">
 		Ext.onReady(function() {

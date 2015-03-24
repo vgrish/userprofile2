@@ -2,15 +2,16 @@
 
 $plugins = array();
 
-$tmp = array(/*
-	'userprofile2' => array(
+$tmp = array(
+	'UP2' => array(
 		'file' => 'userprofile2',
 		'description' => '',
 		'events' => array(
-			'OnManagerPageInit' => array()
+			'OnUserSave' => array(),
+			'OnUserFormPrerender' => array(),
 		)
 	)
-	*/
+
 );
 
 foreach ($tmp as $k => $v) {

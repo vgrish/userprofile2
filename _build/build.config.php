@@ -49,7 +49,7 @@ define('BUILD_PLUGIN_UPDATE', true);
 define('BUILD_PLUGIN_STATIC', false);
 
 $BUILD_RESOLVERS = array(
-	//'tables',
+	'tables',
 	//'chunks',
 	//'setup',
 );

@@ -70,4 +70,75 @@ class userprofile2 {
 	}
 
 
+	public function getProfileTypeDefault()
+	{
+		$type = 0;
+
+		/*
+		 * TODO type
+		 */
+
+		return $type;
+	}
+
+
+	/**
+	 * @param array $d
+	 * @return bool
+	 */
+	public function isModeEventNew($d = array())
+	{
+		return ($d['mode'] == 'new')
+			? true
+			: false;
+	}
+
+	/*
+	 * EVENT
+	 */
+
+	/**
+	 * @param $sp
+	 */
+	public function OnUserFormPrerender($sp)
+	{
+		if($this->isModeEventNew($sp)) {return '';}
+		$id = $sp['id'];
+
+		$this->modx->log(1 , print_r('OnUserFormPrerender' ,1));
+
+		$this->modx->controller->addLexiconTopic('userprofile2:default');
+		$this->modx->controller->addCss($this->config['cssUrl'] . 'mgr/main.css');
+
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/userprofile2.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/misc/utils.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/misc/up2.combo.js');
+
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/user.panel.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/tab.js');
+
+		$config = array(
+			'connector_url' => $this->config['connectorUrl'],
+			'user' => $id,
+		);
+		$data_js = preg_replace(array('/^\n/', '/\t{6}/'), '', '
+			userprofile2.config = ' . $this->modx->toJSON($config) . ';
+		');
+		$this->modx->regClientStartupScript("<script type=\"text/javascript\">\n" . $data_js . "\n</script>", true);
+	}
+
+	/**
+	 * @param $sp
+	 */
+	public function OnUserSave($sp)
+	{
+		if(!$this->isModeEventNew($sp)) {return '';};
+		$user = $sp['user'];
+		$id = $user->get('id');
+		if($up2Profile = $this->modx->getObject('up2Profile', $id)) {return '';}
+		$up2Profile = $this->modx->newObject('up2Profile');
+		$up2Profile->set('id', $id);
+		$up2Profile->set('type', $this->getProfileTypeDefault());
+		$up2Profile->save();
+	}
 }

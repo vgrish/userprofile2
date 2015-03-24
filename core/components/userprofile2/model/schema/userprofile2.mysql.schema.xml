@@ -2,17 +2,47 @@
 <model package="userprofile2" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="userprofile2"
 	   version="1.1">
 
-	<object class="userprofile2Item" table="userprofile2_items" extends="xPDOSimpleObject">
-		<field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-		<field key="description" dbtype="text" phptype="text" null="true" default=""/>
-		<field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+	<object class="up2Profile" table="up2_profile" extends="xPDOObject">
+		<field key="id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" index="pk" />
 
-		<index alias="name" name="name" primary="false" unique="false" type="BTREE">
-			<column key="name" length="" collation="A" null="false"/>
+		<field key="type" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" />
+		<field key="lastname" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="firstname" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="secondname" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="description" dbtype="text" phptype="string" null="true" />
+		<field key="introtext" dbtype="text" phptype="string" null="true" />
+		<field key="registration" dbtype="datetime" phptype="datetime" null="true" default="0000-00-00 00:00:00" />
+		<field key="lastactivity" dbtype="datetime" phptype="datetime" null="true" default="0000-00-00 00:00:00" />
+		<field key="ip" dbtype="varchar" precision="16" phptype="string" null="true" default="0.0.0.0" />
+
+		<index alias="id" name="id" primary="true" unique="true" type="BTREE">
+			<column key="id" length="" collation="A" null="false" />
 		</index>
-		<index alias="active" name="active" primary="false" unique="false" type="BTREE">
-			<column key="active" length="" collation="A" null="false"/>
+		<index alias="type" name="type" primary="false" unique="false" type="BTREE" >
+			<column key="type" length="" collation="A" null="false" />
 		</index>
+		<index alias="lastname" name="lastname" primary="false" unique="false" type="BTREE" >
+			<column key="lastname" length="" collation="A" null="false" />
+		</index>
+		<index alias="firstname" name="firstname" primary="false" unique="false" type="BTREE" >
+			<column key="firstname" length="" collation="A" null="false" />
+		</index>
+		<index alias="secondname" name="secondname" primary="false" unique="false" type="BTREE" >
+			<column key="secondname" length="" collation="A" null="false" />
+		</index>
+		<index alias="registration" name="registration" primary="false" unique="false" type="BTREE">
+			<column key="registration" length="" collation="A" null="false" />
+		</index>
+		<index alias="lastactivity" name="lastactivity" primary="false" unique="false" type="BTREE">
+			<column key="lastactivity" length="" collation="A" null="false" />
+		</index>
+		<index alias="ip" name="ip" primary="false" unique="false" type="BTREE" >
+			<column key="ip" length="" collation="A" null="false" />
+		</index>
+
+		<aggregate alias="User" class="modUser" local="id" foreign="id" owner="foreign" cardinality="one" />
+		<aggregate alias="UserProfile" class="modUserProfile" local="id" foreign="internalKey" owner="foreign" cardinality="one" />
+
 	</object>
 
 </model>
