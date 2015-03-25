@@ -172,10 +172,6 @@ userprofile2.window.CreateTypeField = function(config) {
 		,action: 'mgr/settings/type-field/create'
 		,fields: config.fields
 		,keys: [{key: Ext.EventObject.ENTER,shift: true,fn: function() {this.submit() },scope: this}]
-		,listeners: {
-			success: {fn:function(r) {dd.el.unmask();grid.refresh();},scope:grid}
-			,failure: {fn:function(r) {dd.el.unmask();},scope:grid}
-		}
 	});
 	userprofile2.window.CreateTypeField.superclass.constructor.call(this,config);
 };
