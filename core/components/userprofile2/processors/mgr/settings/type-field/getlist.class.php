@@ -1,6 +1,6 @@
 <?php
-class up2TypeFildGetListProcessor extends modObjectGetListProcessor {
-	public $classKey = 'up2TypeFild';
+class up2TypeFieldGetListProcessor extends modObjectGetListProcessor {
+	public $classKey = 'up2TypeField';
 	public $defaultSortField = 'rank';
 	public $defaultSortDirection  = 'asc';
 	public $permission = '';
@@ -29,4 +29,4 @@ class up2TypeFildGetListProcessor extends modObjectGetListProcessor {
 		return $array;
 	}
 }
-return 'up2TypeFildGetListProcessor';
+return 'up2TypeFieldGetListProcessor';

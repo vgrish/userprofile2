@@ -1,6 +1,6 @@
 <?php
-class up2FildsGetListProcessor extends modObjectGetListProcessor {
-	public $classKey = 'up2Filds';
+class up2FieldsGetListProcessor extends modObjectGetListProcessor {
+	public $classKey = 'up2Fields';
 	public $defaultSortField = 'rank';
 	public $defaultSortDirection  = 'asc';
 	public $permission = '';
@@ -14,9 +14,9 @@ class up2FildsGetListProcessor extends modObjectGetListProcessor {
 	/** {@inheritDoc} */
 	public function prepareQueryBeforeCount(xPDOQuery $c) {
 
-		$c->leftJoin('up2TypeFild','up2TypeFild', '`up2Filds`.`type` = `up2TypeFild`.`id`');
-		$columns = $this->modx->getSelectColumns('up2Filds', 'up2Filds', '', array(), true);
-		$c->select($columns . ', `up2TypeFild`.`name` as `type_name`');
+		$c->leftJoin('up2TypeField','up2TypeField', '`up2Fields`.`type` = `up2TypeField`.`id`');
+		$columns = $this->modx->getSelectColumns('up2Fields', 'up2Fields', '', array(), true);
+		$c->select($columns . ', `up2TypeField`.`name` as `type_name`');
 
 		if ($active = $this->getProperty('active')) {
 			$c->where(array('active' => $active));
@@ -72,4 +72,4 @@ class up2FildsGetListProcessor extends modObjectGetListProcessor {
 		return $data;
 	}
 }
-return 'up2FildsGetListProcessor';
+return 'up2FieldsGetListProcessor';

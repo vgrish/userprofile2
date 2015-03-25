@@ -1,5 +1,5 @@
 <?php
-$xpdo_meta_map['up2TypeFild']= array (
+$xpdo_meta_map['up2TypeField']= array (
   'package' => 'userprofile2',
   'version' => '1.1',
   'table' => 'up2_type_field',
@@ -57,7 +57,7 @@ $xpdo_meta_map['up2TypeFild']= array (
   array (
     'Fields' => 
     array (
-      'class' => 'up2Filds',
+      'class' => 'up2Fields',
       'local' => 'id',
       'foreign' => 'type',
       'cardinality' => 'many',

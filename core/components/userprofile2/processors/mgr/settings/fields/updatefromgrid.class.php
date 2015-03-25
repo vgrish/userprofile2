@@ -1,10 +1,10 @@
 <?php
 require_once (dirname(__FILE__).'/update.class.php');
-class up2FildsFromGridProcessor extends up2FildsUpdateProcessor {
+class up2FieldsFromGridProcessor extends up2FieldsUpdateProcessor {
 	/** {@inheritDoc} */
 	public static function getInstance(modX &$modx,$className,$properties = array()) {
 		/** @var modProcessor $processor */
-		$processor = new up2FildsFromGridProcessor($modx,$properties);
+		$processor = new up2FieldsFromGridProcessor($modx,$properties);
 		return $processor;
 	}
 	/** {@inheritDoc} */
@@ -22,4 +22,4 @@ class up2FildsFromGridProcessor extends up2FildsUpdateProcessor {
 		return parent::initialize();
 	}
 }
-return 'up2FildsFromGridProcessor';
+return 'up2FieldsFromGridProcessor';

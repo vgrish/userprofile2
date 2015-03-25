@@ -7,7 +7,9 @@ $xpdo_meta_map = array (
   ),
   'xPDOSimpleObject' => 
   array (
-    0 => 'up2TypeFild',
-    1 => 'up2Filds',
+    0 => 'up2TypeField',
+    1 => 'up2Tabs',
+    2 => 'up2Fields',
+    3 => 'up2TypeProfile',
   ),
 );

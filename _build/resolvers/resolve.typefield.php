@@ -35,8 +35,8 @@ if ($object->xpdo) {
 
 
 			foreach ($types as $id => $properties) {
-				if (!$type = $modx->getCount('up2TypeFild', array('id' => $id))) {
-					$type = $modx->newObject('up2TypeFild', array_merge(array(
+				if (!$type = $modx->getCount('up2TypeField', array('id' => $id))) {
+					$type = $modx->newObject('up2TypeField', array_merge(array(
 						'active' => 1,
 						'rank' => $id - 1,
 					), $properties));

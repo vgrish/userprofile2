@@ -189,7 +189,8 @@ userprofile2.window.ViewFields = function(config) {
         ,labelAlign: 'top'
         ,fields: {
             xtype: 'modx-tabs'
-            //,border: true
+			,cls: 'up2-tab-up'
+			,border: false
             ,activeTab: config.activeTab || 0
             ,bodyStyle: { background: 'transparent'}
             ,deferredRender: false
@@ -387,7 +388,9 @@ Ext.extend(userprofile2.grid.Fields,MODx.grid.Grid, {
                 xtype: 'userprofile2-window-field-in-tab-create'
                 ,fields: this.getTabFields('create')
                 ,listeners: {
-                    success: {fn:function() { this.refresh(); },scope:this}
+                    success: {fn:function() {
+						Ext.getCmp('userprofile2-grid-tab-fields-' + tab).refresh();
+						},scope:this}
                 }
             });
         }

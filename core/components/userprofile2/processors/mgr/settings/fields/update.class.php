@@ -1,6 +1,6 @@
 <?php
-class up2FildsUpdateProcessor extends modObjectUpdateProcessor {
-	public $classKey = 'up2Filds';
+class up2FieldsUpdateProcessor extends modObjectUpdateProcessor {
+	public $classKey = 'up2Fields';
 	public $languageTopics = array('userprofile2');
 	public $permission = 'up2setting_save';
 
@@ -19,4 +19,4 @@ class up2FildsUpdateProcessor extends modObjectUpdateProcessor {
 	}
 
 }
-return 'up2FildsUpdateProcessor';
+return 'up2FieldsUpdateProcessor';

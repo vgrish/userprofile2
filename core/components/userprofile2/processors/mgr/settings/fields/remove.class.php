@@ -1,6 +1,6 @@
 <?php
-class up2FildsRemoveProcessor extends modObjectRemoveProcessor  {
-	public $classKey = 'up2Filds';
+class up2FieldsRemoveProcessor extends modObjectRemoveProcessor  {
+	public $classKey = 'up2Fields';
 	public $languageTopics = array('userprofile2');
 	public $permission = 'up2setting_save';
 
@@ -19,4 +19,4 @@ class up2FildsRemoveProcessor extends modObjectRemoveProcessor  {
 	}
 
 }
-return 'up2FildsRemoveProcessor';
+return 'up2FieldsRemoveProcessor';

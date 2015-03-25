@@ -1,6 +1,6 @@
 <?php
-class up2TypeFildCreateProcessor extends modObjectCreateProcessor {
-	public $classKey = 'up2TypeFild';
+class up2TypeFieldCreateProcessor extends modObjectCreateProcessor {
+	public $classKey = 'up2TypeField';
 	public $languageTopics = array('userprofile2');
 	public $permission = 'vpsetting_save';
 
@@ -13,7 +13,7 @@ class up2TypeFildCreateProcessor extends modObjectCreateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
-		if ($this->modx->getObject('up2TypeFild',array('name' => $this->getProperty('name')))) {
+		if ($this->modx->getObject('up2TypeField',array('name' => $this->getProperty('name')))) {
 			$this->modx->error->addField('name', $this->modx->lexicon('vp_err_ae'));
 		}
 
@@ -22,10 +22,10 @@ class up2TypeFildCreateProcessor extends modObjectCreateProcessor {
 	/** {@inheritDoc} */
 	public function beforeSave() {
 		$this->object->fromArray(array(
-			'rank' => $this->modx->getCount('up2TypeFild')
+			'rank' => $this->modx->getCount('up2TypeField')
 		));
 		return parent::beforeSave();
 	}
 
 }
-return 'up2TypeFildCreateProcessor';
+return 'up2TypeFieldCreateProcessor';

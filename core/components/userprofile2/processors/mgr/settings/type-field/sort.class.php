@@ -1,7 +1,7 @@
 <?php
 // It is adapted code from https://github.com/splittingred/Gallery/blob/a51442648fde1066cf04d46550a04265b1ad67da/core/components/gallery/processors/mgr/item/sort.php
-class up2TypeFildSortProcessor extends modObjectProcessor {
-	public $classKey = 'up2TypeFild';
+class up2TypeFieldSortProcessor extends modObjectProcessor {
+	public $classKey = 'up2TypeField';
 	public $permission = 'up2setting_save';
 	/** {@inheritDoc} */
 	public function initialize() {
@@ -57,4 +57,4 @@ class up2TypeFildSortProcessor extends modObjectProcessor {
 		}
 	}
 }
-return 'up2TypeFildSortProcessor';
+return 'up2TypeFieldSortProcessor';

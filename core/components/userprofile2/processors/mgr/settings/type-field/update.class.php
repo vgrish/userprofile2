@@ -1,6 +1,6 @@
 <?php
-class up2TypeFildUpdateProcessor extends modObjectUpdateProcessor {
-	public $classKey = 'up2TypeFild';
+class up2TypeFieldUpdateProcessor extends modObjectUpdateProcessor {
+	public $classKey = 'up2TypeField';
 	public $languageTopics = array('userprofile2');
 	public $permission = 'up2setting_save';
 
@@ -14,7 +14,7 @@ class up2TypeFildUpdateProcessor extends modObjectUpdateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
-		if ($this->modx->getObject('up2TypeFild',array('name' => $this->getProperty('name'), 'id:!=' => $this->getProperty('id') ))) {
+		if ($this->modx->getObject('up2TypeField',array('name' => $this->getProperty('name'), 'id:!=' => $this->getProperty('id') ))) {
 			$this->modx->error->addField('name', $this->modx->lexicon('vp_err_ae'));
 		}
 
@@ -22,4 +22,4 @@ class up2TypeFildUpdateProcessor extends modObjectUpdateProcessor {
 	}
 
 }
-return 'up2TypeFildUpdateProcessor';
+return 'up2TypeFieldUpdateProcessor';
