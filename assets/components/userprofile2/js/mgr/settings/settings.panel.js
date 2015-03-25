@@ -61,7 +61,17 @@ userprofile2.panel.Settings = function(config) {
                 }, {
                     xtype: 'userprofile2-grid-tabs'
                 }]
-            }, {
+            },{
+				title: _('up2_type_profile')
+				, items: [{
+					html: '<p>' + _('up2_type_profile_intro') + '</p>'
+					, border: false
+					, bodyCssClass: 'panel-desc'
+					, bodyStyle: 'margin-bottom: 10px'
+				}, {
+					xtype: 'userprofile2-grid-type-profile'
+				}]
+			},{
                 title: _('up2_setting')
                 , items: [{
                     html: '<p>' + _('up2_setting_intro') + '</p>'

@@ -18,6 +18,7 @@ $_lang['up2_value'] = 'Значение';
 $_lang['up2_required'] = 'Обязательно';
 $_lang['up2_editable'] = 'Редактируемое';
 $_lang['up2_description'] = 'Описание';
+$_lang['up2_default'] = 'По-умолчанию';
 
 
 
@@ -26,7 +27,7 @@ $_lang['up2_menu_add'] = 'Добавить';
 $_lang['up2_menu_update'] = 'Изменить';
 $_lang['up2_menu_remove'] = 'Удалить';
 $_lang['up2_menu_tab_fields'] = 'Поля вкладки';
-
+$_lang['up2_menu_profile_tabs'] = 'Вкладки профиля';
 
 $_lang['up2_menu_remove_confirm'] = 'Вы уверены, что хотите удалить эту запись?';
 
