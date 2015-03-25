@@ -15,6 +15,7 @@ if ($object->xpdo) {
 				'up2Profile',
 				'up2TypeFild',
 				'up2Filds',
+				'up2Tabs',
 
 			);
 			foreach ($objects as $tmp) {

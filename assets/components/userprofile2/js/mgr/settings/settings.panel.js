@@ -41,7 +41,7 @@ userprofile2.panel.Settings = function(config) {
 				}, {
 					xtype: 'userprofile2-grid-type-field'
 				}]
-			},{
+			}/*,{
                 title: _('up2_fields')
                 , items: [{
                     html: '<p>' + _('up2_fields_intro') + '</p>'
@@ -51,7 +51,7 @@ userprofile2.panel.Settings = function(config) {
                 }, {
                     //xtype: 'userprofile2-grid-fields'
                 }]
-            },{
+            }*/,{
                 title: _('up2_tabs')
                 , items: [{
                     html: '<p>' + _('up2_tabs_intro') + '</p>'
@@ -59,7 +59,7 @@ userprofile2.panel.Settings = function(config) {
                     , bodyCssClass: 'panel-desc'
                     , bodyStyle: 'margin-bottom: 10px'
                 }, {
-                    //xtype: 'userprofile2-grid-tabs'
+                    xtype: 'userprofile2-grid-tabs'
                 }]
             }, {
                 title: _('up2_setting')

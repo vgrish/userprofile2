@@ -3,7 +3,14 @@ userprofile2.utils.renderBoolean = function (value, props, row) {
 	return value
 		? String.format('<span class="green">{0}</span>', _('yes'))
 		: String.format('<span class="red">{0}</span>', _('no'));
-}
+};
+
+userprofile2.utils.renderType = function (value, props, row) {
+	return row.json.type_name
+		? row.json.type_name
+		: value;
+};
+
 
 userprofile2.utils.getMenu = function (actions, grid, selected) {
 	var menu = [];

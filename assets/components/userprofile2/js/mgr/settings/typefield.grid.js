@@ -82,10 +82,13 @@ Ext.extend(userprofile2.grid.TypeField,MODx.grid.Grid,{
 	}*/
 
 	,createTypeField: function(btn,e) {
+		var w = Ext.getCmp('userprofile2-window-type-field-create');
+		if (w) {w.hide().getEl().remove();}
+
 		if (!this.windows.createTypeField) {
 			this.windows.createTypeField = MODx.load({
 				xtype: 'userprofile2-window-type-field-create'
-				,fields: this.getEventFields('create')
+				,fields: this.getTypeFieldFields('create')
 				,listeners: {
 					success: {fn:function() { this.refresh(); },scope:this}
 				}
@@ -106,7 +109,7 @@ Ext.extend(userprofile2.grid.TypeField,MODx.grid.Grid,{
 			this.windows.updateTypeField = MODx.load({
 				xtype: 'userprofile2-window-type-field-update'
 				,record: r
-				,fields: this.getEventFields('update')
+				,fields: this.getTypeFieldFields('update')
 				,listeners: {
 					success: {fn:function() { this.refresh(); },scope:this}
 				}
@@ -134,7 +137,7 @@ Ext.extend(userprofile2.grid.TypeField,MODx.grid.Grid,{
 		});
 	}
 
-	,getEventFields: function(type) {
+	,getTypeFieldFields: function(type) {
 		var fields = [];
 
 		fields.push(
@@ -169,6 +172,10 @@ userprofile2.window.CreateTypeField = function(config) {
 		,action: 'mgr/settings/type-field/create'
 		,fields: config.fields
 		,keys: [{key: Ext.EventObject.ENTER,shift: true,fn: function() {this.submit() },scope: this}]
+		,listeners: {
+			success: {fn:function(r) {dd.el.unmask();grid.refresh();},scope:grid}
+			,failure: {fn:function(r) {dd.el.unmask();},scope:grid}
+		}
 	});
 	userprofile2.window.CreateTypeField.superclass.constructor.call(this,config);
 };

@@ -59,6 +59,18 @@
 
 	</object>
 
+
+	<object class="up2Tabs" table="up2_tabs" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="description" dbtype="text" phptype="string" null="true" />
+		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
+		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
+
+		<aggregate alias="Filds" class="up2Filds" local="id" foreign="tab" owner="foreign" cardinality="many" />
+
+	</object>
+
+
 	<object class="up2Filds" table="up2_fields" extends="xPDOSimpleObject">
 		<field key="name_in" dbtype="varchar" precision="100" phptype="string" null="false" />
 		<field key="name_out" dbtype="varchar" precision="100" phptype="string" null="false" />
@@ -79,7 +91,7 @@
 		</index>
 
 		<aggregate alias="TypeField" class="up2TypeFild" local="type" foreign="id" owner="foreign" cardinality="one" />
-
+		<aggregate alias="Tabs" class="up2Tabs" local="tab" foreign="id" owner="foreign" cardinality="many" />
 	</object>
 
 </model>
