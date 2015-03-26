@@ -4,7 +4,6 @@
 
 	<object class="up2Profile" table="up2_profile" extends="xPDOObject">
 		<field key="id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" index="pk" />
-
 		<field key="type" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" />
 		<field key="lastname" dbtype="varchar" precision="255" phptype="string" null="false" />
 		<field key="firstname" dbtype="varchar" precision="255" phptype="string" null="false" />
@@ -42,16 +41,12 @@
 
 		<aggregate alias="User" class="modUser" local="id" foreign="id" owner="foreign" cardinality="one" />
 		<aggregate alias="UserProfile" class="modUserProfile" local="id" foreign="internalKey" owner="foreign" cardinality="one" />
-
 	</object>
-
-
 
 	<object class="up2TypeField" table="up2_type_field" extends="xPDOSimpleObject">
 		<field key="name" dbtype="varchar" precision="100" phptype="string" null="false" />
 		<field key="type_in" dbtype="varchar" precision="100" phptype="string" null="false" />
 		<field key="type_out" dbtype="varchar" precision="100" phptype="string" null="false" />
-
 		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
 		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
 
@@ -59,17 +54,16 @@
 
 	</object>
 
-
-	<object class="up2Tabs" table="up2_tabs" extends="xPDOSimpleObject">
-		<field key="name" dbtype="varchar" precision="100" phptype="string" null="false" />
+	<object class="up2TypeTab" table="up2_type_tab" extends="xPDOSimpleObject">
+		<field key="name_in" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="name_out" dbtype="varchar" precision="100" phptype="string" null="false" />
 		<field key="description" dbtype="text" phptype="string" null="true" />
 		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
 		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
 
 		<composite alias="Fields" class="up2Fields" local="id" foreign="tab" cardinality="many" owner="local" />
-
+		<composite alias="Tabs" class="up2Tabs" local="id" foreign="tab" cardinality="many" owner="local" />
 	</object>
-
 
 	<object class="up2Fields" table="up2_fields" extends="xPDOSimpleObject">
 		<field key="name_in" dbtype="varchar" precision="100" phptype="string" null="false" />
@@ -91,19 +85,36 @@
 		</index>
 
 		<aggregate alias="TypeField" class="up2TypeField" local="type" foreign="id" owner="foreign" cardinality="one" />
-		<aggregate alias="Tabs" class="up2Tabs" local="tab" foreign="id" owner="foreign" cardinality="one" />
+		<aggregate alias="TypeTab" class="up2TypeTab" local="tab" foreign="id" owner="foreign" cardinality="one" />
 	</object>
+
+	<object class="up2Tabs" table="up2_tabs" extends="xPDOSimpleObject">
+		<field key="tab" dbtype="tinyint" precision="3" phptype="integer" attributes="unsigned" null="true" default="0" />
+		<field key="type" dbtype="tinyint" precision="3" phptype="integer" attributes="unsigned" null="true" default="0" />
+		<field key="editable" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
+		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
+		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
+
+		<index alias="tab" name="tab" primary="false" unique="false" type="BTREE" >
+			<column key="tab" length="" collation="A" null="false" />
+		</index>
+		<index alias="type" name="type" primary="false" unique="false" type="BTREE" >
+			<column key="type" length="" collation="A" null="false" />
+		</index>
+
+		<aggregate alias="TypeProfile" class="up2TypeProfile" local="type" foreign="id" owner="foreign" cardinality="one" />
+		<aggregate alias="TypeTab" class="up2TypeTab" local="tab" foreign="id" owner="foreign" cardinality="one" />
+	</object>
+
 
 	<object class="up2TypeProfile" table="up2_type_profile" extends="xPDOSimpleObject">
 		<field key="name" dbtype="varchar" precision="100" phptype="string" null="false" />
 		<field key="description" dbtype="text" phptype="string" null="true" />
 		<field key="default" dbtype="tinyint" precision="1" phptype="integer" null="true" default="0" />
-
 		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
 		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
 
 		<composite alias="Fields" class="up2Fields" local="id" foreign="type" cardinality="many" owner="local" />
-
 	</object>
 
 </model>

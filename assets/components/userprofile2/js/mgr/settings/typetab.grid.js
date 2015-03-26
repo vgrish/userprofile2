@@ -1,4 +1,4 @@
-userprofile2.grid.Tabs = function(config) {
+userprofile2.grid.TypeTab = function(config) {
     config = config || {};
 
     this.dd = function(grid) {
@@ -14,7 +14,7 @@ userprofile2.grid.Tabs = function(config) {
                     MODx.Ajax.request({
                         url: userprofile2.config.connector_url
                         ,params: {
-                            action: config.action || 'mgr/settings/tabs/sort'
+                            action: config.action || 'mgr/settings/type-tab/sort'
                             ,source: source
                             ,target: target
                         }
@@ -31,24 +31,25 @@ userprofile2.grid.Tabs = function(config) {
         id: 'userprofile2-grid-tabs'
         ,url: userprofile2.config.connector_url
         ,baseParams: {
-            action: 'mgr/settings/tabs/getlist'
+            action: 'mgr/settings/type-tab/getlist'
         }
-        ,fields: ['id', 'name', 'description', 'active', 'rank']
+        ,fields: ['id', 'name_in', 'name_out','description', 'active', 'rank']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
-        ,save_action: 'mgr/settings/tabs/updatefromgrid'
+        ,save_action: 'mgr/settings/type-tab/updatefromgrid'
         ,autosave: true
         /*,save_callback: this.updateRow*/
         ,columns: [
             {header: _('up2_id'),dataIndex: 'id',width: 50, sortable: true}
-            ,{header: _('up2_name'),dataIndex: 'name',width: 150, editor: {xtype: 'textfield', allowBlank: false}, sortable: true}
+            ,{header: _('up2_name_tab_in'),dataIndex: 'name_in',width: 150, editor: {xtype: 'textfield', allowBlank: false}, sortable: true}
+            ,{header: _('up2_name_tab_out'),dataIndex: 'name_out',width: 150, editor: {xtype: 'textfield', allowBlank: false}, sortable: true}
             ,{header: _('up2_description'),dataIndex: 'description',width: 150, editor: {xtype: 'textfield', allowBlank: false}, sortable: false}
             ,{header: _('up2_active'),dataIndex: 'active', sortable:true, width:50, editor:{xtype:'combo-boolean', renderer:'boolean'}}
         ]
         ,tbar: [{
             text: _('up2_btn_create')
-            ,handler: this.createTabs
+            ,handler: this.createTypeTab
             ,scope: this
         }]
         ,ddGroup: 'dd'
@@ -57,16 +58,16 @@ userprofile2.grid.Tabs = function(config) {
             render: {fn: this.dd, scope: this}
         }
     });
-    userprofile2.grid.Tabs.superclass.constructor.call(this,config);
+    userprofile2.grid.TypeTab.superclass.constructor.call(this,config);
 };
-Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
+Ext.extend(userprofile2.grid.TypeTab,MODx.grid.Grid,{
     windows: {}
 
     ,getMenu: function() {
         var m = [];
         m.push({
             text: _('up2_menu_update')
-            ,handler: this.updateTabs
+            ,handler: this.updateTypeTab
         });
         m.push('-');
         m.push({
@@ -76,14 +77,14 @@ Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
         m.push('-');
         m.push({
             text: _('up2_menu_remove')
-            ,handler: this.removeTabs
+            ,handler: this.removeTypeTab
         });
         this.addContextMenuItem(m);
     }
 
-    ,createTabs: function(btn,e) {
-        if (!this.windows.createTabs) {
-            this.windows.createTabs = MODx.load({
+    ,createTypeTab: function(btn,e) {
+        if (!this.windows.createTypeTab) {
+            this.windows.createTypeTab = MODx.load({
                 xtype: 'userprofile2-window-tabs-create'
                 ,fields: this.getEventFields('create')
                 ,listeners: {
@@ -91,19 +92,19 @@ Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
                 }
             });
         }
-        this.windows.createTabs.fp.getForm().reset();
-        this.windows.createTabs.fp.getForm().setValues({
+        this.windows.createTypeTab.fp.getForm().reset();
+        this.windows.createTypeTab.fp.getForm().setValues({
             active: 1
         });
-        this.windows.createTabs.show(e.target);
+        this.windows.createTypeTab.show(e.target);
     }
 
-    ,updateTabs: function(btn,e) {
+    ,updateTypeTab: function(btn,e) {
         if (!this.menu.record || !this.menu.record.id) return false;
         var r = this.menu.record;
 
-        if (!this.windows.updateTabs) {
-            this.windows.updateTabs = MODx.load({
+        if (!this.windows.updateTypeTab) {
+            this.windows.updateTypeTab = MODx.load({
                 xtype: 'userprofile2-window-tabs-update'
                 ,record: r
                 ,fields: this.getEventFields('update')
@@ -112,12 +113,12 @@ Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
                 }
             });
         }
-        this.windows.updateTabs.fp.getForm().reset();
-        this.windows.updateTabs.fp.getForm().setValues(r);
-        this.windows.updateTabs.show(e.target);
+        this.windows.updateTypeTab.fp.getForm().reset();
+        this.windows.updateTypeTab.fp.getForm().setValues(r);
+        this.windows.updateTypeTab.show(e.target);
     }
 
-    ,removeTabs: function(btn,e) {
+    ,removeTypeTab: function(btn,e) {
         if (!this.menu.record) return false;
 
         MODx.msg.confirm({
@@ -125,7 +126,7 @@ Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
             ,text: _('up2_menu_remove_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/settings/tabs/remove'
+                action: 'mgr/settings/type-tab/remove'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -138,13 +139,14 @@ Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
         var fields = [];
 
         fields.push(
-            {xtype: 'hidden',name: 'id', id: 'userprofile2-tabs-id-'+type}
-            ,{xtype: 'textfield',fieldLabel: _('up2_name'), name: 'name', allowBlank: false, anchor: '99%', id: 'userprofile2-tabs-name-'+type}
-            ,{xtype: 'textarea',fieldLabel: _('up2_description'), name: 'description', allowBlank: true, anchor: '99%', id: 'userprofile2-tabs-description-'+type}
+            {xtype: 'hidden',name: 'id', id: 'userprofile2-type-tab-id-'+type}
+            ,{xtype: 'textfield',fieldLabel: _('up2_name_tab_in'), name: 'name_in', allowBlank: false, anchor: '99%', id: 'userprofile2-type-tab-name_in-'+type}
+            ,{xtype: 'textfield',fieldLabel: _('up2_name_tab_out'), name: 'name_out', allowBlank: false, anchor: '99%', id: 'userprofile2-type-tab-name_out-'+type}
+            ,{xtype: 'textarea',fieldLabel: _('up2_description'), name: 'description', allowBlank: true, anchor: '99%', id: 'userprofile2-type-tab-description-'+type}
         );
 
         fields.push(
-            {xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_active'), name: 'active', id: 'userprofile2-tabs-active-'+type}
+            {xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_active'), name: 'active', id: 'userprofile2-type-tab-active-'+type}
         );
 
         return fields;
@@ -154,8 +156,8 @@ Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
         if (typeof(row) != 'undefined') {
             this.menu.record = row.data;
         }
-
         var id = this.menu.record.id;
+        var name = this.menu.record.name_in;
         var w = Ext.getCmp('userprofile2-window-fields-view');
         if (w) {w.hide().getEl().remove();}
 
@@ -164,6 +166,7 @@ Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
             ,id: 'userprofile2-window-fields-view'
             ,record: {
                 id: id
+                ,name: name
             }
             ,listeners: {
                 success: {fn:function() {this.refresh();},scope:this}
@@ -174,7 +177,7 @@ Ext.extend(userprofile2.grid.Tabs,MODx.grid.Grid,{
     }
 
 });
-Ext.reg('userprofile2-grid-tabs',userprofile2.grid.Tabs);
+Ext.reg('userprofile2-grid-type-tab',userprofile2.grid.TypeTab);
 
 
 userprofile2.window.ViewFields = function(config) {
@@ -182,8 +185,8 @@ userprofile2.window.ViewFields = function(config) {
 
     this.ident = config.ident || 'meuitem'+Ext.id();
     Ext.applyIf(config,{
-        //title: _('up2_menu_update')
-        id: this.ident
+        title: _('up2_menu_update') + ' : ' + config.record.name
+        ,id: this.ident
         ,width: 750
         ,autoHeight: true
         ,labelAlign: 'top'
@@ -195,7 +198,7 @@ userprofile2.window.ViewFields = function(config) {
             ,bodyStyle: { background: 'transparent'}
             ,deferredRender: false
             ,autoHeight: true
-            ,items: this.getTabs(config)
+            ,items: this.getTypeTab(config)
         }
         ,buttons: [{text: _('close'),scope: this,handler: function() {this.hide();}}]
         ,keys: []
@@ -207,7 +210,7 @@ userprofile2.window.ViewFields = function(config) {
 
 Ext.extend(userprofile2.window.ViewFields,MODx.Window, {
 
-    getTabs: function(config) {
+    getTypeTab: function(config) {
         var w = Ext.getCmp('userprofile2-grid-tab-fields-'+config.record.id);
         if (w) {w.hide().getEl().remove();}
 
@@ -490,7 +493,7 @@ Ext.reg('userprofile2-window-field-in-tab-update',userprofile2.window.UpdateFiel
 
 
 /* ------------------------------------------------- */
-userprofile2.window.CreateTabs = function(config) {
+userprofile2.window.CreateTypeTab = function(config) {
     config = config || {};
     this.ident = config.ident || 'mecitem'+Ext.id();
     Ext.applyIf(config,{
@@ -501,17 +504,17 @@ userprofile2.window.CreateTabs = function(config) {
         ,labelAlign: 'left'
         ,labelWidth: 150
         ,url: userprofile2.config.connector_url
-        ,action: 'mgr/settings/tabs/create'
+        ,action: 'mgr/settings/type-tab/create'
         ,fields: config.fields
         ,keys: [{key: Ext.EventObject.ENTER,shift: true,fn: function() {this.submit() },scope: this}]
     });
-    userprofile2.window.CreateTabs.superclass.constructor.call(this,config);
+    userprofile2.window.CreateTypeTab.superclass.constructor.call(this,config);
 };
-Ext.extend(userprofile2.window.CreateTabs,MODx.Window);
-Ext.reg('userprofile2-window-tabs-create',userprofile2.window.CreateTabs);
+Ext.extend(userprofile2.window.CreateTypeTab,MODx.Window);
+Ext.reg('userprofile2-window-tabs-create',userprofile2.window.CreateTypeTab);
 
 
-userprofile2.window.UpdateTabs = function(config) {
+userprofile2.window.UpdateTypeTab = function(config) {
     config = config || {};
     this.ident = config.ident || 'meuitem'+Ext.id();
     Ext.applyIf(config,{
@@ -522,11 +525,11 @@ userprofile2.window.UpdateTabs = function(config) {
         ,labelAlign: 'left'
         ,labelWidth: 150
         ,url: userprofile2.config.connector_url
-        ,action: 'mgr/settings/tabs/update'
+        ,action: 'mgr/settings/type-tab/update'
         ,fields: config.fields
         ,keys: [{key: Ext.EventObject.ENTER,shift: true,fn: function() {this.submit() },scope: this}]
     });
-    userprofile2.window.UpdateTabs.superclass.constructor.call(this,config);
+    userprofile2.window.UpdateTypeTab.superclass.constructor.call(this,config);
 };
-Ext.extend(userprofile2.window.UpdateTabs,MODx.Window);
-Ext.reg('userprofile2-window-tabs-update',userprofile2.window.UpdateTabs);
+Ext.extend(userprofile2.window.UpdateTypeTab,MODx.Window);
+Ext.reg('userprofile2-window-tabs-update',userprofile2.window.UpdateTypeTab);

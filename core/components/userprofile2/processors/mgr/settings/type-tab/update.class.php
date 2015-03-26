@@ -1,6 +1,6 @@
 <?php
-class up2TabsUpdateProcessor extends modObjectUpdateProcessor {
-	public $classKey = 'up2Tabs';
+class up2TypeTabUpdateProcessor extends modObjectUpdateProcessor {
+	public $classKey = 'up2TypeTab';
 	public $languageTopics = array('userprofile2');
 	public $permission = 'up2setting_save';
 
@@ -14,12 +14,12 @@ class up2TabsUpdateProcessor extends modObjectUpdateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
-		if ($this->modx->getObject('up2Tabs',array('tab' => $this->getProperty('tab'), 'id:!=' => $this->getProperty('id') ))) {
-			$this->modx->error->addField('tab', $this->modx->lexicon('vp_err_ae'));
+		if ($this->modx->getObject('up2TypeTab',array('name_out' => $this->getProperty('name_out'), 'id:!=' => $this->getProperty('id') ))) {
+			$this->modx->error->addField('name_out', $this->modx->lexicon('vp_err_ae'));
 		}
 
 		return parent::beforeSet();
 	}
 
 }
-return 'up2TabsUpdateProcessor';
+return 'up2TypeTabUpdateProcessor';

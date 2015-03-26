@@ -30,7 +30,7 @@ class userprofile2SettingsManagerController extends userprofile2MainController {
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/settings/typefield.grid.js');
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/settings/typeprofile.grid.js');
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/settings/fields.grid.js');
-		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/settings/tabs.grid.js');
+		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/settings/typetab.grid.js');
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/settings/setting.grid.js');
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/settings/lexicon.grid.js');
 		$this->addJavascript($this->userprofile2->config['jsUrl'] . 'mgr/settings/settings.panel.js');

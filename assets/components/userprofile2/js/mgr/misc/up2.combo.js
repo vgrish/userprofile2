@@ -72,3 +72,28 @@ userprofile2.combo.FieldType = function(config) {
 };
 Ext.extend(userprofile2.combo.FieldType, MODx.combo.ComboBox);
 Ext.reg('userprofile2-combo-field-type', userprofile2.combo.FieldType);
+
+
+userprofile2.combo.TabType = function(config) {
+	config = config || {};
+	Ext.applyIf(config, {
+		name: 'handler'
+		, hiddenName: 'tab'
+		, displayField: 'name_in'
+		, valueField: 'id'
+		, editable: true
+		, fields: ['name_in','id']
+		, pageSize: 10
+		, emptyText: _('up2_combo_select')
+		, hideMode: 'offsets'
+		, url: userprofile2.config.connector_url
+		, baseParams: {
+			action: 'mgr/settings/type-tab/getlist',
+			combo: true,
+			limit: 0
+		}
+	});
+	userprofile2.combo.TabType.superclass.constructor.call(this, config);
+};
+Ext.extend(userprofile2.combo.TabType, MODx.combo.ComboBox);
+Ext.reg('userprofile2-combo-tab-type', userprofile2.combo.TabType);

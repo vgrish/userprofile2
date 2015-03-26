@@ -8,8 +8,9 @@ $xpdo_meta_map = array (
   'xPDOSimpleObject' => 
   array (
     0 => 'up2TypeField',
-    1 => 'up2Tabs',
+    1 => 'up2TypeTab',
     2 => 'up2Fields',
-    3 => 'up2TypeProfile',
+    3 => 'up2Tabs',
+    4 => 'up2TypeProfile',
   ),
 );

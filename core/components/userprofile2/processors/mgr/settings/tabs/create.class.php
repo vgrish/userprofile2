@@ -13,16 +13,26 @@ class up2TabsCreateProcessor extends modObjectCreateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
-		if ($this->modx->getObject('up2Tabs',array('name' => $this->getProperty('name')))) {
-			$this->modx->error->addField('name', $this->modx->lexicon('vp_err_ae'));
+		if (!$this->getProperty('type')) {
+			$this->modx->error->addField('type', $this->modx->lexicon('vp_err_ae'));
 		}
+		if ($this->modx->getObject('up2Tabs',array(
+			'tab' => $this->getProperty('tab'),
+			'type' => $this->getProperty('type'),
+		))) {
+			$this->modx->error->addField('tab', $this->modx->lexicon('vp_err_ae'));
+		}
+
 
 		return !$this->hasErrors();
 	}
 	/** {@inheritDoc} */
 	public function beforeSave() {
+		$q = $this->modx->newQuery($this->classKey);
+		$q->where(array('type:=' => $this->getProperty('type')));
+
 		$this->object->fromArray(array(
-			'rank' => $this->modx->getCount('up2Tabs')
+			'rank' => $this->modx->getCount('up2Tabs', $q)
 		));
 		return parent::beforeSave();
 	}

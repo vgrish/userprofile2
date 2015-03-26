@@ -26,6 +26,9 @@ $_lang['up2_lexicon_intro'] = 'Интро';
 $_lang['up2_type_field'] = 'Тип поля';
 $_lang['up2_type_field_intro'] = 'Интро';
 
+$_lang['up2_type_tab'] = 'Тип вкладки';
+$_lang['up2_type_tab_intro'] = 'Интро';
+
 $_lang['up2_type_profile'] = 'Тип профиля';
 $_lang['up2_type_profile_intro'] = 'Интро';
 

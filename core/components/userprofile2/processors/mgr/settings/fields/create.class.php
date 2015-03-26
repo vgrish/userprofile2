@@ -24,8 +24,11 @@ class up2FieldsCreateProcessor extends modObjectCreateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function beforeSave() {
+		$q = $this->modx->newQuery($this->classKey);
+		$q->where(array('tab:=' => $this->getProperty('tab')));
+
 		$this->object->fromArray(array(
-			'rank' => $this->modx->getCount('up2Fields')
+			'rank' => $this->modx->getCount('up2Fields', $q)
 		));
 		return parent::beforeSave();
 	}

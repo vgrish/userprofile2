@@ -144,9 +144,9 @@ $xpdo_meta_map['up2Fields']= array (
       'owner' => 'foreign',
       'cardinality' => 'one',
     ),
-    'Tabs' => 
+    'TypeTab' => 
     array (
-      'class' => 'up2Tabs',
+      'class' => 'up2TypeTab',
       'local' => 'tab',
       'foreign' => 'id',
       'owner' => 'foreign',

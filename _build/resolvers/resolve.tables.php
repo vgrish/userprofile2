@@ -12,12 +12,12 @@ if ($object->xpdo) {
 
 			$manager = $modx->getManager();
 			$objects = array(
+				'up2TypeProfile',
 				'up2Profile',
 				'up2TypeField',
 				'up2Fields',
+				'up2TypeTab',
 				'up2Tabs',
-
-				'up2TypeProfile',
 
 			);
 			foreach ($objects as $tmp) {

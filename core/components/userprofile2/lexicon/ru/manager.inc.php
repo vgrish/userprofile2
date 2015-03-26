@@ -1,9 +1,7 @@
 <?php
 
-$_lang['up2_tab'] = 'UserProfile2';
-$_lang['up2_tab_intro'] = 'Интро';
-
 $_lang['up2_id'] = 'Id';
+$_lang['up2_tab'] = 'Вкладка';
 $_lang['up2_name'] = 'Наименование';
 $_lang['up2_type_in'] = 'Тип внутренний';
 $_lang['up2_type_out'] = 'Тип внешний';
@@ -12,6 +10,10 @@ $_lang['up2_description'] = 'Описание';
 
 $_lang['up2_name_in'] = 'Имя поля';
 $_lang['up2_name_out'] = 'Имя поля в форме';
+$_lang['up2_name_tab_in'] = 'Имя вкладки';
+$_lang['up2_name_tab_out'] = 'Имя вкладки в форме';
+
+
 $_lang['up2_type'] = 'Тип';
 $_lang['up2_css'] = 'Css класс';
 $_lang['up2_value'] = 'Значение';

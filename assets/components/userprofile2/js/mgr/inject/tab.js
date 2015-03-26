@@ -1,4 +1,4 @@
-Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
+Ext.ComponentMgr.onAvailable('modx-user-type-tab', function() {
     this.on('beforerender', function() {
 
         this.add({

@@ -23,7 +23,7 @@ userprofile2.panel.Settings = function(config) {
             , cls: 'modx-page-header container'
         }, {
             xtype: 'modx-tabs'
-            , id: 'userprofile2-settings-tabs'
+            , id: 'userprofile2-settings-type-tab'
             , bodyStyle: 'padding: 10px'
             , defaults: {border: false, autoHeight: true}
             , border: true
@@ -52,14 +52,14 @@ userprofile2.panel.Settings = function(config) {
                     //xtype: 'userprofile2-grid-fields'
                 }]
             }*/,{
-                title: _('up2_tabs')
+                title: _('up2_type_tab')
                 , items: [{
-                    html: '<p>' + _('up2_tabs_intro') + '</p>'
+                    html: '<p>' + _('up2_type_tab_intro') + '</p>'
                     , border: false
                     , bodyCssClass: 'panel-desc'
                     , bodyStyle: 'margin-bottom: 10px'
                 }, {
-                    xtype: 'userprofile2-grid-tabs'
+                    xtype: 'userprofile2-grid-type-tab'
                 }]
             },{
 				title: _('up2_type_profile')

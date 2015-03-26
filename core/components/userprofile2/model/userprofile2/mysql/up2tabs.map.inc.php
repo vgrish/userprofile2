@@ -6,25 +6,39 @@ $xpdo_meta_map['up2Tabs']= array (
   'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
-    'name' => NULL,
-    'description' => NULL,
+    'tab' => 0,
+    'type' => 0,
+    'editable' => 1,
     'active' => 1,
     'rank' => 0,
   ),
   'fieldMeta' => 
   array (
-    'name' => 
+    'tab' => 
     array (
-      'dbtype' => 'varchar',
-      'precision' => '100',
-      'phptype' => 'string',
-      'null' => false,
-    ),
-    'description' => 
-    array (
-      'dbtype' => 'text',
-      'phptype' => 'string',
+      'dbtype' => 'tinyint',
+      'precision' => '3',
+      'phptype' => 'integer',
+      'attributes' => 'unsigned',
       'null' => true,
+      'default' => 0,
+    ),
+    'type' => 
+    array (
+      'dbtype' => 'tinyint',
+      'precision' => '3',
+      'phptype' => 'integer',
+      'attributes' => 'unsigned',
+      'null' => true,
+      'default' => 0,
+    ),
+    'editable' => 
+    array (
+      'dbtype' => 'tinyint',
+      'precision' => '1',
+      'phptype' => 'integer',
+      'null' => true,
+      'default' => 1,
     ),
     'active' => 
     array (
@@ -44,15 +58,58 @@ $xpdo_meta_map['up2Tabs']= array (
       'default' => 0,
     ),
   ),
-  'composites' => 
+  'indexes' => 
   array (
-    'Fields' => 
+    'tab' => 
     array (
-      'class' => 'up2Fields',
-      'local' => 'id',
-      'foreign' => 'tab',
-      'cardinality' => 'many',
-      'owner' => 'local',
+      'alias' => 'tab',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'tab' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'type' => 
+    array (
+      'alias' => 'type',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'type' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+  ),
+  'aggregates' => 
+  array (
+    'TypeProfile' => 
+    array (
+      'class' => 'up2TypeProfile',
+      'local' => 'type',
+      'foreign' => 'id',
+      'owner' => 'foreign',
+      'cardinality' => 'one',
+    ),
+    'TypeTab' => 
+    array (
+      'class' => 'up2TypeTab',
+      'local' => 'tab',
+      'foreign' => 'id',
+      'owner' => 'foreign',
+      'cardinality' => 'one',
     ),
   ),
 );

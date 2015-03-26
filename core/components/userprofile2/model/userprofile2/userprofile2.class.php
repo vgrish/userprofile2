@@ -72,15 +72,17 @@ class userprofile2 {
 
 	public function getProfileTypeDefault()
 	{
-		$type = 0;
-
-		/*
-		 * TODO type
-		 */
-
-		return $type;
+		$id = 0;
+		$q = $this->modx->newQuery('up2TypeProfile');
+		$q->sortby('`up2TypeProfile`.`rank`', 'ASC');
+		$q->select('`up2TypeProfile`.`id`');
+		$q->where(array('up2TypeProfile.active' => 1,'up2TypeProfile.default' => 1));
+		$q->limit(1);
+		if ($q->prepare() && $q->stmt->execute()) {
+			$id = $q->stmt->fetch(PDO::FETCH_COLUMN);
+		}
+		return (int) $id;
 	}
-
 
 	/**
 	 * @param array $d

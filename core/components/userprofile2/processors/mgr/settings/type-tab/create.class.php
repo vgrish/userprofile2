@@ -1,6 +1,6 @@
 <?php
-class up2TypeProfileCreateProcessor extends modObjectCreateProcessor {
-	public $classKey = 'up2TypeProfile';
+class up2TypeTabCreateProcessor extends modObjectCreateProcessor {
+	public $classKey = 'up2TypeTab';
 	public $languageTopics = array('userprofile2');
 	public $permission = 'vpsetting_save';
 
@@ -13,8 +13,8 @@ class up2TypeProfileCreateProcessor extends modObjectCreateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
-		if ($this->modx->getObject('up2TypeProfile',array('name' => $this->getProperty('name')))) {
-			$this->modx->error->addField('name', $this->modx->lexicon('vp_err_ae'));
+		if ($this->modx->getObject('up2TypeTab',array('name_out' => $this->getProperty('name_out')))) {
+			$this->modx->error->addField('name_out', $this->modx->lexicon('vp_err_ae'));
 		}
 
 		return !$this->hasErrors();
@@ -22,17 +22,10 @@ class up2TypeProfileCreateProcessor extends modObjectCreateProcessor {
 	/** {@inheritDoc} */
 	public function beforeSave() {
 		$this->object->fromArray(array(
-			'rank' => $this->modx->getCount('up2TypeProfile')
+			'rank' => $this->modx->getCount('up2TypeTab')
 		));
-		// default
-		if($this->modx->userprofile2->getProfileTypeDefault() > 0){
-			$this->object->fromArray(array(
-				'default' => 0
-			));
-		}
-
 		return parent::beforeSave();
 	}
 
 }
-return 'up2TypeProfileCreateProcessor';
+return 'up2TypeTabCreateProcessor';

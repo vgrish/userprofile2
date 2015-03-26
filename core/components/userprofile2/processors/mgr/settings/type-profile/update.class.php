@@ -17,6 +17,12 @@ class up2TypeProfileUpdateProcessor extends modObjectUpdateProcessor {
 		if ($this->modx->getObject('up2TypeProfile',array('name' => $this->getProperty('name'), 'id:!=' => $this->getProperty('id') ))) {
 			$this->modx->error->addField('name', $this->modx->lexicon('vp_err_ae'));
 		}
+		// default
+		if($this->getProperty('default')) {
+			if($this->modx->userprofile2->getProfileTypeDefault() > 0){
+				$this->unsetProperty('default');
+			}
+		}
 
 		return parent::beforeSet();
 	}
