@@ -50,7 +50,12 @@ define('BUILD_PLUGIN_STATIC', false);
 
 $BUILD_RESOLVERS = array(
 	'tables',
+
 	'typefield',
+	'typetab',
+	'fields',
+	'typeprofile',
+	'tabs',
 
 	'setup',
 	//'chunks',
