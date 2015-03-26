@@ -14,6 +14,10 @@ if ($object->xpdo) {
 					'name' => !$lang ? 'Профиль #1' : 'Profile #1',
 					'default' => '1',
 				),
+				'2' => array(
+					'name' => !$lang ? 'Профиль #2' : 'Profile #2',
+					'default' => '0',
+				),
 
 			);
 

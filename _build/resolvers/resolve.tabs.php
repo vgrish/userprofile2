@@ -25,6 +25,13 @@ if ($object->xpdo) {
 					'tab' => '3',
 					'editable' => '0',
 				),
+
+				
+				'4' => array(
+					'type' => '2',
+					'tab' => '1',
+					'editable' => '0',
+				),
 			);
 
 
