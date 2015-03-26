@@ -107,6 +107,19 @@ class userprofile2 {
 		if($this->isModeEventNew($sp)) {return '';}
 		$id = $sp['id'];
 
+
+		$user = $sp['user'];
+
+		if(!$up2Profile = $user->getOne('up2Profile')) {return '';};
+		if(!$typeProfile = $up2Profile->get('type')) {
+			$typeProfile = $this->getProfileTypeDefault();
+			$up2Profile->set('type', $typeProfile);
+			$up2Profile->save();
+		}
+
+		$this->modx->log(1, print_r($up2Profile->toArray() ,1));
+
+
 		$this->modx->log(1 , print_r('OnUserFormPrerender' ,1));
 
 		$this->modx->controller->addLexiconTopic('userprofile2:default');
@@ -119,9 +132,14 @@ class userprofile2 {
 		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/user.panel.js');
 		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/tab.js');
 
+
+		//$typeProfile =
+
 		$config = array(
 			'connector_url' => $this->config['connectorUrl'],
+			'type' => $typeProfile,
 			'user' => $id,
+
 		);
 		$data_js = preg_replace(array('/^\n/', '/\t{6}/'), '', '
 			userprofile2.config = ' . $this->modx->toJSON($config) . ';
@@ -136,11 +154,6 @@ class userprofile2 {
 	{
 		if(!$this->isModeEventNew($sp)) {return '';};
 		$user = $sp['user'];
-		$id = $user->get('id');
-		if($up2Profile = $this->modx->getObject('up2Profile', $id)) {return '';}
-		$up2Profile = $this->modx->newObject('up2Profile');
-		$up2Profile->set('id', $id);
-		$up2Profile->set('type', $this->getProfileTypeDefault());
-		$up2Profile->save();
+		$user->getOne('up2Profile');
 	}
 }

@@ -14,3 +14,11 @@ $xpdo_meta_map = array (
     4 => 'up2TypeProfile',
   ),
 );
+
+$this->map['modUser']['composites']['up2Profile'] = array(
+    'class' => 'up2Profile',
+    'local' => 'id',
+    'foreign' => 'id',
+    'cardinality' => 'one',
+    'owner' => 'local',
+);

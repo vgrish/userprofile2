@@ -26,7 +26,7 @@ if ($object->xpdo) {
 					'editable' => '0',
 				),
 
-				
+
 				'4' => array(
 					'type' => '2',
 					'tab' => '1',
