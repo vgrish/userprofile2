@@ -14,7 +14,11 @@ class up2TabsUpdateProcessor extends modObjectUpdateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
-		if ($this->modx->getObject('up2Tabs',array('tab' => $this->getProperty('tab'), 'id:!=' => $this->getProperty('id') ))) {
+		if ($this->modx->getObject('up2Tabs',array(
+			'tab' => $this->getProperty('tab'),
+			'type' => $this->getProperty('type'),
+			'id:!=' => $this->getProperty('id')
+		))) {
 			$this->modx->error->addField('tab', $this->modx->lexicon('vp_err_ae'));
 		}
 

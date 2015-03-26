@@ -241,5 +241,13 @@ $xpdo_meta_map['up2Profile']= array (
       'owner' => 'foreign',
       'cardinality' => 'one',
     ),
+    'TypeProfile' => 
+    array (
+      'class' => 'up2TypeProfile',
+      'local' => 'type',
+      'foreign' => 'id',
+      'owner' => 'foreign',
+      'cardinality' => 'one',
+    ),
   ),
 );

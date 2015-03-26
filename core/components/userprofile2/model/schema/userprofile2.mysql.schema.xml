@@ -41,6 +41,7 @@
 
 		<aggregate alias="User" class="modUser" local="id" foreign="id" owner="foreign" cardinality="one" />
 		<aggregate alias="UserProfile" class="modUserProfile" local="id" foreign="internalKey" owner="foreign" cardinality="one" />
+		<aggregate alias="TypeProfile" class="up2TypeProfile" local="type" foreign="id" owner="foreign" cardinality="one" />
 	</object>
 
 	<object class="up2TypeField" table="up2_type_field" extends="xPDOSimpleObject">
@@ -114,7 +115,7 @@
 		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
 		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />
 
-		<composite alias="Fields" class="up2Fields" local="id" foreign="type" cardinality="many" owner="local" />
+		<aggregate alias="Tabs" class="up2Tabs" local="id" foreign="type" owner="local" cardinality="many" />
 	</object>
 
 </model>

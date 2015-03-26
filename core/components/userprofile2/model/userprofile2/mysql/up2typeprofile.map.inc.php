@@ -64,4 +64,15 @@ $xpdo_meta_map['up2TypeProfile']= array (
       'owner' => 'local',
     ),
   ),
+  'aggregates' => 
+  array (
+    'Tabs' => 
+    array (
+      'class' => 'up2Tabs',
+      'local' => 'id',
+      'foreign' => 'type',
+      'owner' => 'foreign',
+      'cardinality' => 'many',
+    ),
+  ),
 );

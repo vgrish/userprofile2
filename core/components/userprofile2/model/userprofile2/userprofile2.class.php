@@ -95,6 +95,95 @@ class userprofile2 {
 			: false;
 	}
 
+
+	public function getTabsFilds($type)
+	{
+		$data = $ids = array();
+		$q = $this->modx->newQuery('up2Tabs', array(
+			'active' => 1,
+			'type' => $type,
+			));
+		$q->sortby('`up2Tabs`.`rank`', 'ASC');
+		$q->select('id');
+		if ($q->prepare() && $q->stmt->execute()) {
+			$ids = $q->stmt->fetchAll(PDO::FETCH_COLUMN);
+		}
+		if(count($ids) == 0) {return $data;}
+		foreach ($ids as $id) {
+			if(!$tab = $this->modx->getObject('up2Tabs', $id)) {continue;}
+			if(!$typeTab = $tab->getOne('TypeTab')) {continue;}
+			if(!$typeTab->get('active')) {continue;}
+			//
+			$_ids = array();
+			$q = $this->modx->newQuery('up2Fields', array(
+				'active' => 1,
+				'tab' => $typeTab->get('id'),
+			));
+			$q->sortby('`up2Fields`.`rank`', 'ASC');
+			$q->select('id');
+			if ($q->prepare() && $q->stmt->execute()) {
+				$_ids = $q->stmt->fetchAll(PDO::FETCH_COLUMN);
+			}
+			if(count($_ids) == 0) {continue;}
+			foreach ($_ids as $_id) {
+				if(!$field = $this->modx->getObject('up2Fields', $_id)) {continue;}
+				if(!$typeField = $field->getOne('TypeField')) {continue;}
+
+				$this->modx->log(1 , print_r('====@@@@@@======' ,1));
+				$this->modx->log(1 , print_r($typeField->toArray() ,1));
+
+			}
+
+			$this->modx->log(1 , print_r('====IIIII======' ,1));
+			$this->modx->log(1 , print_r($_ids ,1));
+
+
+			//$data[] = $typeTab->toArray();
+			//$data[$typeTab->get('name_out')][] = '';
+			// $data[]
+
+			$this->modx->log(1 , print_r('====+=========' ,1));
+			$this->modx->log(1 , print_r($tab->toArray() ,1));
+			$this->modx->log(1 , print_r($typeTab->toArray() ,1));
+
+		}
+
+
+		$this->modx->log(1 , print_r('====+=========' ,1));
+		$this->modx->log(1 , print_r($ids ,1));
+
+/*
+
+[id] => 2
+    [tab] => 2
+    [type] => 1
+    [editable] => 1
+    [active] => 1
+    [rank] => 0
+
+
+[id] => 2
+    [name_in] => Вкладка #2
+    [name_out] => tab_2
+    [description] =>
+    [active] => 1
+    [rank] => 1
+
+
+if($tabs = $typeProfile->getMany('Tabs')) {
+			foreach($tabs as $tab) {
+
+				if(!$tab->get('active')) {continue;}
+
+				$this->modx->log(1 , print_r('====+=========' ,1));
+				$this->modx->log(1 , print_r($tab->toArray() ,1));
+
+			}
+		}*/
+
+		return $data;
+	}
+
 	/*
 	 * EVENT
 	 */
@@ -111,13 +200,17 @@ class userprofile2 {
 		$user = $sp['user'];
 
 		if(!$up2Profile = $user->getOne('up2Profile')) {return '';};
-		if(!$typeProfile = $up2Profile->get('type')) {
-			$typeProfile = $this->getProfileTypeDefault();
-			$up2Profile->set('type', $typeProfile);
+		if(!$type = $up2Profile->get('type')) {
+			$type = $this->getProfileTypeDefault();
+			$up2Profile->set('type', $type);
 			$up2Profile->save();
 		}
+		//if(!$typeProfile = $up2Profile->getOne('TypeProfile')) {return '';};
 
-		$this->modx->log(1, print_r($up2Profile->toArray() ,1));
+		$data = $this->getTabsFilds($type);
+
+
+		//$this->modx->log(1, print_r($up2Profile->toArray() ,1));
 
 
 		$this->modx->log(1 , print_r('OnUserFormPrerender' ,1));
@@ -137,7 +230,7 @@ class userprofile2 {
 
 		$config = array(
 			'connector_url' => $this->config['connectorUrl'],
-			'type' => $typeProfile,
+			'type' => $type,
 			'user' => $id,
 
 		);
