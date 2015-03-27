@@ -38,7 +38,10 @@ class userprofile2 {
 			'templatesPath' => $corePath . 'elements/templates/',
 			'chunkSuffix' => '.chunk.tpl',
 			'snippetsPath' => $corePath . 'elements/snippets/',
-			'processorsPath' => $corePath . 'processors/'
+			'processorsPath' => $corePath . 'processors/',
+
+			'cache_key' => $this->namespace.'/',
+
 		), $config);
 
 		$this->modx->addPackage('userprofile2', $this->config['modelPath']);
@@ -96,8 +99,12 @@ class userprofile2 {
 	}
 
 
-	public function getTabsFilds($type)
+	public function getTabsFields($type)
 	{
+		$key = 'tabs_fields/' . $type;
+		$data = $this->getCache($key);
+		if(!empty($data)) {return $data;}
+		//
 		$data = $ids = array();
 		$q = $this->modx->newQuery('up2Tabs', array(
 			'active' => 1,
@@ -142,11 +149,58 @@ class userprofile2 {
 				'fields' => $_dataField,
 			);
 		}
+		if(!$this->setCache($key, $data)) {
+			$this->modx->log(1, print_r('[UP2]:Error set cache for key - ' . $key, 1));
+		}
 
 		$this->modx->log(1 , print_r('====DATA======' ,1));
 		$this->modx->log(1 , print_r($data ,1));
 
 		return $data;
+	}
+
+	/**
+	 * @param $key
+	 * @param array $data
+	 * @return mixed
+	 */
+	public function setCache($key, $data = array())
+	{
+		if(empty($key)) {return $key;}
+		$cacheKey = $this->config['cache_key'];
+		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
+		$this->modx->cacheManager->set($key, $data, 0, $cacheOptions);
+
+		return $key;
+	}
+
+	/**
+	 * @param $key
+	 * @return mixed|string
+	 */
+	public function getCache($key)
+	{
+		$cached = '';
+		if(empty($key)) {return $cached;}
+		$cacheKey = $this->config['cache_key'];
+		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
+		$cached = $this->modx->getCacheManager()->get($key, $cacheOptions);
+
+		return $cached;
+	}
+
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
+	public function clearCache($key)
+	{
+		if(empty($key)) {return $key;}
+		$cacheKey = $this->config['cache_key'];
+		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
+		$this->modx->cacheManager->clean($cacheOptions);
+
+		return $key;
 	}
 
 	/*
@@ -172,7 +226,7 @@ class userprofile2 {
 		}
 		//if(!$typeProfile = $up2Profile->getOne('TypeProfile')) {return '';};
 
-		$data = $this->getTabsFilds($type);
+		$data = $this->getTabsFields($type);
 
 
 		//$this->modx->log(1, print_r($up2Profile->toArray() ,1));
@@ -214,4 +268,16 @@ class userprofile2 {
 		$user = $sp['user'];
 		$user->getOne('up2Profile');
 	}
+
+	/**
+	 * @param $sp
+	 */
+	public function OnBeforeCacheUpdate($sp)
+	{
+		$key = '/';
+		if($this->clearCache($key)) {
+			$this->modx->log(modX::LOG_LEVEL_INFO, '[UP2] Clearing the cache. Path: ' . $key  );
+		}
+	}
+
 }
