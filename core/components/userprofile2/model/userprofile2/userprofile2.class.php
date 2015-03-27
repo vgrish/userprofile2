@@ -125,61 +125,26 @@ class userprofile2 {
 				$_ids = $q->stmt->fetchAll(PDO::FETCH_COLUMN);
 			}
 			if(count($_ids) == 0) {continue;}
+			$_dataField = array();
 			foreach ($_ids as $_id) {
 				if(!$field = $this->modx->getObject('up2Fields', $_id)) {continue;}
 				if(!$typeField = $field->getOne('TypeField')) {continue;}
-
-				$this->modx->log(1 , print_r('====@@@@@@======' ,1));
-				$this->modx->log(1 , print_r($typeField->toArray() ,1));
-
+				$_dataField[$typeField->get('id')] = array(
+					'name' => $typeField->get('name'),
+					'type_in' => $typeField->get('type_in'),
+					'type_out' => $typeField->get('type_out'),
+				);
 			}
-
-			$this->modx->log(1 , print_r('====IIIII======' ,1));
-			$this->modx->log(1 , print_r($_ids ,1));
-
-
-			//$data[] = $typeTab->toArray();
-			//$data[$typeTab->get('name_out')][] = '';
-			// $data[]
-
-			$this->modx->log(1 , print_r('====+=========' ,1));
-			$this->modx->log(1 , print_r($tab->toArray() ,1));
-			$this->modx->log(1 , print_r($typeTab->toArray() ,1));
-
+			$data[$typeTab->get('id')] = array(
+				'name_in' => $typeTab->get('name_in'),
+				'name_out' => $typeTab->get('name_out'),
+				'description' => $typeTab->get('description'),
+				'fields' => $_dataField,
+			);
 		}
 
-
-		$this->modx->log(1 , print_r('====+=========' ,1));
-		$this->modx->log(1 , print_r($ids ,1));
-
-/*
-
-[id] => 2
-    [tab] => 2
-    [type] => 1
-    [editable] => 1
-    [active] => 1
-    [rank] => 0
-
-
-[id] => 2
-    [name_in] => Вкладка #2
-    [name_out] => tab_2
-    [description] =>
-    [active] => 1
-    [rank] => 1
-
-
-if($tabs = $typeProfile->getMany('Tabs')) {
-			foreach($tabs as $tab) {
-
-				if(!$tab->get('active')) {continue;}
-
-				$this->modx->log(1 , print_r('====+=========' ,1));
-				$this->modx->log(1 , print_r($tab->toArray() ,1));
-
-			}
-		}*/
+		$this->modx->log(1 , print_r('====DATA======' ,1));
+		$this->modx->log(1 , print_r($data ,1));
 
 		return $data;
 	}
