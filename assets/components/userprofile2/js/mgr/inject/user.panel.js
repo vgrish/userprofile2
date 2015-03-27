@@ -5,10 +5,8 @@ userprofile2.panel.User = function(config) {
         ,border: false
         ,baseCls: 'modx-formpanel'
         ,layout: 'anchor'
-
         ,listeners: {
             setup: {fn:this.setup,scope:this}
-
             ,afterRender: function(thisForm, options){
                 var uf = Ext.getCmp('modx-panel-user');
 
@@ -17,16 +15,15 @@ userprofile2.panel.User = function(config) {
                 }, this);
             }
         }
-
         ,items: [{
-            html: '<p>'+_('up2_tab_intro')+'</p>'
+            html: '<p>'+_('up2_tabs_intro')+'</p>'
             ,border: false
             ,bodyCssClass: 'panel-desc'
         }, {
             layout: 'column'
             ,border: false
             ,bodyCssClass: 'tab-panel-wrapper '
-            ,style: 'padding: 15px;'
+            ,style: 'padding: 10px;'
             ,items: this.getItems(config)
         }]
     });
@@ -38,10 +35,10 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
     beforeSubmit: function(o) {
         var d = '';
         var f = Ext.getCmp('modx-panel-user').getForm();
+
         if(f.id) {
             d = Ext.util.JSON.encode($('#'+f.id).serializeJSON().up2);
         }
-
         MODx.Ajax.request({
             url: userprofile2.config.connector_url
             ,params: {
@@ -53,7 +50,6 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
     }
 
     ,getFielValue: function(tabName, fieldName, defaultValue) {
-
         var extended = userprofile2.config.extended;
 
         if(extended[tabName] && extended[tabName][fieldName] && (typeof extended[tabName][fieldName]!== 'object')) {
@@ -67,6 +63,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
     }
 
     ,getTabs: function(config) {
+
         var tabsItems = [];
         var tabs = {
             xtype: 'modx-tabs',
@@ -75,16 +72,16 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
             forceLayout: true,
             id: 'up2-extended-tabs',
             width: '99%',
-            bodyStyle: 'padding: 10px 10px 10px 0px;',
+            bodyStyle: 'padding: 10px 0px 10px 0px;',
             style: 'padding: 15px 25px 15px 15px;',
             border: true,
             defaults: {
                 border: false,
                 autoHeight: true,
-                bodyStyle: 'padding: 5px 8px 5px 5px;',
                 layout: 'form',
                 deferredRender: false,
-                forceLayout: true
+                forceLayout: true,
+                labelAlign: 'top'
             },
             items: tabsItems
         };
@@ -120,13 +117,9 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                     anchor: '100%',
                     value: this.getFielValue(tabNameOut, item['name_out'], item['value']) || item['value']
                 };
-
-                console.log(item['value']);
-
                 tabFields.push(field);
             }
             if(typeof tabFields!== 'object') {continue;}
-
             tabsItems.push({
                 title: tabNameIn,
                 items: tabFields,
