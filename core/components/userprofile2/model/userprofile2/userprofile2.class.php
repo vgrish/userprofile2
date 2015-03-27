@@ -226,18 +226,15 @@ class userprofile2 {
 			$up2Profile->set('type', $type);
 			$up2Profile->save();
 		}
-		//if(!$typeProfile = $up2Profile->getOne('TypeProfile')) {return '';};
-
+		if(!$extended = $user->getOne('Profile')->get('extended')) {
+			$extended = array();
+		}
 		$tabsFields = $this->getTabsFields($type);
 
 
 		$this->modx->log(1 , print_r('====DATA======' ,1));
 		$this->modx->log(1 , print_r($tabsFields ,1));
 
-		//$this->modx->log(1, print_r($up2Profile->toArray() ,1));
-
-
-		$this->modx->log(1 , print_r('OnUserFormPrerender' ,1));
 
 		$this->modx->controller->addLexiconTopic('userprofile2:default');
 		$this->modx->controller->addCss($this->config['cssUrl'] . 'mgr/main.css');
@@ -251,14 +248,12 @@ class userprofile2 {
 
 		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/zepto-1.1.6.js');
 		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/jquery.serializejson.js');
-
 		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/spec.js');
-
-		//$typeProfile =
-
+		//
 		$config = array(
 			'connector_url' => $this->config['connectorUrl'],
 			'tabsfields' => $tabsFields,
+			'extended' => $extended,
 			'type' => $type,
 			'user' => $id,
 		);

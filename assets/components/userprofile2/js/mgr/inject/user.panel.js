@@ -52,6 +52,20 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
         });
     }
 
+    ,getFielValue: function(tabName, fieldName, defaultValue) {
+
+        var extended = userprofile2.config.extended;
+
+        if(extended[tabName] && extended[tabName][fieldName] && (typeof extended[tabName][fieldName]!== 'object')) {
+            value = extended[tabName][fieldName];
+        }
+        else {
+            value = defaultValue;
+        }
+
+        return value;
+    }
+
     ,getTabs: function(config) {
         var tabsItems = [];
         var tabs = {
@@ -62,6 +76,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
             id: 'up2-extended-tabs',
             width: '99%',
             bodyStyle: 'padding: 10px 10px 10px 0px;',
+            style: 'padding: 15px 25px 15px 15px;',
             border: true,
             defaults: {
                 border: false,
@@ -71,8 +86,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                 deferredRender: false,
                 forceLayout: true
             },
-            items: tabsItems,
-            style: 'padding: 15px 25px 15px 15px;'
+            items: tabsItems
         };
 
         var tf = userprofile2.config.tabsfields;
@@ -104,10 +118,11 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                     allowBlank: item['required'],
                     ctCls: 'up2_' + item['type_in'],
                     anchor: '100%',
-
-                    //value: data[v] || data[tab][v],
-
+                    value: this.getFielValue(tabNameOut, item['name_out'], item['value']) || item['value']
                 };
+
+                console.log(item['value']);
+
                 tabFields.push(field);
             }
             if(typeof tabFields!== 'object') {continue;}
