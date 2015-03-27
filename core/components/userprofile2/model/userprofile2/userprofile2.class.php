@@ -136,7 +136,7 @@ class userprofile2 {
 			foreach ($_ids as $_id) {
 				if(!$field = $this->modx->getObject('up2Fields', $_id)) {continue;}
 				if(!$typeField = $field->getOne('TypeField')) {continue;}
-				$_dataField[$typeField->get('id')] = array(
+				$_dataField[$field->get('name_out')] = array(
 					'name_in' => $field->get('name_in'),
 					'name_out' => $field->get('name_out'),
 					'required' => $field->get('required'),
@@ -147,7 +147,7 @@ class userprofile2 {
 					'type_out' => $typeField->get('type_out'),
 				);
 			}
-			$data[$typeTab->get('id')] = array(
+			$data[$typeTab->get('name_out')] = array(
 				'name_in' => $typeTab->get('name_in'),
 				'name_out' => $typeTab->get('name_out'),
 				'description' => $typeTab->get('description'),
@@ -228,11 +228,11 @@ class userprofile2 {
 		}
 		//if(!$typeProfile = $up2Profile->getOne('TypeProfile')) {return '';};
 
-		$data = $this->getTabsFields($type);
+		$tabsFields = $this->getTabsFields($type);
 
 
 		$this->modx->log(1 , print_r('====DATA======' ,1));
-		$this->modx->log(1 , print_r($data ,1));
+		$this->modx->log(1 , print_r($tabsFields ,1));
 
 		//$this->modx->log(1, print_r($up2Profile->toArray() ,1));
 
@@ -249,14 +249,18 @@ class userprofile2 {
 		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/user.panel.js');
 		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/tab.js');
 
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/zepto-1.1.6.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/jquery.serializejson.js');
+
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/spec.js');
 
 		//$typeProfile =
 
 		$config = array(
 			'connector_url' => $this->config['connectorUrl'],
+			'tabsfields' => $tabsFields,
 			'type' => $type,
 			'user' => $id,
-
 		);
 		$data_js = preg_replace(array('/^\n/', '/\t{6}/'), '', '
 			userprofile2.config = ' . $this->modx->toJSON($config) . ';

@@ -14,6 +14,9 @@ class up2FieldsUpdateProcessor extends modObjectUpdateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
+		if ($this->modx->getObject('up2Fields',array('name_out' => $this->getProperty('name_out'), 'id:!=' => $this->getProperty('id') ))) {
+			$this->modx->error->addField('name_out', $this->modx->lexicon('vp_err_ae'));
+		}
 
 		return parent::beforeSet();
 	}

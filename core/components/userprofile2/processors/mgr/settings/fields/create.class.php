@@ -16,6 +16,9 @@ class up2FieldsCreateProcessor extends modObjectCreateProcessor {
 		if ($this->modx->getObject('up2Fields',array('name_in' => $this->getProperty('name_in')))) {
 			$this->modx->error->addField('name_in', $this->modx->lexicon('vp_err_ae'));
 		}
+		if ($this->modx->getObject('up2Fields',array('name_out' => $this->getProperty('name_out')))) {
+			$this->modx->error->addField('name_out', $this->modx->lexicon('vp_err_ae'));
+		}
 		if (!$this->getProperty('tab')) {
 			$this->modx->error->addField('tab', $this->modx->lexicon('vp_err_ae'));
 		}

@@ -37,20 +37,12 @@ userprofile2.panel.User = function(config) {
 };
 Ext.extend(userprofile2.panel.User,MODx.Panel, {
 
+
     beforeSubmit: function(o) {
-
-
-        console.log('beforeSubmit');
-
-        var v = Ext.getCmp('modx-panel-user').getForm().getValues();
-        var d = [];
-        var n = 0;
-
-        for(i in v) {
-            if(/up2/.test(i)) {
-                d[n] = [i, v[i]];
-                n++;
-            }
+        var d = '';
+        var f = Ext.getCmp('modx-panel-user').getForm();
+        if(f.id) {
+            d = Ext.util.JSON.encode($('#'+f.id).serializeJSON().up2);
         }
 
         MODx.Ajax.request({
@@ -58,7 +50,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
             ,params: {
                 action: 'mgr/profile/update'
                 ,id: userprofile2.config.user
-                ,data: Ext.util.JSON.encode(d)
+                ,data: d
             }
         });
 
@@ -88,8 +80,78 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
             style: 'padding: 15px 25px 15px 15px;'
         };
 
+        var tf = userprofile2.config.tabsfields;
+        if((!tf) || (typeof tf!== 'object')) return tabs;
+
+        for (keyTab in tf) {
+            var tab = tf[keyTab];
+            if((!tab) || (typeof tab!== 'object')) {continue;}
+
+            var fields = tab['fields'];
+            if((!fields) || (typeof fields!== 'object')) {continue;}
+
+            var tabNameIn = tab['name_in'];
+            var tabNameOut = tab['name_out'];
+            var tabDescription = tab['description'];
+            var tabFields = [];
+
+            for (keyField in fields) {
+
+                var item = fields[keyField];
+                if((!item) || (typeof item!== 'object')) {continue;}
+
+                var field = {
+                    xtype: item['type_in'],
+                    name: 'up2[' + tabNameOut + '][' + item['name_out'] + ']',
+                    id: 'up2-extended-field-' + item['name_out'],
+                    fieldLabel: item['name_in'],
+                    disabled: !item['editable'],
+                    allowBlank: item['required'],
+                    ctCls: 'up2_' + item['type_in'],
+
+                    //value: data[v] || data[tab][v],
+                    anchor: '99%',
+
+                    //style: 'margin:0px 0px 15px 10px;',
+                    //labelStyle: 'margin:0px 0px 0px 0px;',
+
+
+
+                };
+                tabFields.push(field);
+            }
+            if(typeof tabFields!== 'object') {continue;}
+
+            console.log('====');
+            console.log(tabFields);
+            console.log('====');
+
+
+            tabsItems.push({
+                title: tabNameIn,
+                items: tabFields,
+                id: tabNameOut
+            });
+
+
+            console.log('keyTab - ' + keyTab);
+        }
+
+        console.log(tabsItems);
+
         return tabs;
     }
+
+    /*
+     [name_in] => поле #9
+     [name_out] => field_9
+     [required] => 1
+     [editable] => 1
+     [value] =>
+     [css] =>
+     [type_in] => numberfield
+     [type_out] => num
+     */
 
     /*
      return {
@@ -217,6 +279,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                 labelAlign: 'top',
                 preventRender: true,
                 items: this.getTabs(config)
+
                 /*[
                     {
                         xtype: 'fieldset',

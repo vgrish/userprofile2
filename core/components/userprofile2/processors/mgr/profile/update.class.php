@@ -16,6 +16,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		$this->modx->log(1, print_r('====================' ,1 ));
 		$this->modx->log(1, print_r($this->getProperties() ,1 ));
 
+
 		$data = $this->getProperty('data');
 		if(empty($data)) {
 			return $this->success();
