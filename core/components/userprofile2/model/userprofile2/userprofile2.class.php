@@ -137,7 +137,12 @@ class userprofile2 {
 				if(!$field = $this->modx->getObject('up2Fields', $_id)) {continue;}
 				if(!$typeField = $field->getOne('TypeField')) {continue;}
 				$_dataField[$typeField->get('id')] = array(
-					'name' => $typeField->get('name'),
+					'name_in' => $field->get('name_in'),
+					'name_out' => $field->get('name_out'),
+					'required' => $field->get('required'),
+					'editable' => $field->get('editable'),
+					'value' => $field->get('value'),
+					'css' => $field->get('css'),
 					'type_in' => $typeField->get('type_in'),
 					'type_out' => $typeField->get('type_out'),
 				);
@@ -152,9 +157,6 @@ class userprofile2 {
 		if(!$this->setCache($key, $data)) {
 			$this->modx->log(1, print_r('[UP2]:Error set cache for key - ' . $key, 1));
 		}
-
-		$this->modx->log(1 , print_r('====DATA======' ,1));
-		$this->modx->log(1 , print_r($data ,1));
 
 		return $data;
 	}
@@ -228,6 +230,9 @@ class userprofile2 {
 
 		$data = $this->getTabsFields($type);
 
+
+		$this->modx->log(1 , print_r('====DATA======' ,1));
+		$this->modx->log(1 , print_r($data ,1));
 
 		//$this->modx->log(1, print_r($up2Profile->toArray() ,1));
 
