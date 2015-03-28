@@ -21,13 +21,16 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		if(empty($data)) {
 			return $this->success();
 		}
-		$data = $this->modx->fromJSON($data);
+	/*	$data = $this->modx->fromJSON($data);
 		if(empty($data)) {
 			return $this->success();
-		}
+		}*/
 
 		$this->modx->log(1, print_r('=====WORK===============' ,1 ));
 		$this->modx->log(1, print_r($data ,1 ));
+
+		$this->setProperty('extended', $data);
+
 
 		return !$this->hasErrors();
 	}

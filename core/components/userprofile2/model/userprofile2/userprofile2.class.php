@@ -226,9 +226,11 @@ class userprofile2 {
 			$up2Profile->set('type', $type);
 			$up2Profile->save();
 		}
-		if(!$extended = $user->getOne('Profile')->get('extended')) {
+		/*if(!$extended = $user->getOne('Profile')->get('extended')) {
 			$extended = array();
-		}
+		}*/
+		$extended = $up2Profile->get('extended');
+
 		$tabsFields = $this->getTabsFields($type);
 
 
