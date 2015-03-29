@@ -188,7 +188,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
 					]
 				}, {
 					xtype: 'fieldset',
-					//title: _('up2_fieldset_activity'),
+					title: _('up2_fieldset_activity'),
 					layoutConfig: {
 						labelAlign: 'top'
 					},
