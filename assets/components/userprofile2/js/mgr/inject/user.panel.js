@@ -12,7 +12,7 @@ userprofile2.panel.User = function(config) {
 		config.avatar = userprofile2.config.profile.avatar;
 	}
 	if(!http(config.avatar)) {
-		config.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&src=/' + config.avatar + '&wctx=MODx.ctx&source=' + getSource()
+		config.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&zc=1&src=/' + config.avatar + '&wctx=MODx.ctx&source=' + getSource()
 	}
 	else {config.preview = config.avatar}
 
@@ -151,100 +151,65 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
     ,getItems: function(config) {
         var items = [];
 
-        items.push(
-            {
-                columnWidth: .3,
-                xtype: 'panel',
+		items.push({
+				columnWidth: .3,
+				xtype: 'panel',
+				border: false,
+				layout: 'form',
+				labelAlign: 'top',
+				preventRender: true,
+				items: [{
+					xtype: 'fieldset',
+					title: _('up2_fieldset_avatar'),
+					layoutConfig: { labelAlign: 'top'},
+					layout: 'column',
+					items:[{
+						columnWidth: 1,
+						xtype: 'panel',
+						border: false,
+						layout: 'form',
+						labelAlign: 'top',
+						preventRender: true,
+						items: [{
+								xtype: 'userprofile2-combo-browser',
+								id: 'userprofile2-combo-browser',
+								name: 'photo',
+								anchor: '100%',
+								value: config.avatar || ''
+							},{
+								html: ''
+								+ '<div id="up2-avatar">'
+								+ '<img src="' + config.preview +'" alt=""  class="up2-avatar">'
+								+ '</div>'
+							}
+						]
 
-                border: false,
-                layout: 'form',
-                labelAlign: 'top',
-                preventRender: true,
-                items: [
-                    {
-                        xtype: 'fieldset',
-                        title: _('up2_fieldset_avatar'),
-                        layoutConfig: {
-                            labelAlign: 'top'
-                        },
-                        layout: 'column',
-                        items: [
-                            {
-                                columnWidth: 1,
-                                xtype: 'panel',
-                                border: false,
-                                layout: 'form',
-                                labelAlign: 'top',
-                                preventRender: true,
-                                items: [
-                                    {
-                                        xtype: 'userprofile2-combo-browser',
-										id: 'userprofile2-combo-browser',
-                                        fieldLabel: _('up_avatar'),
-                                        name: 'photo',
-                                        anchor: '100%',
-										value: config.avatar || ''
-                                    },{
-										html: ''
-										+ '<div id="up2-avatar">'
-										+ '<img src="' + config.preview +'" alt=""  class="up2-avatar">'
-										+ '</div>'
-									}
-                                ]
+					}
+					]
+				}, {
+					xtype: 'fieldset',
+					//title: _('up2_fieldset_activity'),
+					layoutConfig: {
+						labelAlign: 'top'
+					},
+					layout: 'column',
+					items: [{
+						columnWidth: 1,
+						xtype: 'panel',
+						border: false,
+						layout: 'form',
+						labelAlign: 'top',
+						preventRender: true,
+						items:[
+							{ xtype: 'textfield', disabled: true, value: 'fdfdfd', fieldLabel: _('up2_user_registration'), anchor: '100%'}
+							,{ xtype: 'textfield', disabled: true, value: 'fdfdfd', fieldLabel: _('up2_user_lastactivity'), anchor: '100%'}
+							,{ xtype: 'textfield', disabled: true, value: 'fdfdfd', fieldLabel: _('up2_user_ip'), anchor: '100%'}
+						]}
+					]
 
-                            }
-                        ]
-                    }, {
-                        xtype: 'fieldset',
-                        title: _('up_fieldset_info'),
-                        layoutConfig: {
-                            labelAlign: 'top'
-                        },
-                        layout: 'column',
-                        items: [
-                            {
-                                columnWidth: 1,
-                                xtype: 'panel',
-                                border: false,
-                                layout: 'form',
-                                labelAlign: 'top',
-                                preventRender: true,
-                                items: [
-                                    {
-                                        xtype: 'hidden',
-                                        name: 'up2[real][type_id]',
-                                        //value: userprofile.config.extSetting.id
-                                    },
-                                    {
-                                        xtype: 'textarea',
-                                        name: 'up2[real][description]',
-                                        //value: data.description || '',
-                                        description: _('up2_description_help'),
-                                        fieldLabel: _('up2_description'),
-                                        anchor: '100%',
-                                        //height: 126,
-                                        enableKeyEvents: true,
-                                        //listeners: listeners
-                                    },
-                                    {
-                                        xtype: 'textarea',
-                                        name: 'up2[real][introtext]',
-                                        //value: data.introtext || '',
-                                        description: _('up2_introtext_help'),
-                                        fieldLabel: _('up2_introtext'),
-                                        anchor: '100%',
-                                        height: 126,
-                                        enableKeyEvents: true,
-                                        //listeners: listeners
-                                    }
-                                ]
-
-                            }
-                        ]
-
-                    }
-                ]
-            },
+				}
+				]
+			},
             {
                 columnWidth: .7,
                 xtype: 'panel',
