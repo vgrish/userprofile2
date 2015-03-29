@@ -42,6 +42,12 @@ class userprofile2 {
 
 			'cache_key' => $this->namespace.'/',
 
+			'gravatarUrl' => 'https://www.gravatar.com/avatar/',
+			'gravatarSize' => 300,
+			'gravatarIcon' => 'mm',
+
+
+
 		), $config);
 
 		$this->modx->addPackage('userprofile2', $this->config['modelPath']);
@@ -205,6 +211,14 @@ class userprofile2 {
 		return $key;
 	}
 
+	public function prepareUserFields($data = array()) {
+		$data['gravatar'] = $this->config['gravatarUrl'] . md5(strtolower($data['email'])) .'?s=' . $this->config['gravatarSize'] . '&d=' . $this->config['gravatarIcon'];
+		$data['avatar'] = !empty($data['photo'])
+			? $data['photo']
+			: $data['gravatar'];
+		return $data;
+	}
+
 	/*
 	 * EVENT
 	 */
@@ -226,10 +240,11 @@ class userprofile2 {
 			$up2Profile->set('type', $type);
 			$up2Profile->save();
 		}
-		/*if(!$extended = $user->getOne('Profile')->get('extended')) {
-			$extended = array();
-		}*/
-		$extended = $up2Profile->get('extended');
+		if($profile = $user->getOne('Profile')->toArray()) {
+			$profile = $this->prepareUserFields($profile);
+		}
+
+		$extended = (array) $up2Profile->get('extended');
 
 		$tabsFields = $this->getTabsFields($type);
 
@@ -256,6 +271,7 @@ class userprofile2 {
 			'connector_url' => $this->config['connectorUrl'],
 			'tabsfields' => $tabsFields,
 			'extended' => $extended,
+			'profile' => $profile,
 			'type' => $type,
 			'user' => $id,
 		);

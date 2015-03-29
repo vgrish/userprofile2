@@ -1,5 +1,21 @@
 userprofile2.panel.User = function(config) {
     config = config || {};
+
+	var http =  function(uri) {
+		return /^(https?|ftp)\:\/\/[a-zA-Z0-9\.\-]+\.[a-z]{2,}(\/.+)$/.test(uri);
+	};
+	var getSource = function(){
+		return config.source || 1;
+	};
+
+	if(!config.avatar) {
+		config.avatar = userprofile2.config.profile.avatar;
+	}
+	if(!http(config.avatar)) {
+		config.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&src=/' + config.avatar + '&wctx=MODx.ctx&source=' + getSource()
+	}
+	else {config.preview = config.avatar}
+
     Ext.apply(config,{
         id: 'userprofile2-panel-user'
         ,border: false
@@ -147,7 +163,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                 items: [
                     {
                         xtype: 'fieldset',
-                        title: _('up_fieldset_avatar'),
+                        title: _('up2_fieldset_avatar'),
                         layoutConfig: {
                             labelAlign: 'top'
                         },
@@ -162,14 +178,18 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                                 preventRender: true,
                                 items: [
                                     {
-                                        //xtype: 'up-combo-browser',
+                                        xtype: 'userprofile2-combo-browser',
+										id: 'userprofile2-combo-browser',
                                         fieldLabel: _('up_avatar'),
                                         name: 'photo',
                                         anchor: '100%',
-                                        id: 'up-combo-browser',
-                                        //value: config.profile.photo || ''
-                                    },
-                                    //avatar
+										value: config.avatar || ''
+                                    },{
+										html: ''
+										+ '<div id="up2-avatar">'
+										+ '<img src="' + config.preview +'" alt=""  class="up2-avatar">'
+										+ '</div>'
+									}
                                 ]
 
                             }
