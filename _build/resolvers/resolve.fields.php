@@ -11,8 +11,8 @@ if ($object->xpdo) {
 			// fields
 			$fields = array(
 				'1' => array(
-					'name_in' => !$lang ? 'поле #1' : 'field #1',
-					'name_out' => 'field_1',
+					'name_in' => !$lang ? 'Фамилия' : 'Lastname',
+					'name_out' => 'lastname',
 					'tab' => '1',
 					'type' => '1',
 					'css' => '',
@@ -20,34 +20,34 @@ if ($object->xpdo) {
 					'editable' => '1',
 				),
 				'2' => array(
-					'name_in' => !$lang ? 'поле #2' : 'field #2',
-					'name_out' => 'field_2',
+					'name_in' => !$lang ? 'Имя' : 'firstname',
+					'name_out' => 'firstname',
 					'tab' => '1',
-					'type' => '2',
-					'css' => 'required',
-					'required' => '1',
-					'editable' => '1',
-				),
-				'3' => array(
-					'name_in' => !$lang ? 'поле #3' : 'field #3',
-					'name_out' => 'field_3',
-					'tab' => '1',
-					'type' => '3',
+					'type' => '1',
 					'css' => '',
 					'required' => '',
 					'editable' => '1',
 				),
+				'3' => array(
+					'name_in' => !$lang ? 'Отчество' : 'secondname',
+					'name_out' => 'secondname',
+					'tab' => '1',
+					'type' => '1',
+					'css' => '',
+					'required' => '',
+					'editable' => '1',
+				),
+
+
 				'4' => array(
 					'name_in' => !$lang ? 'поле #4' : 'field #4',
 					'name_out' => 'field_4',
-					'tab' => '1',
+					'tab' => '2',
 					'type' => '4',
 					'css' => '',
 					'required' => '',
 					'editable' => '1',
 				),
-
-
 				'5' => array(
 					'name_in' => !$lang ? 'поле #5' : 'field #5',
 					'name_out' => 'field_5',

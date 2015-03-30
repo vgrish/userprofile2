@@ -8,13 +8,11 @@
 		<field key="lastname" dbtype="varchar" precision="255" phptype="string" null="false" />
 		<field key="firstname" dbtype="varchar" precision="255" phptype="string" null="false" />
 		<field key="secondname" dbtype="varchar" precision="255" phptype="string" null="false" />
-		<field key="description" dbtype="text" phptype="string" null="true" />
-		<field key="introtext" dbtype="text" phptype="string" null="true" />
 		<field key="registration" dbtype="datetime" phptype="datetime" null="true" default="0000-00-00 00:00:00" />
 		<field key="lastactivity" dbtype="datetime" phptype="datetime" null="true" default="0000-00-00 00:00:00" />
 		<field key="ip" dbtype="varchar" precision="16" phptype="string" null="true" default="0.0.0.0" />
-
 		<field key="extended" dbtype="text" phptype="json" null="true" index="fulltext" indexgrp="extended" />
+		<field key="properties" dbtype="text" phptype="json" null="true" index="fulltext" indexgrp="extended" />
 
 		<index alias="id" name="id" primary="true" unique="true" type="BTREE">
 			<column key="id" length="" collation="A" null="false" />

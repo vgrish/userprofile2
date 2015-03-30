@@ -11,8 +11,8 @@ if ($object->xpdo) {
 			// type tab
 			$tabs = array(
 				'1' => array(
-					'name_in' => !$lang ? 'Вкладка #1' : 'Tab #1',
-					'name_out' => 'tab_1',
+					'name_in' => !$lang ? 'Информация' : 'Information',
+					'name_out' => 'info',
 				),
 				'2' => array(
 					'name_in' => !$lang ? 'Вкладка #2' : 'Tab #2',
