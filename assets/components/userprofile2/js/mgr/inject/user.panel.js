@@ -13,10 +13,10 @@ userprofile2.panel.User = function(config) {
     if(!config.data) {
         config.data = userprofile2.config.data;
     }
-	if(!http(config.data.avatar)) {
-		config.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&zc=1&src=/' + config.data.avatar + '&wctx=MODx.ctx&source=' + getSource()
-	}
-	else {config.data.preview = config.data.avatar}
+    if(!http(config.data.avatar)) {
+        config.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&zc=1&src=/' + config.data.avatar + '&wctx=MODx.ctx&source=' + getSource()
+    }
+    else {config.data.preview = config.data.avatar}
 
     Ext.apply(config,{
         id: 'userprofile2-panel-user'
@@ -158,76 +158,76 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
     ,getItems: function(config) {
         var items = [];
 
-		items.push({
-				columnWidth: .3,
-				xtype: 'panel',
-				border: false,
-				layout: 'form',
-				labelAlign: 'top',
-				preventRender: true,
-				items: [{
-					xtype: 'fieldset',
-					title: _('up2_fieldset_user'),
-					layoutConfig: { labelAlign: 'top'},
-					layout: 'column',
-					items:[{
-						columnWidth: 1,
-						xtype: 'panel',
-						border: false,
-						layout: 'form',
-						labelAlign: 'top',
-						preventRender: true,
-						items: [{
-                                xtype: 'userprofile2-combo-profile-type',
-                                id: 'userprofile2-combo-profile-type',
-                                fieldLabel: _('up2_user_type'),
-                                name: 'up2[type]',
-                                hiddenName: 'up2[type]',
-                                allowBlank: false,
-                                anchor: '100%',
-                                value: config.type,
-                                listeners: {
-                                    select: {fn: function(r) { this.profileChangeType();},scope:this }
-                                }
-                            },{
-								xtype: 'userprofile2-combo-browser',
-								id: 'userprofile2-combo-browser',
-								name: 'photo',
-								anchor: '100%',
-								value: config.data.avatar || ''
-							},{
-								html: ''
-								+ '<div id="up2-avatar">'
-								+ '<img src="' + config.data.preview +'" alt=""  class="up2-avatar">'
-								+ '</div>'
-							}
-						]
+        items.push({
+                columnWidth: .3,
+                xtype: 'panel',
+                border: false,
+                layout: 'form',
+                labelAlign: 'top',
+                preventRender: true,
+                items: [{
+                    xtype: 'fieldset',
+                    title: _('up2_fieldset_user'),
+                    layoutConfig: { labelAlign: 'top'},
+                    layout: 'column',
+                    items:[{
+                        columnWidth: 1,
+                        xtype: 'panel',
+                        border: false,
+                        layout: 'form',
+                        labelAlign: 'top',
+                        preventRender: true,
+                        items: [{
+                            xtype: 'userprofile2-combo-profile-type',
+                            id: 'userprofile2-combo-profile-type',
+                            fieldLabel: _('up2_user_type'),
+                            name: 'up2[type]',
+                            hiddenName: 'up2[type]',
+                            allowBlank: false,
+                            anchor: '100%',
+                            value: config.type,
+                            listeners: {
+                                select: {fn: function(r) { this.profileChangeType();},scope:this }
+                            }
+                        },{
+                            xtype: 'userprofile2-combo-browser',
+                            id: 'userprofile2-combo-browser',
+                            name: 'photo',
+                            anchor: '100%',
+                            value: config.data.avatar || ''
+                        },{
+                            html: ''
+                            + '<div id="up2-avatar">'
+                            + '<img src="' + config.data.preview +'" alt=""  class="up2-avatar">'
+                            + '</div>'
+                        }
+                        ]
 
-					}
-					]
-				}, {
-					xtype: 'fieldset',
-					title: _('up2_fieldset_activity'),
-					layoutConfig: { labelAlign: 'top'},
-					layout: 'column',
-					items: [{
-						columnWidth: 1,
-						xtype: 'panel',
-						border: false,
-						layout: 'form',
-						labelAlign: 'top',
-						preventRender: true,
-						items:[
-                           // { xtype: 'hidden', name: 'up2[type]', value: config.type}
-							{ xtype: 'textfield', disabled: true, value: config.data.registration, fieldLabel: _('up2_user_registration'), anchor: '100%'}
-							,{ xtype: 'textfield', disabled: true, value: config.data.lastactivity, fieldLabel: _('up2_user_lastactivity'), anchor: '100%'}
-							,{ xtype: 'textfield', disabled: true, value: config.data.ip, fieldLabel: _('up2_user_ip'), anchor: '100%'}
-						]}
-					]
+                    }
+                    ]
+                }, {
+                    xtype: 'fieldset',
+                    title: _('up2_fieldset_activity'),
+                    layoutConfig: { labelAlign: 'top'},
+                    layout: 'column',
+                    items: [{
+                        columnWidth: 1,
+                        xtype: 'panel',
+                        border: false,
+                        layout: 'form',
+                        labelAlign: 'top',
+                        preventRender: true,
+                        items:[
+                            // { xtype: 'hidden', name: 'up2[type]', value: config.type}
+                            { xtype: 'textfield', disabled: true, value: config.data.registration, fieldLabel: _('up2_user_registration'), anchor: '100%'}
+                            ,{ xtype: 'textfield', disabled: true, value: config.data.lastactivity, fieldLabel: _('up2_user_lastactivity'), anchor: '100%'}
+                            ,{ xtype: 'textfield', disabled: true, value: config.data.ip, fieldLabel: _('up2_user_ip'), anchor: '100%'}
+                        ]}
+                    ]
 
-				}
-				]
-			},
+                }
+                ]
+            },
             {
                 columnWidth: .7,
                 xtype: 'panel',
