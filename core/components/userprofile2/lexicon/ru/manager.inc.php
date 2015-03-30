@@ -40,3 +40,7 @@ $_lang['up2_btn_edit'] = 'Изменить';
 $_lang['up2_btn_view'] = 'Просмотр';
 $_lang['up2_btn_delete'] = 'Удалить';
 $_lang['up2_btn_cancel'] = 'Отмена';
+
+// error
+$_lang['up2_type_profile_err'] = 'Неправильный тип профиля!';
+$_lang['up2_required_err'] = 'Заполните обязательные поля!';

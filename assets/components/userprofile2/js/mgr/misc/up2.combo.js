@@ -99,6 +99,29 @@ Ext.extend(userprofile2.combo.TabType, MODx.combo.ComboBox);
 Ext.reg('userprofile2-combo-tab-type', userprofile2.combo.TabType);
 
 
+userprofile2.combo.ProfileType = function(config) {
+	config = config || {};
+	Ext.applyIf(config, {
+		name: 'handler'
+		, hiddenName: 'type'
+		, displayField: 'name'
+		, valueField: 'id'
+		, editable: true
+		, fields: ['name','id']
+		, pageSize: 10
+		, emptyText: _('up2_combo_select')
+		, hideMode: 'offsets'
+		, url: userprofile2.config.connector_url
+		, baseParams: {
+			action: 'mgr/settings/type-profile/getlist',
+			combo: true,
+			limit: 0
+		}
+	});
+	userprofile2.combo.ProfileType.superclass.constructor.call(this, config);
+};
+Ext.extend(userprofile2.combo.ProfileType, MODx.combo.ComboBox);
+Ext.reg('userprofile2-combo-profile-type', userprofile2.combo.ProfileType);
 
 
 userprofile2.combo.Browser = function(config) {

@@ -41,6 +41,7 @@ class userprofile2 {
 			'processorsPath' => $corePath . 'processors/',
 
 			'cache_key' => $this->namespace.'/',
+			'json_response' => true,
 
 			'gravatarUrl' => 'https://www.gravatar.com/avatar/',
 			'gravatarSize' => 300,
@@ -104,6 +105,21 @@ class userprofile2 {
 			: false;
 	}
 
+	public function getRequiredFields($type)
+	{
+		$requiredfields = array();
+		$tabsFields = $this->getTabsFields($type);
+		if(count($tabsFields) == 0) {return $requiredfields;}
+		foreach ($tabsFields as $tabs) {
+			if((count($tabs['fields']) == 0)) {continue;}
+			foreach($tabs['fields'] as $field) {
+				if(!empty($field['required'])) {
+					$requiredfields[] = $field['name_out'];
+				}
+			}
+		}
+		return $requiredfields;
+	}
 
 	public function getTabsFields($type)
 	{
@@ -281,6 +297,42 @@ class userprofile2 {
 			userprofile2.config = ' . $this->modx->toJSON($config) . ';
 		');
 		$this->modx->regClientStartupScript("<script type=\"text/javascript\">\n" . $data_js . "\n</script>", true);
+	}
+
+	/**
+	 * @param string $message
+	 * @param array $data
+	 * @param array $placeholders
+	 * @return array|string
+	 */
+	public function error($message = '', $data = array(), $placeholders = array())
+	{
+		$response = array(
+			'success' => false,
+			'message' => $this->modx->lexicon($message, $placeholders),
+			'data' => $data,
+		);
+		return $this->config['json_response']
+			? $this->modx->toJSON($response)
+			: $response;
+	}
+
+	/**
+	 * @param string $message
+	 * @param array $data
+	 * @param array $placeholders
+	 * @return array|string
+	 */
+	public function success($message = '', $data = array(), $placeholders = array())
+	{
+		$response = array(
+			'success' => true,
+			'message' => $this->modx->lexicon($message, $placeholders),
+			'data' => $data,
+		);
+		return $this->config['json_response']
+			? $this->modx->toJSON($response)
+			: $response;
 	}
 
 	/**
