@@ -3,10 +3,15 @@
 $chunks = array();
 
 $tmp = array(
-	'tpl.userprofile2.item' => array(
-		'file' => 'item',
+	'tpl.up2User.Row' => array(
+		'file' => 'up2_user_row',
 		'description' => '',
 	),
+
+/*	'tpl.userprofile2.item' => array(
+		'file' => 'item',
+		'description' => '',
+	),*/
 );
 
 // Save chunks for setup options

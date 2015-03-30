@@ -392,6 +392,14 @@ class userprofile2 {
 		$data['registration_format'] = $this->dateFormat($data['registration']);
 		$data['lastactivity_format'] = $this->dateFormat($data['lastactivity']);
 
+		unset(
+			$data['password'],
+			$data['cachepwd'],
+			$data['sessionid'],
+			$data['hash_class'],
+			$data['salt']
+		);
+
 		return $data;
 	}
 
