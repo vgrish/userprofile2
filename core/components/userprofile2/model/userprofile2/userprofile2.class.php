@@ -47,15 +47,12 @@ class userprofile2 {
 			'gravatarSize' => 300,
 			'gravatarIcon' => 'mm',
 
-
-
 		), $config);
 
 		$this->modx->addPackage('userprofile2', $this->config['modelPath']);
 		$this->modx->lexicon->load('userprofile2:default');
 
 		$this->active = $this->modx->getOption('userprofile2_active', $config, false);
-
 	}
 
 	/**
@@ -77,48 +74,6 @@ class userprofile2 {
 			}
 		}
 		return $option;
-	}
-
-
-	public function getProfileTypeDefault()
-	{
-		$id = 0;
-		$q = $this->modx->newQuery('up2TypeProfile');
-		$q->sortby('`up2TypeProfile`.`rank`', 'ASC');
-		$q->select('`up2TypeProfile`.`id`');
-		$q->where(array('up2TypeProfile.active' => 1,'up2TypeProfile.default' => 1));
-		$q->limit(1);
-		if ($q->prepare() && $q->stmt->execute()) {
-			$id = $q->stmt->fetch(PDO::FETCH_COLUMN);
-		}
-		return (int) $id;
-	}
-
-	/**
-	 * @param array $d
-	 * @return bool
-	 */
-	public function isModeEventNew($d = array())
-	{
-		return ($d['mode'] == 'new')
-			? true
-			: false;
-	}
-
-	public function getRequiredFields($type)
-	{
-		$requiredfields = array();
-		$tabsFields = $this->getTabsFields($type);
-		if(count($tabsFields) == 0) {return $requiredfields;}
-		foreach ($tabsFields as $tabs) {
-			if((count($tabs['fields']) == 0)) {continue;}
-			foreach($tabs['fields'] as $field) {
-				if(!empty($field['required'])) {
-					$requiredfields[] = $field['name_out'];
-				}
-			}
-		}
-		return $requiredfields;
 	}
 
 	public function getTabsFields($type)
@@ -183,6 +138,52 @@ class userprofile2 {
 		return $data;
 	}
 
+	public function getUserFields($id) {
+		$data = array();
+		if(!$user = $this->modx->getObject('modUser', $id)) {return $data;}
+		$Profile = $user->getOne('Profile')->toArray();
+		$up2Profile = $user->getOne('up2Profile')->toArray();
+		$data = array_merge($Profile, $up2Profile);
+		$data['extend'] = (array) $data['extend'];
+		$data['property'] = (array) $data['property'];
+		$data['gravatar'] = $this->config['gravatarUrl'] . md5(strtolower($data['email'])) .'?s=' . $this->config['gravatarSize'] . '&d=' . $this->config['gravatarIcon'];
+		$data['avatar'] = !empty($data['photo'])
+			? $data['photo']
+			: $data['gravatar'];
+
+		return $data;
+	}
+
+	public function getRequiredFields($type)
+	{
+		$requiredfields = array();
+		$tabsFields = $this->getTabsFields($type);
+		if(count($tabsFields) == 0) {return $requiredfields;}
+		foreach ($tabsFields as $tabs) {
+			if((count($tabs['fields']) == 0)) {continue;}
+			foreach($tabs['fields'] as $field) {
+				if(!empty($field['required'])) {
+					$requiredfields[] = $field['name_out'];
+				}
+			}
+		}
+		return $requiredfields;
+	}
+
+	public function getProfileTypeDefault()
+	{
+		$id = 0;
+		$q = $this->modx->newQuery('up2TypeProfile');
+		$q->sortby('`up2TypeProfile`.`rank`', 'ASC');
+		$q->select('`up2TypeProfile`.`id`');
+		$q->where(array('up2TypeProfile.active' => 1,'up2TypeProfile.default' => 1));
+		$q->limit(1);
+		if ($q->prepare() && $q->stmt->execute()) {
+			$id = $q->stmt->fetch(PDO::FETCH_COLUMN);
+		}
+		return (int) $id;
+	}
+
 	/**
 	 * @param $key
 	 * @param array $data
@@ -227,78 +228,6 @@ class userprofile2 {
 		return $key;
 	}
 
-	public function getUserFields($id) {
-		$data = array();
-		if(!$user = $this->modx->getObject('modUser', $id)) {return $data;}
-		$Profile = $user->getOne('Profile')->toArray();
-		$up2Profile = $user->getOne('up2Profile')->toArray();
-		$data = array_merge($Profile, $up2Profile);
-		$data['extend'] = (array) $data['extend'];
-		$data['property'] = (array) $data['property'];
-		$data['gravatar'] = $this->config['gravatarUrl'] . md5(strtolower($data['email'])) .'?s=' . $this->config['gravatarSize'] . '&d=' . $this->config['gravatarIcon'];
-		$data['avatar'] = !empty($data['photo'])
-			? $data['photo']
-			: $data['gravatar'];
-
-		$this->modx->log(1 , print_r('====getUserFields======' ,1));
-		$this->modx->log(1 , print_r($data ,1));
-
-		return $data;
-	}
-
-	/*
-	 * EVENT
-	 */
-
-	/**
-	 * @param $sp
-	 */
-	public function OnUserFormPrerender($sp)
-	{
-		if($this->isModeEventNew($sp)) {return '';}
-		$id = $sp['id'];
-		$user = $sp['user'];
-		if(!$up2Profile = $user->getOne('up2Profile')) {return '';};
-		if(!$type = $up2Profile->get('type')) {
-			$type = $this->getProfileTypeDefault();
-			$up2Profile->set('type', $type);
-			$up2Profile->save();
-		}
-		$data = $this->getUserFields($id);
-		$tabsFields = $this->getTabsFields($type);
-
-		$this->modx->log(1 , print_r('====DATA======' ,1));
-		$this->modx->log(1 , print_r($tabsFields ,1));
-
-
-		$this->modx->controller->addLexiconTopic('userprofile2:default');
-		$this->modx->controller->addCss($this->config['cssUrl'] . 'mgr/main.css');
-
-		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/userprofile2.js');
-		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/misc/utils.js');
-		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/misc/up2.combo.js');
-
-		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/user.panel.js');
-		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/tab.js');
-
-		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/zepto-1.1.6.js');
-		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/jquery.serializejson.js');
-		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/spec.js');
-		//
-		$config = array(
-			'connector_url' => $this->config['connectorUrl'],
-			'tabsfields' => $tabsFields,
-			'extend' => $data['extend'],
-			'data' => $data,
-			'type' => $type,
-			'user' => $id,
-		);
-		$data_js = preg_replace(array('/^\n/', '/\t{6}/'), '', '
-			userprofile2.config = ' . $this->modx->toJSON($config) . ';
-		');
-		$this->modx->regClientStartupScript("<script type=\"text/javascript\">\n" . $data_js . "\n</script>", true);
-	}
-
 	/**
 	 * @param string $message
 	 * @param array $data
@@ -333,6 +262,63 @@ class userprofile2 {
 		return $this->config['json_response']
 			? $this->modx->toJSON($response)
 			: $response;
+	}
+
+	/**
+	 * @param array $d
+	 * @return bool
+	 */
+	public function isModeEventNew($d = array())
+	{
+		return ($d['mode'] == 'new')
+			? true
+			: false;
+	}
+
+	/*
+	 * EVENT
+	 */
+
+	/**
+	 * @param $sp
+	 */
+	public function OnUserFormPrerender($sp)
+	{
+		if($this->isModeEventNew($sp)) {return '';}
+		$id = $sp['id'];
+		$user = $sp['user'];
+		if(!$up2Profile = $user->getOne('up2Profile')) {return '';};
+		if(!$type = $up2Profile->get('type')) {
+			$type = $this->getProfileTypeDefault();
+			$up2Profile->set('type', $type);
+			$up2Profile->save();
+		}
+		$data = $this->getUserFields($id);
+		$tabsFields = $this->getTabsFields($type);
+		//
+		$this->modx->controller->addLexiconTopic('userprofile2:default');
+		$this->modx->controller->addCss($this->config['cssUrl'] . 'mgr/main.css');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/userprofile2.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/misc/utils.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/misc/up2.combo.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/user.panel.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'mgr/inject/tab.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/zepto-1.1.6.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/jquery.serializejson.js');
+		$this->modx->regClientStartupScript($this->getOption('jsUrl') . 'lib/spec.js');
+		//
+		$config = array(
+			'connector_url' => $this->config['connectorUrl'],
+			'tabsfields' => $tabsFields,
+			'extend' => $data['extend'],
+			'data' => $data,
+			'type' => $type,
+			'user' => $id,
+		);
+		$data_js = preg_replace(array('/^\n/', '/\t{6}/'), '', '
+			userprofile2.config = ' . $this->modx->toJSON($config) . ';
+		');
+		$this->modx->regClientStartupScript("<script type=\"text/javascript\">\n" . $data_js . "\n</script>", true);
 	}
 
 	/**

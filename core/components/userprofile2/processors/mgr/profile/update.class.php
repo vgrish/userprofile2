@@ -13,11 +13,6 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	/** {@inheritDoc} */
 	public function beforeSet() {
 		$realFields = array('lastname','firstname','secondname');
-
-		/*$this->modx->log(1, print_r('====================' ,1 ));
-		$this->modx->log(1, print_r($this->getProperties() ,1 ));*/
-
-
 		$data = $this->getProperty('data');
 		if(empty($data)) {
 			return $this->success();
@@ -29,7 +24,6 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			exit;
 		}
 		unset($data['type']);
-
 		$requiredfields = $this->modx->userprofile2->getRequiredFields($type);
 		foreach($data as $tab) {
 			foreach($tab as $fieldName => $value) {
@@ -46,11 +40,6 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			echo $this->modx->userprofile2->error('up2_required_err');
 			exit;
 		}
-
-
-		$this->modx->log(1, print_r('=====WORK===============' ,1 ));
-		$this->modx->log(1, print_r($data ,1 ));
-
 		$data = $this->modx->toJSON($data);
 		$this->setProperty('extend', $data);
 		$this->setProperty('type', $type);

@@ -1,7 +1,5 @@
 <?php
 
-//
-
 
 $_lang['up2_fieldset_avatar'] = 'Аватар';
 $_lang['up2_fieldset_user'] = 'Пользователь';
