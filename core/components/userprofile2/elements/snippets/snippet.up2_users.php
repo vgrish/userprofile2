@@ -135,7 +135,7 @@ $output = array();
 if (!empty($rows) && is_array($rows)) {
 	foreach ($rows as $k => $row) {
 		// def
-		$row = $userprofile2->prepareData($row);
+		$row = $userprofile2->getUserFields($row);
 		$row['idx'] = $userprofile2->pdoTools->idx++;
 		$tpl = $userprofile2->pdoTools->defineChunk($row);
 		$output[] .= empty($tpl)
