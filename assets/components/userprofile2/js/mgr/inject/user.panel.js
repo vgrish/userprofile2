@@ -1,9 +1,6 @@
 userprofile2.panel.User = function(config) {
     config = config || {};
 
-	var http =  function(uri) {
-		return /^(https?|ftp)\:\/\/[a-zA-Z0-9\.\-]+\.[a-z]{2,}(\/.+)$/.test(uri);
-	};
 	var getSource = function(){
 		return config.source || 1;
 	};
@@ -13,10 +10,12 @@ userprofile2.panel.User = function(config) {
     if(!config.data) {
         config.data = userprofile2.config.data;
     }
-    if(!http(config.data.avatar)) {
-        config.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&zc=1&src=/' + config.data.avatar + '&wctx=MODx.ctx&source=' + getSource()
+    if(!userprofile2.utils.http(config.data.avatar)) {
+        config.data.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&zc=1&src=/' + config.data.avatar + '&wctx=MODx.ctx&source=' + getSource()
     }
-    else {config.data.preview = config.data.avatar}
+    else {
+		config.data.preview = config.data.avatar;
+	}
 
     Ext.apply(config,{
         id: 'userprofile2-panel-user'
@@ -195,7 +194,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                             fieldLabel: _('up2_avatar'),
                             name: 'photo',
                             anchor: '100%',
-                            value: config.data.avatar || ''
+                            value: userprofile2.utils.http(config.data.avatar) ? '' : config.data.avatar
                         },{
                             html: ''
                             + '<div id="up2-avatar">'

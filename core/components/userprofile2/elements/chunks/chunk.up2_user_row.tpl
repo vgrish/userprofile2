@@ -13,10 +13,10 @@
                 <a href="[[+main_url]]/[[+id]]/">[[+fullname]]</a>
             </div>
             <div class="registered">
-                [[%up2_field_registration]]: [[!+registration_format]]
+                [[%up2_registration]]: [[!+registration_format]]
             </div>
             <div class="lastactivity">
-                [[%up2_field_lastactivity]]: [[!+lastactivity_format]]
+                [[%up2_lastactivity]]: [[!+lastactivity_format]]
             </div>
         </div>
         <div class="col-md-2">

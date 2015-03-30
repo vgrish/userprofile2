@@ -202,6 +202,10 @@ class userprofile2 {
 	 */
 	public function dateFormat($date, $dateFormat = null)
 	{
+
+		$this->modx->log(1, print_r('=====$dateFormat ' ,1));
+		$this->modx->log(1, print_r($date ,1));
+
 		$date = preg_match('/^\d+$/', $date) ? $date : strtotime($date);
 		$dateFormat = !empty($dateFormat) ? $dateFormat : $this->config['dateFormat'];
 		$current = time();
@@ -378,10 +382,6 @@ class userprofile2 {
 	}
 
 	public function getUserFields($id) {
-
-		$this->modx->log(1, print_r('=====erfefe re re ' ,1));
-		$this->modx->log(1, print_r($this->config['gravatarSize'] ,1));
-
 		$data = array();
 		if(!is_array($id)) {
 			if(!$user = $this->modx->getObject('modUser', $id)) {return $data;}

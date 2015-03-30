@@ -44,3 +44,15 @@ $_lang['up2_btn_cancel'] = 'Отмена';
 // error
 $_lang['up2_type_profile_err'] = 'Неправильный тип профиля!';
 $_lang['up2_required_err'] = 'Заполните обязательные поля!';
+
+
+// date
+$_lang['up2_date_now'] = 'Только что';
+$_lang['up2_date_today'] = 'Сегодня в';
+$_lang['up2_date_yesterday'] = 'Вчера в';
+$_lang['up2_date_tomorrow'] = 'Завтра в';
+$_lang['up2_date_minutes_back'] = '["[[+minutes]] минута назад","[[+minutes]] минуты назад","[[+minutes]] минут назад"]';
+$_lang['up2_date_minutes_back_less'] = 'меньше минуты назад';
+$_lang['up2_date_hours_back'] = '["[[+hours]] час назад","[[+hours]] часа назад","[[+hours]] часов назад"]';
+$_lang['up2_date_hours_back_less'] = 'меньше часа назад';
+$_lang['up2_date_months'] = '["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"]';

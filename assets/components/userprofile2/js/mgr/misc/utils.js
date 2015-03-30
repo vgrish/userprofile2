@@ -11,6 +11,10 @@ userprofile2.utils.renderType = function (value, props, row) {
 		: value;
 };
 
+userprofile2.utils.http = function (uri) {
+	return /^(https?|ftp)\:\/\/[a-zA-Z0-9\.\-]+\.[a-z]{2,}(\/.+)$/.test(uri);
+};
+
 
 userprofile2.utils.getMenu = function (actions, grid, selected) {
 	var menu = [];
