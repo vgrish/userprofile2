@@ -192,6 +192,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                         },{
                             xtype: 'userprofile2-combo-browser',
                             id: 'userprofile2-combo-browser',
+                            fieldLabel: _('up2_avatar'),
                             name: 'photo',
                             anchor: '100%',
                             value: config.data.avatar || ''

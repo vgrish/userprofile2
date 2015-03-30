@@ -11,3 +11,4 @@ $_lang['up2_user_registration'] = 'Первый вход';
 $_lang['up2_user_lastactivity'] = 'Последний вход';
 $_lang['up2_user_ip'] = 'Последний ip';
 $_lang['up2_user_type'] = 'Профиль';
+$_lang['up2_avatar'] = 'Аватар';
