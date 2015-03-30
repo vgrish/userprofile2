@@ -7,6 +7,11 @@ $tmp = array(
 		'file' => 'up2_user_row',
 		'description' => '',
 	),
+/*	'up2All.Users' => array(
+		'file' => 'up2_all_users',
+		'description' => '',
+	),*/
+
 
 /*	'tpl.userprofile2.item' => array(
 		'file' => 'item',

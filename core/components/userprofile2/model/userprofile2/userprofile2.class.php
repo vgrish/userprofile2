@@ -102,7 +102,7 @@ class userprofile2 {
 		}
 		$this->pdoTools->setConfig($this->config);
 
-		$this->modx->log(1, print_r($this->config ,1));
+		//$this->modx->log(1, print_r($this->config ,1));
 
 		$this->config['ctx'] = $ctx;
 		if (!empty($this->initialized[$ctx])) {
@@ -202,10 +202,6 @@ class userprofile2 {
 	 */
 	public function dateFormat($date, $dateFormat = null)
 	{
-
-		$this->modx->log(1, print_r('=====$dateFormat ' ,1));
-		$this->modx->log(1, print_r($date ,1));
-
 		$date = preg_match('/^\d+$/', $date) ? $date : strtotime($date);
 		$dateFormat = !empty($dateFormat) ? $dateFormat : $this->config['dateFormat'];
 		$current = time();
@@ -396,6 +392,9 @@ class userprofile2 {
 		$data['avatar'] = !empty($data['photo'])
 			? $data['photo']
 			: $data['gravatar'];
+		$data['firstname'] = !empty($data['firstname'])
+			? $data['firstname']
+			: $data['username'];
 		$data['registration_format'] = $this->dateFormat($data['registration']);
 		$data['lastactivity_format'] = $this->dateFormat($data['lastactivity']);
 

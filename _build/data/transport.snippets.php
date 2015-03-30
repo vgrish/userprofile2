@@ -7,7 +7,10 @@ $tmp = array(
 		'file' => 'up2_users',
 		'description' => '',
 	),
-
+	'up2UserTotal' => array(
+		'file' => 'up2_total',
+		'description' => '',
+	),
 	/*'userprofile2' => array(
 		'file' => 'userprofile2',
 		'description' => '',

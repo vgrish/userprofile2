@@ -3,33 +3,30 @@
 $properties = array();
 
 $tmp = array(
-	'tpl' => array(
-		'type' => 'textfield',
-		'value' => 'tpl.up2User.Row',
-	),
-	'tplWrapper' => array(
+
+	'parents' => array(
 		'type' => 'textfield',
 		'value' => ''
 	),
-	'wrapIfEmpty' => array(
-		'type' => 'combo-boolean',
-		'value' => false
+	'depth' => array(
+		'type' => 'numberfield',
+		'value' => 10
 	),
-	'returnIds' => array(
-		'type' => 'combo-boolean',
-		'value' => false
+	'tpl' => array(
+		'type' => 'textfield',
+		'value' => 'tpl.Tickets.comment.list.row',
 	),
 	'sortby' => array(
 		'type' => 'textfield',
-		'value' => 'modUser.id'
+		'value' => 'createdon',
 	),
 	'sortdir' => array(
 		'type' => 'list',
 		'options' => array(
 			array('text' => 'ASC','value' => 'ASC'),
-			array('text' => 'DESC','value' => 'DESC')
+			array('text' => 'DESC','value' => 'DESC'),
 		),
-		'value' => 'ASC',
+		'value' => 'DESC',
 	),
 	'limit' => array(
 		'type' => 'numberfield',
@@ -39,53 +36,55 @@ $tmp = array(
 		'type' => 'numberfield',
 		'value' => 0
 	),
-	'outputSeparator' => array(
-		'type' => 'textfield',
-		'value' => "\n"
-	),
-	'toPlaceholder' => array(
-		'type' => 'textfield',
-		'value' => ''
-	),
+
 	'showLog' => array(
 		'type' => 'combo-boolean',
 		'value' => false
 	),
-	'groups' => array(
-		'type' => 'textfield',
-		'value' => ''
+	'includeContent' => array(
+		'type' => 'combo-boolean',
+		'value' => false,
 	),
-	'roles' => array(
+	'includeTVs' => array(
 		'type' => 'textfield',
-		'value' => false
-	),
-	'users' => array(
-		'type' => 'textfield',
-		'value' => ''
+		'value' => '',
 	),
 	'where' => array(
 		'type' => 'textfield',
-		'value' => ''
+		'value' => '',
 	),
-	'showInactive' => array(
-		'type' => 'combo-boolean',
-		'value' => false
-	),
-	'showBlocked' => array(
-		'type' => 'combo-boolean',
-		'value' => false
-	),
-	'idx' => array(
-		'type' => 'numberfield',
-		'value' => ''
-	),
-	'totalVar' => array(
+	'tvPrefix' => array(
 		'type' => 'textfield',
-		'value' => 'total'
+		'value' => '',
 	),
-	'select' => array(
-		'type' => 'textarea',
-		'value' => ''
+	'toPlaceholder' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+	'outputSeparator' => array(
+		'type' => 'textfield',
+		'value' => "\n",
+	),
+
+	'showUnpublished' => array(
+		'type' => 'combo-boolean',
+		'value' => false,
+	),
+	'showDeleted' => array(
+		'type' => 'combo-boolean',
+		'value' => false,
+	),
+	'showHidden' => array(
+		'type' => 'combo-boolean',
+		'value' => true,
+	),
+	'cacheKey' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+	'cacheTime' => array(
+		'type' => 'numberfield',
+		'value' => 1800,
 	),
 	'gravatarIcon' => array(
 		'type' => 'textfield',
@@ -93,11 +92,7 @@ $tmp = array(
 	),
 	'gravatarSize' => array(
 		'type' => 'numberfield',
-		'value' => '64',
-	),
-	'dateFormat' => array(
-		'type' => 'textfield',
-		'value' => 'd F Y, H:i',
+		'value' => '24',
 	),
 
 );

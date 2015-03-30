@@ -1,16 +1,16 @@
 [[-!upUserTotal?
 &user=`[[+id]]`
 ]]
-<div class="userprofile-list-row">
+<div class="up2-list-row">
     <div class="row">
         <div class="col-md-2 col-avatar">
-            <div class="userprofile-avatar-wrapper">
-                <img src="[[+avatar]]" class="userprofile-avatar">
+            <div class="up2-avatar-wrapper">
+                <img src="[[+avatar]]" class="up2-avatar">
             </div>
         </div>
         <div class="col-md-6">
-            <div class="fullname">
-                <a href="[[+main_url]]/[[+id]]/">[[+fullname]]</a>
+            <div class="firstname">
+                <a href="/users/[[+id]]/">[[+firstname]]</a>
             </div>
             <div class="registered">
                 [[%up2_registration]]: [[!+registration_format]]
@@ -20,19 +20,17 @@
             </div>
         </div>
         <div class="col-md-2">
-            <a href="[[+main_url]]/[[+id]]/tickets/">
-                [[-!+up.total.tickets]]
-                [[upUserTotal?
-                &user=`[[!+id]]`
+            <a href="/users/tickets/[[+id]]/">
+                [[up2UserTotal?
+                &user_id=`[[+id]]`
                 &toPlaceholders=`0`
                 &processSection=`tickets,,`
                 ]]
             </a></div>
         <div class="col-md-2">
-            <a href="[[+main_url]]/[[+id]]/comments/">
-                [[-!+up.total.comments]]
-                [[upUserTotal?
-                &user=`[[!+id]]`
+            <a href="/users/comments/[[+id]]/">
+                [[up2UserTotal?
+                &user_id=`[[+id]]`
                 &toPlaceholders=`0`
                 &processSection=`,comments,`
                 ]]

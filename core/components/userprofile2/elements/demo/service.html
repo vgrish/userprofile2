@@ -1,0 +1,22 @@
+
+[[!+vp.ticket_user_id]] <br>
+[[!+vp.comment_user_id]] <br>
+
+[[!+vp.ticket_user_id:gt=`0`:then=`
+	[[!pdoPage:default=`[[%up2_no_tickets]]`?
+		&element=`getTickets`
+		&parents=`0`
+		&user=`[[!+vp.ticket_user_id]]`
+		&showLog=`0`
+	]]
+`]]
+
+[[!+vp.comment_user_id:gt=`0`:then=`
+	[[!pdoPage:default=`[[%up2_no_comments]]`?
+		&element=`upUserComments`
+		&parents=`0`
+		&user_id=`[[!+vp.comment_user_id]]`
+	]]
+`]]
+
+[[!+page.nav]]
