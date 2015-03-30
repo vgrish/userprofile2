@@ -13,6 +13,9 @@ class userprofile2 {
 	public $initialized = array();
 	public $active = false;
 
+	/* @var pdoTools $pdoTools */
+	public $pdoTools;
+
 	/**
 	 * @param modX $modx
 	 * @param array $config
@@ -75,6 +78,113 @@ class userprofile2 {
 		}
 		return $option;
 	}
+
+	/**
+	 * @param string $ctx
+	 * @param array $scriptProperties
+	 * @return bool
+	 */
+	public function initialize($ctx = 'web', $scriptProperties = array())
+	{
+		$this->config = array_merge($this->config, $scriptProperties);
+		if (!$this->pdoTools) {
+			$this->loadPdoTools();
+		}
+		$this->pdoTools->setConfig($this->config);
+		$this->config['ctx'] = $ctx;
+		if (!empty($this->initialized[$ctx])) {
+			return true;
+		}
+		switch ($ctx) {
+			case 'mgr':
+				break;
+			default:
+				if (!defined('MODX_API_MODE') || !MODX_API_MODE) {
+					if ($css = trim($this->config['frontend_css'])) {
+						if (preg_match('/\.css/i', $css)) {
+							$this->modx->regClientCSS(str_replace('[[+assetsUrl]]', $this->config['assetsUrl'], $css));
+						}
+					}
+					$config_js = preg_replace(array('/^\n/', '/\t{5}/'), '', '
+					userprofile2 = {};
+					userprofile2Config = {
+						cssUrl: "' . $this->config['cssUrl'] . 'web/"
+						,jsUrl: "' . $this->config['jsUrl'] . 'web/"
+						,actionUrl: "' . $this->config['actionUrl'] . '"
+						,ctx: "' . $this->modx->context->get('key') . '"
+						,close_all_message: "' . $this->modx->lexicon('up2_message_close_all') . '"
+					};
+					');
+					$this->modx->regClientStartupScript("<script type=\"text/javascript\">\n" . $config_js . "\n</script>", true);
+					if ($js = trim($this->config['frontend_js'])) {
+						if (!empty($js) && preg_match('/\.js/i', $js)) {
+							$this->modx->regClientScript(preg_replace(array('/^\n/', '/\t{7}/'), '', '
+							<script type="text/javascript">
+								if(typeof jQuery == "undefined") {
+									document.write("<script src=\"' . $this->config['jsUrl'] . 'web/lib/jquery.min.js\" type=\"text/javascript\"><\/script>");
+								}
+							</script>
+							'), true);
+							$this->modx->regClientScript(str_replace('[[+assetsUrl]]', $this->config['assetsUrl'], $js));
+						}
+					}
+				}
+				$this->initialized[$ctx] = true;
+				break;
+		}
+		return true;
+	}
+
+
+
+	/**
+	 * from https://github.com/bezumkin/Tickets/blob/9c09152ae4a1cdae04fb31d2bc0fa57be5e0c7ea/core/components/tickets/model/tickets/tickets.class.php#L1120
+	 *
+	 * Loads an instance of pdoTools
+	 * @return boolean
+	 */
+	public function loadPdoTools()
+	{
+		if (!is_object($this->pdoTools) || !($this->pdoTools instanceof pdoTools)) {
+			/** @var pdoFetch $pdoFetch */
+			$fqn = $this->modx->getOption('pdoFetch.class', null, 'pdotools.pdofetch', true);
+			if ($pdoClass = $this->modx->loadClass($fqn, '', false, true)) {
+				$this->pdoTools = new $pdoClass($this->modx, $this->config);
+			} elseif ($pdoClass = $this->modx->loadClass($fqn, MODX_CORE_PATH . 'components/pdotools/model/', false, true)) {
+				$this->pdoTools = new $pdoClass($this->modx, $this->config);
+			} else {
+				$this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not load pdoFetch from "MODX_CORE_PATH/components/pdotools/model/".');
+			}
+		}
+		return !empty($this->pdoTools) && $this->pdoTools instanceof pdoTools;
+	}
+
+	/**
+	 * from https://github.com/bezumkin/Tickets/blob/9c09152ae4a1cdae04fb31d2bc0fa57be5e0c7ea/core/components/tickets/model/tickets/tickets.class.php#L1147
+	 *
+	 * Process and return the output from a Chunk by name.
+	 * @param string $name The name of the chunk.
+	 * @param array $properties An associative array of properties to process the Chunk with, treated as placeholders within the scope of the Element.
+	 * @param boolean $fastMode If false, all MODX tags in chunk will be processed.
+	 * @return string The processed output of the Chunk.
+	 */
+	public function getChunk($name, array $properties = array(), $fastMode = false)
+	{
+		if (!$this->modx->parser) {
+			$this->modx->getParser();
+		}
+		if (!$this->pdoTools) {
+			$this->loadPdoTools();
+		}
+		return $this->pdoTools->getChunk($name, $properties, $fastMode);
+	}
+
+
+
+
+
+
+
 
 	public function getTabsFields($type)
 	{
