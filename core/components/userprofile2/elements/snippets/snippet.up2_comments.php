@@ -111,10 +111,10 @@ if (!empty($rows) && is_array($rows)) {
 		$row = $Tickets->prepareComment($row);
 		// Processing chunk
 		$row['idx'] = $userprofile2->pdoTools->idx++;
-		$tpl = $up->pdoTools->defineChunk($row);
+		$tpl = $userprofile2->pdoTools->defineChunk($row);
 		$output[] = !empty($tpl)
-			? $up->pdoTools->getChunk($tpl, $row, $up->pdoTools->config['fastMode'])
-			: $up->pdoTools->getChunk('', $row);
+			? $userprofile2->pdoTools->getChunk($tpl, $row, $userprofile2->pdoTools->config['fastMode'])
+			: $userprofile2->pdoTools->getChunk('', $row);
 	}
 	$userprofile2->pdoTools->addTime('Returning processed chunks');
 }
@@ -124,7 +124,7 @@ if (!empty($cacheKey)) {
 	$modx->cacheManager->set('userprofile2/tickets/latest.'.$cacheKey, $output, $cacheTime);
 }
 if ($modx->user->hasSessionContext('mgr') && !empty($showLog)) {
-	$output .= '<pre class="up2Log">' . print_r($up->pdoTools->getTime(), 1) . '</pre>';
+	$output .= '<pre class="up2Log">' . print_r($userprofile2->pdoTools->getTime(), 1) . '</pre>';
 }
 if (!empty($toPlaceholder)) {
 	$modx->setPlaceholder($toPlaceholder, $output);

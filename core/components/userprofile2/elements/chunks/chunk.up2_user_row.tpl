@@ -20,16 +20,16 @@
             </div>
         </div>
         <div class="col-md-2">
-            <a href="/users/tickets/[[+id]]/">
-                [[up2UserTotal?
+            <a href="/users/[[+id]]/tickets/">
+                [[!up2UserTotal?
                 &user_id=`[[+id]]`
                 &toPlaceholders=`0`
                 &processSection=`tickets,,`
                 ]]
             </a></div>
         <div class="col-md-2">
-            <a href="/users/comments/[[+id]]/">
-                [[up2UserTotal?
+            <a href="/users/[[+id]]/comments/">
+                [[!up2UserTotal?
                 &user_id=`[[+id]]`
                 &toPlaceholders=`0`
                 &processSection=`,comments,`

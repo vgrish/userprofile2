@@ -11,6 +11,11 @@ $tmp = array(
 		'file' => 'up2_total',
 		'description' => '',
 	),
+	'up2UserComments' => array(
+		'file' => 'up2_comments',
+		'description' => '',
+	),
+
 	/*'userprofile2' => array(
 		'file' => 'userprofile2',
 		'description' => '',

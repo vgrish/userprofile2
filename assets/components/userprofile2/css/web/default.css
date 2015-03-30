@@ -1,0 +1,13 @@
+.up2-page .up2-avatar, .up2-list-row .up2-avatar{
+	max-height: 100%;
+}
+
+.up2-page .up2-avatar-wrapper, .up2-list-row .up2-avatar-wrapper {
+	float: left;
+	height: 64px;
+	width: 64px;
+	border-radius: 5px;
+	display: inline-block;
+	overflow: hidden;
+	background: #EFEFEF;
+}
