@@ -211,11 +211,22 @@ class userprofile2 {
 		return $key;
 	}
 
-	public function prepareUserFields($data = array()) {
+	public function getUserFields($id) {
+		$data = array();
+		if(!$user = $this->modx->getObject('modUser', $id)) {return $data;}
+		$Profile = $user->getOne('Profile')->toArray();
+		$up2Profile = $user->getOne('up2Profile')->toArray();
+		$data = array_merge($Profile, $up2Profile);
+		$data['extend'] = (array) $data['extend'];
+		$data['property'] = (array) $data['property'];
 		$data['gravatar'] = $this->config['gravatarUrl'] . md5(strtolower($data['email'])) .'?s=' . $this->config['gravatarSize'] . '&d=' . $this->config['gravatarIcon'];
 		$data['avatar'] = !empty($data['photo'])
 			? $data['photo']
 			: $data['gravatar'];
+
+		$this->modx->log(1 , print_r('====getUserFields======' ,1));
+		$this->modx->log(1 , print_r($data ,1));
+
 		return $data;
 	}
 
@@ -230,24 +241,15 @@ class userprofile2 {
 	{
 		if($this->isModeEventNew($sp)) {return '';}
 		$id = $sp['id'];
-
-
 		$user = $sp['user'];
-
 		if(!$up2Profile = $user->getOne('up2Profile')) {return '';};
 		if(!$type = $up2Profile->get('type')) {
 			$type = $this->getProfileTypeDefault();
 			$up2Profile->set('type', $type);
 			$up2Profile->save();
 		}
-		if($profile = $user->getOne('Profile')->toArray()) {
-			$profile = $this->prepareUserFields($profile);
-		}
-
-		$extended = (array) $up2Profile->get('extended');
-
+		$data = $this->getUserFields($id);
 		$tabsFields = $this->getTabsFields($type);
-
 
 		$this->modx->log(1 , print_r('====DATA======' ,1));
 		$this->modx->log(1 , print_r($tabsFields ,1));
@@ -270,8 +272,8 @@ class userprofile2 {
 		$config = array(
 			'connector_url' => $this->config['connectorUrl'],
 			'tabsfields' => $tabsFields,
-			'extended' => $extended,
-			'profile' => $profile,
+			'extend' => $data['extend'],
+			'data' => $data,
 			'type' => $type,
 			'user' => $id,
 		);

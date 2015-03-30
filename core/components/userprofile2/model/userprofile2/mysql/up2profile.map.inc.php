@@ -14,8 +14,8 @@ $xpdo_meta_map['up2Profile']= array (
     'registration' => '0000-00-00 00:00:00',
     'lastactivity' => '0000-00-00 00:00:00',
     'ip' => '0.0.0.0',
-    'extended' => NULL,
-    'properties' => NULL,
+    'extend' => NULL,
+    'property' => NULL,
   ),
   'fieldMeta' => 
   array (
@@ -79,21 +79,21 @@ $xpdo_meta_map['up2Profile']= array (
       'null' => true,
       'default' => '0.0.0.0',
     ),
-    'extended' => 
+    'extend' => 
     array (
       'dbtype' => 'text',
       'phptype' => 'json',
       'null' => true,
       'index' => 'fulltext',
-      'indexgrp' => 'extended',
+      'indexgrp' => 'extend',
     ),
-    'properties' => 
+    'property' => 
     array (
       'dbtype' => 'text',
       'phptype' => 'json',
       'null' => true,
       'index' => 'fulltext',
-      'indexgrp' => 'extended',
+      'indexgrp' => 'property',
     ),
   ),
   'indexes' => 

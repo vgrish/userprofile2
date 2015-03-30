@@ -11,8 +11,8 @@
 		<field key="registration" dbtype="datetime" phptype="datetime" null="true" default="0000-00-00 00:00:00" />
 		<field key="lastactivity" dbtype="datetime" phptype="datetime" null="true" default="0000-00-00 00:00:00" />
 		<field key="ip" dbtype="varchar" precision="16" phptype="string" null="true" default="0.0.0.0" />
-		<field key="extended" dbtype="text" phptype="json" null="true" index="fulltext" indexgrp="extended" />
-		<field key="properties" dbtype="text" phptype="json" null="true" index="fulltext" indexgrp="extended" />
+		<field key="extend" dbtype="text" phptype="json" null="true" index="fulltext" indexgrp="extend" />
+		<field key="property" dbtype="text" phptype="json" null="true" index="fulltext" indexgrp="property" />
 
 		<index alias="id" name="id" primary="true" unique="true" type="BTREE">
 			<column key="id" length="" collation="A" null="false" />

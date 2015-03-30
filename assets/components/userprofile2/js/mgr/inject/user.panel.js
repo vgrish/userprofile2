@@ -7,14 +7,13 @@ userprofile2.panel.User = function(config) {
 	var getSource = function(){
 		return config.source || 1;
 	};
-
-	if(!config.avatar) {
-		config.avatar = userprofile2.config.profile.avatar;
+    if(!config.data) {
+        config.data = userprofile2.config.data;
+    }
+	if(!http(config.data.avatar)) {
+		config.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&zc=1&src=/' + config.data.avatar + '&wctx=MODx.ctx&source=' + getSource()
 	}
-	if(!http(config.avatar)) {
-		config.preview = MODx.config.connectors_url + 'system/phpthumb.php?h=193&w=308&zc=1&src=/' + config.avatar + '&wctx=MODx.ctx&source=' + getSource()
-	}
-	else {config.preview = config.avatar}
+	else {config.data.preview = config.data.avatar}
 
     Ext.apply(config,{
         id: 'userprofile2-panel-user'
@@ -66,10 +65,10 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
     }
 
     ,getFielValue: function(tabName, fieldName, defaultValue) {
-        var extended = userprofile2.config.extended;
+        var extend = userprofile2.config.extend;
 
-        if(extended[tabName] && extended[tabName][fieldName] && (typeof extended[tabName][fieldName]!== 'object')) {
-            value = extended[tabName][fieldName];
+        if(extend[tabName] && extend[tabName][fieldName] && (typeof extend[tabName][fieldName]!== 'object')) {
+            value = extend[tabName][fieldName];
         }
         else {
             value = defaultValue;
@@ -86,7 +85,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
             autoHeight: true,
             deferredRender: false,
             forceLayout: true,
-            id: 'up2-extended-tabs',
+            id: 'up2-extend-tabs',
             width: '99%',
             bodyStyle: 'padding: 10px 0px 10px 0px;',
             style: 'padding: 15px 25px 15px 15px;',
@@ -125,7 +124,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                 var field = {
                     xtype: item['type_in'],
                     name: 'up2[' + tabNameOut + '][' + item['name_out'] + ']',
-                    id: 'up2-extended-field-' + item['name_out'],
+                    id: 'up2-extend-field-' + item['name_out'],
                     fieldLabel: item['name_in'],
                     disabled: !item['editable'],
                     allowBlank: item['required'],
@@ -142,8 +141,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                 id: tabNameOut
             });
         }
-
-        console.log(tabsItems);
+        /*console.log(tabsItems);*/
 
         return tabs;
     }
@@ -175,11 +173,11 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
 								id: 'userprofile2-combo-browser',
 								name: 'photo',
 								anchor: '100%',
-								value: config.avatar || ''
+								value: config.data.avatar || ''
 							},{
 								html: ''
 								+ '<div id="up2-avatar">'
-								+ '<img src="' + config.preview +'" alt=""  class="up2-avatar">'
+								+ '<img src="' + config.data.preview +'" alt=""  class="up2-avatar">'
 								+ '</div>'
 							}
 						]
@@ -189,9 +187,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
 				}, {
 					xtype: 'fieldset',
 					title: _('up2_fieldset_activity'),
-					layoutConfig: {
-						labelAlign: 'top'
-					},
+					layoutConfig: { labelAlign: 'top'},
 					layout: 'column',
 					items: [{
 						columnWidth: 1,
@@ -201,9 +197,9 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
 						labelAlign: 'top',
 						preventRender: true,
 						items:[
-							{ xtype: 'textfield', disabled: true, value: 'fdfdfd', fieldLabel: _('up2_user_registration'), anchor: '100%'}
-							,{ xtype: 'textfield', disabled: true, value: 'fdfdfd', fieldLabel: _('up2_user_lastactivity'), anchor: '100%'}
-							,{ xtype: 'textfield', disabled: true, value: 'fdfdfd', fieldLabel: _('up2_user_ip'), anchor: '100%'}
+							{ xtype: 'textfield', disabled: true, value: config.data.registration, fieldLabel: _('up2_user_registration'), anchor: '100%'}
+							,{ xtype: 'textfield', disabled: true, value: config.data.lastactivity, fieldLabel: _('up2_user_lastactivity'), anchor: '100%'}
+							,{ xtype: 'textfield', disabled: true, value: config.data.ip, fieldLabel: _('up2_user_ip'), anchor: '100%'}
 						]}
 					]
 
