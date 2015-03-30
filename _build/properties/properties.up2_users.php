@@ -93,7 +93,7 @@ $tmp = array(
 	),
 	'gravatarSize' => array(
 		'type' => 'numberfield',
-		'value' => '64',
+		'value' => '24',
 	),
 	'dateFormat' => array(
 		'type' => 'textfield',

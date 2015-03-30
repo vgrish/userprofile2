@@ -101,6 +101,9 @@ class userprofile2 {
 			$this->loadPdoTools();
 		}
 		$this->pdoTools->setConfig($this->config);
+
+		$this->modx->log(1, print_r($this->config ,1));
+
 		$this->config['ctx'] = $ctx;
 		if (!empty($this->initialized[$ctx])) {
 			return true;
@@ -375,6 +378,10 @@ class userprofile2 {
 	}
 
 	public function getUserFields($id) {
+
+		$this->modx->log(1, print_r('=====erfefe re re ' ,1));
+		$this->modx->log(1, print_r($this->config['gravatarSize'] ,1));
+
 		$data = array();
 		if(!is_array($id)) {
 			if(!$user = $this->modx->getObject('modUser', $id)) {return $data;}
