@@ -18,7 +18,7 @@ if ($object->xpdo) {
 			$packages = array(
 				'pdoTools' => array(
 					'version_major' => 1,
-					'version_minor:>=' => 9,
+					'version_minor:>=' => 11,
 					//'service_url' => 'modx.com'
 				),
 				'VirtualPage' => array(
@@ -26,7 +26,11 @@ if ($object->xpdo) {
 					'version_minor:>=' => 0,
 					//'service_url' => 'modstore.pro'
 				),
-
+/*				'Theme.Bootstrap' => array(
+					'version_major' => 2,
+					'version_minor:>=' => 2,
+					//'service_url' => 'modstore.pro'
+				),*/
 				//
 			);
 			foreach ($packages as $package => $options) {
@@ -143,7 +147,7 @@ function installPackage($packageName, $options) {
 				}
 				else {
 					return array(
-						'success' => 0,
+						'success' => 1,
 						'message' => 'Could not save package <b>' . $packageName . '</b>',
 					);
 				}
