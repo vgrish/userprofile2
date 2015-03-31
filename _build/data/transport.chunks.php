@@ -12,6 +12,11 @@ $tmp = array(
 		'file' => 'up2_content_sidebar',
 		'description' => '',
 	),
+	// чанк списка пользователей
+	'up2.list.users' => array(
+		'file' => 'up2_list_users',
+		'description' => '',
+	),
 
 
 	'tpl.up2User.Row' => array(
