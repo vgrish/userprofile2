@@ -10,7 +10,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 		$modx = & $object->xpdo;
 		$lang = $modx->getOption('manager_language') == 'en' ? 1 : 0;
 
-		if ($template = $modx->getObject('modTemplate', array('templatename' => 'Bootstrap.inner'))) {
+		if ($template = $modx->getObject('modTemplate', array('templatename' => 'userprofile2.inner'))) {
 
 			if (!$resource = $modx->getObject('modResource', array('alias' => 'users'))) {
 				$resource = $modx->newObject('modResource');
@@ -24,12 +24,12 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 				'parent' => 0,
 				'richtext' => 0,
 				'template' => $template->id,
-				'content' => file_get_contents(MODX_CORE_PATH . 'components/userprofile2/elements/demo/users.html')
+				'content' => '[[$up2.list.users?]]'
 			));
 			$resource->save();
 			$parent_id = $resource->id;
 
-			if (!$resource = $modx->getObject('modResource', array('alias' => 'service'))) {
+/*			if (!$resource = $modx->getObject('modResource', array('alias' => 'service'))) {
 				$resource = $modx->newObject('modResource');
 			}
 			$resource->fromArray(array(
@@ -44,7 +44,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 				'content' => file_get_contents(MODX_CORE_PATH . 'components/userprofile2/elements/demo/service.html')
 			));
 			$resource->save();
-			$parent_id = $resource->id;
+			$parent_id = $resource->id;*/
 
 /*			if (!$resource = $modx->getObject('modResource', array('alias' => 'comments'))) {
 				$resource = $modx->newObject('modResource');
