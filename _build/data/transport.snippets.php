@@ -20,6 +20,11 @@ $tmp = array(
 		'file' => 'up2_small_info',
 		'description' => '',
 	),
+	// ссылки на секции + кэширование
+	'up2UserLinkSections' => array(
+		'file' => 'up2_link_sections',
+		'description' => '',
+	),
 
 	/*'userprofile2' => array(
 		'file' => 'userprofile2',

@@ -12,6 +12,10 @@
 	background: #EFEFEF;
 }
 
+.up2-small-info .up2-avatar-wrapper {
+	float: left;
+}
+
 .up2-page #sidebar .title {
 	border-bottom: 1px solid #CCC;
 	padding-bottom: 5px;
@@ -21,3 +25,4 @@
 	min-height: 300px;
 	border-left: 1px solid #EFEFEF;
 }
+

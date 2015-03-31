@@ -77,7 +77,7 @@ if ($object->xpdo) {
 					'description' => !$lang ? 'информация' : 'information',
 					'metod' => 'GET,POST',
 					'route' => '/users/{user_id:[0-9]+}/',
-					'properties' => '{"section":"information"}'
+					'properties' => '{"section":"info"}'
 				),
 				'2' => array(
 					'description' => !$lang ? 'комментарии' : 'comments',
