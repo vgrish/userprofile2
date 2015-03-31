@@ -1,13 +1,23 @@
 .up2-page .up2-avatar, .up2-list-row .up2-avatar{
+	max-width: 100%;
 	max-height: 100%;
 }
 
 .up2-page .up2-avatar-wrapper, .up2-list-row .up2-avatar-wrapper {
-	float: left;
 	height: 64px;
 	width: 64px;
 	border-radius: 5px;
 	display: inline-block;
 	overflow: hidden;
 	background: #EFEFEF;
+}
+
+.up2-page #sidebar .title {
+	border-bottom: 1px solid #CCC;
+	padding-bottom: 5px;
+}
+
+.up2-page #sidebar {
+	min-height: 300px;
+	border-left: 1px solid #EFEFEF;
 }
