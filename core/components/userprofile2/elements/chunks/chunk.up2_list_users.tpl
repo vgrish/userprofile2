@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-6"></div>
-            <div class="col-md-2">Заметки</div>
-            <div class="col-md-2">Комментарии</div>
+            <div class="col-md-2">[[%up2_tickets]]</div>
+            <div class="col-md-2">[[%up2_comments]]</div>
         </div>
         <br>
 
