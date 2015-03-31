@@ -3,6 +3,17 @@
 $chunks = array();
 
 $tmp = array(
+
+	'up2.content.main' => array(
+		'file' => 'up2_content_main',
+		'description' => '',
+	),
+	'up2.content.sidebar' => array(
+		'file' => 'up2_content_sidebar',
+		'description' => '',
+	),
+
+
 	'tpl.up2User.Row' => array(
 		'file' => 'up2_user_row',
 		'description' => '',
