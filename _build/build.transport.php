@@ -23,6 +23,7 @@ $sources = array(
 	'resolvers' => $root . '_build/resolvers/',
 	'chunks' => $root . 'core/components/' . PKG_NAME_LOWER . '/elements/chunks/',
 	'snippets' => $root . 'core/components/' . PKG_NAME_LOWER . '/elements/snippets/',
+	'templates' => $root. 'assets/components/' .PKG_NAME_LOWER . '/elements/templates/',
 	'plugins' => $root . 'core/components/' . PKG_NAME_LOWER . '/elements/plugins/',
 	'lexicon' => $root . 'core/components/' . PKG_NAME_LOWER . '/lexicon/',
 	'docs' => $root . 'core/components/' . PKG_NAME_LOWER . '/docs/',
@@ -219,7 +220,21 @@ if (defined('BUILD_CHUNK_UPDATE')) {
 		$modx->log(modX::LOG_LEVEL_INFO, 'Packaged in ' . count($chunks) . ' chunks.');
 	}
 }
-
+/* add templates */
+if (defined('BUILD_TEMPLATE_UPDATE')) {
+	$attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['Templates'] = array (
+		xPDOTransport::PRESERVE_KEYS => false,
+		xPDOTransport::UPDATE_OBJECT => BUILD_TEMPLATE_UPDATE,
+		xPDOTransport::UNIQUE_KEY => 'templatename',
+	);
+	$templates = include $sources['data'].'transport.templates.php';
+	if (!is_array($templates)) {
+		$modx->log(modX::LOG_LEVEL_ERROR,'Could not package in templates.');
+	} else {
+		$category->addMany($templates);
+		$modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($templates).' templates.');
+	}
+}
 /* add plugins */
 if (defined('BUILD_PLUGIN_UPDATE')) {
 	$attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['Plugins'] = array(
