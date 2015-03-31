@@ -32,13 +32,33 @@ if ($object->xpdo) {
 				$event->save();
 			}
 			// Handler
+			$entry = 0;
+			if($template = $modx->getObject('modTemplate', array('templatename' => 'userprofile2.inner'))) {
+				$entry = $template->id;
+			}
 			$handlers = array(
 				'1' => array(
-					'name' => !$lang ? 'комментарии' : 'comment',
+					'name' => !$lang ? 'информация' : 'information',
+					'type' => 3,
+					'entry' => $entry,
+					'content' => '[[$up2.info.user.main?]]',
+					'description' => !$lang ? 'Информация' : 'Information',
 				),
 				'2' => array(
-					'name' => !$lang ? 'заметки' : 'tickets',
+					'name' => !$lang ? 'комментарии' : 'comments',
+					'type' => 3,
+					'entry' => $entry,
+					'content' => '[[$up2.tickets.user.main?]]',
+					'description' => !$lang ? 'Комментарии' : 'Сomments',
 				),
+				'3' => array(
+					'name' => !$lang ? 'заметки' : 'tickets',
+					'type' => 3,
+					'entry' => $entry,
+					'content' => '[[$up2.tickets.user.main?]]',
+					'description' => !$lang ? 'Заметки' : 'Tickets',
+				),
+
 			);
 
 			foreach ($handlers as $id => $properties) {
@@ -54,17 +74,25 @@ if ($object->xpdo) {
 			// Routes
 			$routes = array(
 				'1' => array(
-					'description' => !$lang ? 'комментарии' : 'comments',
+					'description' => !$lang ? 'информация' : 'information',
 					'metod' => 'GET,POST',
-					'route' => '/users/{comment_user_id:[0-9]+}/comments/',
-
+					'route' => '/users/{user_id:[0-9]+}/',
+					'properties' => '{"section":"information"}'
 				),
 				'2' => array(
-					'description' => !$lang ? 'заметки' : 'tickets',
+					'description' => !$lang ? 'комментарии' : 'comments',
 					'metod' => 'GET,POST',
-					'route' => '/users/{ticket_user_id:[0-9]+}/tickets/',
+					'route' => '/users/{user_id:[0-9]+}/comments/',
+					'properties' => '{"section":"comments"}'
 
 				),
+				'3' => array(
+					'description' => !$lang ? 'заметки' : 'tickets',
+					'metod' => 'GET,POST',
+					'route' => '/users/{user_id:[0-9]+}/tickets/',
+					'properties' => '{"section":"tickets"}'
+				),
+
 
 			);
 
@@ -77,43 +105,6 @@ if ($object->xpdo) {
 					$route->save();
 				}
 			}
-
-				/*// type field
-			$types = array(
-				'1' => array(
-					'name' => !$lang ? 'Текстовое поле' : 'Text',
-					'type_in' => 'textfield',
-					'type_out' => 'text',
-				),
-				'2' => array(
-					'name' => !$lang ? 'Цифровое поле' : 'Number',
-					'type_in' => 'numberfield',
-					'type_out' => 'number',
-				),
-				'3' => array(
-					'name' => !$lang ? 'Скрытое поле' : 'Hidden',
-					'type_in' => 'textfield',
-					'type_out' => 'hidden',
-				),
-				'4' => array(
-					'name' => !$lang ? 'Текстовая область' : 'Textarea',
-					'type_in' => 'textarea',
-					'type_out' => 'textarea',
-				),
-
-			);*/
-
-
-/*			foreach ($types as $id => $properties) {
-				if (!$type = $modx->getCount('up2TypeField', array('id' => $id))) {
-					$type = $modx->newObject('up2TypeField', array_merge(array(
-						'active' => 1,
-						'rank' => $id - 1,
-					), $properties));
-					$type->set('id', $id);
-					$type->save();
-				}
-			}*/
 
 			break;
 

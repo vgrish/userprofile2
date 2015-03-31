@@ -20,12 +20,22 @@ $tmp = array(
 		'file' => 'up2_list_users',
 		'description' => '',
 	),
+	// секция инфо
 	'up2.info.user.main' => array(
 		'file' => 'up2_info_user_main',
 		'description' => '',
 	),
-
-
+	// секция заметки
+	'up2.tickets.user.main' => array(
+		'file' => 'up2_tickets_user_main',
+		'description' => '',
+	),
+	// секция комментарии
+	'up2.comments.user.main' => array(
+		'file' => 'up2_comments_user_main',
+		'description' => '',
+	),
+	//
 
 	// чанки для сниппетов
 	'tpl.up2User.Row' => array(
