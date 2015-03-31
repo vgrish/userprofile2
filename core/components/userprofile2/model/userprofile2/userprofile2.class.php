@@ -392,9 +392,12 @@ class userprofile2 {
 		$data['avatar'] = !empty($data['photo'])
 			? $data['photo']
 			: $data['gravatar'];
+		$data['fullname'] = !empty($data['fullname'])
+			? $data['fullname']
+			: $data['email'];
 		$data['firstname'] = !empty($data['firstname'])
 			? $data['firstname']
-			: $data['username'];
+			: $data['fullname'];
 		$data['registration_format'] = $this->dateFormat($data['registration']);
 		$data['lastactivity_format'] = $this->dateFormat($data['lastactivity']);
 
@@ -444,12 +447,12 @@ class userprofile2 {
 	 * @param array $data
 	 * @return mixed
 	 */
-	public function setCache($key, $data = array())
+	public function setCache($key, $data = array(), $lifetime = 0)
 	{
 		if(empty($key)) {return $key;}
 		$cacheKey = $this->config['cache_key'];
 		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
-		$this->modx->cacheManager->set($key, $data, 0, $cacheOptions);
+		$this->modx->cacheManager->set($key, $data, $lifetime, $cacheOptions);
 
 		return $key;
 	}

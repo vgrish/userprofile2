@@ -15,6 +15,11 @@ $tmp = array(
 		'file' => 'up2_comments',
 		'description' => '',
 	),
+	// краткая инфа о пользователе + кэширование
+	'up2UserSmallInfo' => array(
+		'file' => 'up2_small_info',
+		'description' => '',
+	),
 
 	/*'userprofile2' => array(
 		'file' => 'userprofile2',

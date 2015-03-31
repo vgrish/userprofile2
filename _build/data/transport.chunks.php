@@ -12,17 +12,33 @@ $tmp = array(
 		'file' => 'up2_content_sidebar',
 		'description' => '',
 	),
+
+
+	// вспомогательные чанки
 	// чанк списка пользователей
 	'up2.list.users' => array(
 		'file' => 'up2_list_users',
 		'description' => '',
 	),
+	'up2.info.user.main' => array(
+		'file' => 'up2_info_user_main',
+		'description' => '',
+	),
 
 
+
+	// чанки для сниппетов
 	'tpl.up2User.Row' => array(
 		'file' => 'up2_user_row',
 		'description' => '',
 	),
+	'tpl.up2User.small.Info' => array(
+		'file' => 'up2_user_small_info',
+		'description' => '',
+	),
+
+	//
+
 /*	'up2All.Users' => array(
 		'file' => 'up2_all_users',
 		'description' => '',
