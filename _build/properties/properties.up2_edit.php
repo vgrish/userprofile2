@@ -18,7 +18,7 @@ $tmp = array(
 	),
 	'tplNavTabsOuter' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <ul class="nav nav-tabs">[[+navrows]]</ul>',
+		'value' => '@INLINE <ul class="nav nav-tabs col-sm-3">[[+navrows]]</ul>',
 	),
 	'tplNavTabsRow' => array(
 		'type' => 'textfield',
