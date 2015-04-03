@@ -34,7 +34,7 @@ $tmp = array(
 	),
 	'tplContentTabPaneRow' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <p><b>[[+name]]</b>:<br> [[+value]]</p>',
+		'value' => '@INLINE <p class="[[+class]]"><b>[[+name]]</b>:<br> [[+value]]</p>',
 	),
 
 	'excludeTabs' => array(
