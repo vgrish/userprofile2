@@ -27,7 +27,6 @@ foreach($Sections as $section) {
 			: $userprofile2->pdoTools->getChunk($tplCountWrapper, $row, $userprofile2->pdoTools->config['fastMode']);
 	}
 	else {$row['count'] = '';}
-	$modx->log(1, print_r($row['count'] ,1 ));
 	$row['rows'] .= empty($tplSectionRow)
 		? $userprofile2->pdoTools->getChunk('', $row)
 		: $userprofile2->pdoTools->getChunk($tplSectionRow, $row, $userprofile2->pdoTools->config['fastMode']);
