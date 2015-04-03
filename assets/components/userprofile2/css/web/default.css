@@ -30,6 +30,10 @@ table.table.up2-user-info td {
 	border: none;
 }
 
+.sidebar-block {
+	margin-top: 40px;
+}
+
 /* tabs left */
 .tab-content {
 	overflow: hidden;
