@@ -35,7 +35,7 @@ $tmp = array(
 		'file' => 'up2_comments_user_main',
 		'description' => '',
 	),
-	//
+	// избранное
 	'up2.favorites.user.main' => array(
 		'file' => 'up2_favorites_user_main',
 		'description' => '',
@@ -59,20 +59,12 @@ $tmp = array(
 		'file' => 'up2_user_info',
 		'description' => '',
 	),
-
-
+	'tpl.up2User.Edit' => array(
+		'file' => 'up2_user_edit',
+		'description' => '',
+	),
 	//
 
-/*	'up2All.Users' => array(
-		'file' => 'up2_all_users',
-		'description' => '',
-	),*/
-
-
-/*	'tpl.userprofile2.item' => array(
-		'file' => 'item',
-		'description' => '',
-	),*/
 );
 
 // Save chunks for setup options

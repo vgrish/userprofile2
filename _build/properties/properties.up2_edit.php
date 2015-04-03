@@ -5,7 +5,7 @@ $properties = array();
 $tmp = array(
 	'tplUser' => array(
 		'type' => 'textfield',
-		'value' => 'tpl.up2User.Info',
+		'value' => 'tpl.up2User.Edit',
 	),
 	'user_id' => array(
 		'type' => 'numberfield',

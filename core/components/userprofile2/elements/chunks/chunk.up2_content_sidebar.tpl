@@ -18,7 +18,7 @@
             <div class="col-md-4">
                 <div>
                     <i class="black glyphicon glyphicon-cog"></i>
-                    <a href="/settings/">[[%up2_settings]]</a>
+                    <a href="/users/settings/">[[%up2_settings]]</a>
                 </div>
                 <div style="margin-top:10px;">
                     <i class="black glyphicon glyphicon-off"></i>
