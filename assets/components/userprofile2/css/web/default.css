@@ -26,3 +26,6 @@
 	border-left: 1px solid #EFEFEF;
 }
 
+table.table.up2-user-info td {
+	border: none;
+}

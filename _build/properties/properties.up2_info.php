@@ -11,6 +11,42 @@ $tmp = array(
 		'type' => 'numberfield',
 		'value' => '',
 	),
+
+	'tplTabsOuter' => array(
+		'type' => 'textfield',
+		'value' => '@INLINE <div class="tabbable tabs-left" id="up2-tabs">[[+navtabs]][[+contenttabs]]</div>',
+	),
+	'tplNavTabsOuter' => array(
+		'type' => 'textfield',
+		'value' => '@INLINE <ul class="nav nav-tabs">[[+rows]]</ul>',
+	),
+	'tplNavTabsRow' => array(
+		'type' => 'textfield',
+		'value' => '@INLINE <li class="[[+active]] [[+row_idx]]"><a href="#[[+tabname]]" data-toggle="tab">[[+tabtitle]]</a></li>',
+	),
+	'tplContentTabsOuter' => array(
+		'type' => 'textfield',
+		'value' => '@INLINE <div class="tab-content">[[+content]]</div>',
+	),
+	'tplContentTabPane' => array(
+		'type' => 'textfield',
+		'value' => '@INLINE <div class="tab-pane [[+active]] [[+row_idx]]" id="[[+tabname]]">[[+rows]]</div>',
+	),
+	'tplContentTabPaneRow' => array(
+		'type' => 'textfield',
+		'value' => '@INLINE <p><b>[[+name]]</b>:<br> [[+value]]</p>',
+	),
+
+	'excludeTabs' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+	'activeTab' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+
+
 	'dateFormat' => array(
 		'type' => 'textfield',
 		'value' => 'd F Y, H:i',
