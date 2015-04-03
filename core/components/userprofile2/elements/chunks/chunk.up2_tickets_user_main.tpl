@@ -7,7 +7,7 @@
     &plSection=`[[+vp.section]]`
 ]]
 
-[[!pdoPage?
+[[!pdoPage:default=`[[%up2_no_tickets]]`?
     &element=`getTickets`
     &user=`[[!+vp.user_id]]`
     &parents=`0`

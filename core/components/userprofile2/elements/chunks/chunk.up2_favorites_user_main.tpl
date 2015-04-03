@@ -7,7 +7,7 @@
     &plSection=`[[+vp.section]]`
 ]]
 
-[[!pdoPage?
+[[!pdoPage:default=`[[%up2_no_favorites]]`?
     &element=`getStars`
     &user=`[[!+vp.user_id]]`
 ]]

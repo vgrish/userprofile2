@@ -7,7 +7,7 @@
     &plSection=`[[+vp.section]]`
 ]]
 
-[[!pdoPage?
+[[!pdoPage:default=`[[%up2_no_comments]]`?
     &element=`TicketLatest`
     &tpl=`tpl.Tickets.comment.list.row`
     &user=`[[!+vp.user_id]]`
