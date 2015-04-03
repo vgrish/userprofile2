@@ -40,6 +40,11 @@ $tmp = array(
 		'file' => 'up2_favorites_user_main',
 		'description' => '',
 	),
+	// секция редактирования профиля
+	'up2.edit.user.main' => array(
+		'file' => 'up2_edit_user_main',
+		'description' => '',
+	),
 
 	// чанки для сниппетов
 	'tpl.up2User.Row' => array(
