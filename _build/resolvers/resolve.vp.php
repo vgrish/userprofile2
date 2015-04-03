@@ -65,6 +65,13 @@ if ($object->xpdo) {
 					'content' => '[[$up2.favorites.user.main?]]',
 					'description' => !$lang ? 'Избранное' : 'Favorites',
 				),
+				'5' => array(
+					'name' => !$lang ? 'настройки' : 'settings',
+					'type' => 3,
+					'entry' => $entry,
+					'content' => '[[$up2.edit.user.main?]]',
+					'description' => !$lang ? 'Мои настройки' : 'My settings',
+				),
 
 			);
 
@@ -104,6 +111,12 @@ if ($object->xpdo) {
 					'metod' => 'GET,POST',
 					'route' => '/users/{user_id:[0-9]+}/favorites/',
 					'properties' => '{"section":"favorites"}'
+				),
+				'5' => array(
+					'description' => !$lang ? 'настройки' : 'settings',
+					'metod' => 'GET,POST',
+					'route' => '/users/settings/',
+					'properties' => '{"section":"settings"}'
 				),
 
 			);
