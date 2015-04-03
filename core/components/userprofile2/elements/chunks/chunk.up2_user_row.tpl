@@ -1,6 +1,3 @@
-[[-!upUserTotal?
-&user=`[[+id]]`
-]]
 <div class="up2-list-row">
     <div class="row">
         <div class="col-md-2 col-avatar">
@@ -13,10 +10,10 @@
                 <a href="/users/[[+id]]/">[[+firstname]]</a>
             </div>
             <div class="registered">
-                [[%up2_registration]]: [[!+registration_format]]
+                [[%up2_registration]]: [[+registration_format]]
             </div>
             <div class="lastactivity">
-                [[%up2_lastactivity]]: [[!+lastactivity_format]]
+                [[%up2_lastactivity]]: [[+lastactivity_format]]
             </div>
         </div>
         <div class="col-md-2">
@@ -37,5 +34,4 @@
             </a></div>
     </div>
 </div>
-<br>
 <br>
