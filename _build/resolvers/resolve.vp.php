@@ -48,7 +48,7 @@ if ($object->xpdo) {
 					'name' => !$lang ? 'комментарии' : 'comments',
 					'type' => 3,
 					'entry' => $entry,
-					'content' => '[[$up2.tickets.user.main?]]',
+					'content' => '[[$up2.comments.user.main?]]',
 					'description' => !$lang ? 'Комментарии' : 'Сomments',
 				),
 				'3' => array(
@@ -58,13 +58,20 @@ if ($object->xpdo) {
 					'content' => '[[$up2.tickets.user.main?]]',
 					'description' => !$lang ? 'Заметки' : 'Tickets',
 				),
+				'4' => array(
+					'name' => !$lang ? 'избранное' : 'favorites',
+					'type' => 3,
+					'entry' => $entry,
+					'content' => '[[$up2.favorites.user.main?]]',
+					'description' => !$lang ? 'Избранное' : 'Favorites',
+				),
 
 			);
 
 			foreach ($handlers as $id => $properties) {
 				if (!$handler = $modx->getObject('vpHandler', array('name' => $properties['name']))) {
 					$handler = $modx->newObject('vpHandler', array_merge(array(
-						//'name' => $properties['name'],
+						'cache' => 1,
 					), $properties));
 				}
 				$handler->set('active', 1);
@@ -92,7 +99,12 @@ if ($object->xpdo) {
 					'route' => '/users/{user_id:[0-9]+}/tickets/',
 					'properties' => '{"section":"tickets"}'
 				),
-
+				'4' => array(
+					'description' => !$lang ? 'избранное' : 'favorites',
+					'metod' => 'GET,POST',
+					'route' => '/users/{user_id:[0-9]+}/favorites/',
+					'properties' => '{"section":"favorites"}'
+				),
 
 			);
 
