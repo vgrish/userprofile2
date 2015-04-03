@@ -24,7 +24,11 @@ $tmp = array(
 		'file' => 'up2_link_sections',
 		'description' => '',
 	),
-
+	// вся инфа о пользователе
+	'up2UserInfo' => array(
+		'file' => 'up2_info',
+		'description' => '',
+	),
 );
 
 foreach ($tmp as $k => $v) {

@@ -50,6 +50,11 @@ $tmp = array(
 		'file' => 'up2_user_small_info',
 		'description' => '',
 	),
+	'tpl.up2User.Info' => array(
+		'file' => 'up2_user_info',
+		'description' => '',
+	),
+
 
 	//
 
