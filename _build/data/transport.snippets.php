@@ -3,33 +3,28 @@
 $snippets = array();
 
 $tmp = array(
+	// список пользователей
 	'up2Users' => array(
 		'file' => 'up2_users',
 		'description' => '',
 	),
+	// статистика
 	'up2UserTotal' => array(
 		'file' => 'up2_total',
 		'description' => '',
 	),
-	'up2UserComments' => array(
-		'file' => 'up2_comments',
-		'description' => '',
-	),
-	// краткая инфа о пользователе + кэширование
+
+	// краткая инфа о пользователе
 	'up2UserSmallInfo' => array(
 		'file' => 'up2_small_info',
 		'description' => '',
 	),
-	// ссылки на секции + кэширование
+	// ссылки на секции
 	'up2UserLinkSections' => array(
 		'file' => 'up2_link_sections',
 		'description' => '',
 	),
 
-	/*'userprofile2' => array(
-		'file' => 'userprofile2',
-		'description' => '',
-	),*/
 );
 
 foreach ($tmp as $k => $v) {
