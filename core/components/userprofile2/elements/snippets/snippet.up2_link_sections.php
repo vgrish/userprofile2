@@ -5,9 +5,6 @@ if (!$userprofile2 = $modx->getService('userprofile2', 'userprofile2', $modx->ge
 	return 'Could not load userprofile2 class!';
 }
 $userprofile2->initialize($modx->context->key, $scriptProperties);
-if (!empty($cacheKey) && $output = $userprofile2->getCache('sections/link.'.$cacheKey)) {
-	return $output;
-}
 //
 if(empty($id)) {return '';}
 if(empty($Sections)) {return '';}
@@ -39,9 +36,6 @@ $output = empty($tplSectionOuter)
 	: $userprofile2->pdoTools->getChunk($tplSectionOuter, $row, $userprofile2->pdoTools->config['fastMode']);
 if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
 	$output = $userprofile2->pdoTools->getChunk($tplWrapper, array('output' => $output), $userprofile2->pdoTools->config['fastMode']);
-}
-if (!empty($cacheKey)) {
-	$userprofile2->setCache('sections/link.'.$cacheKey, $output, $cacheTime);
 }
 if (!empty($toPlaceholder)) {
 	$modx->setPlaceholder($toPlaceholder, $output);

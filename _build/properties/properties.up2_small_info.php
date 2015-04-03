@@ -27,14 +27,6 @@ $tmp = array(
 		'type' => 'combo-boolean',
 		'value' => false,
 	),
-	'cacheKey' => array(
-		'type' => 'textfield',
-		'value' => '',
-	),
-	'cacheTime' => array(
-		'type' => 'numberfield',
-		'value' => 1800,
-	),
 );
 
 foreach ($tmp as $k => $v) {
