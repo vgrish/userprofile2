@@ -29,6 +29,12 @@ $tmp = array(
 		'file' => 'up2_info',
 		'description' => '',
 	),
+	// вся инфа о пользователе
+	'up2UserEdit' => array(
+		'file' => 'up2_edit',
+		'description' => '',
+	),
+
 );
 
 foreach ($tmp as $k => $v) {

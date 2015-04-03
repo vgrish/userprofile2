@@ -10,3 +10,7 @@
     &id=`[[!+vp.user_id]]`
     &plSection=`[[!+vp.section]]`
 ]]
+
+[[!up2UserInfo?
+	&user_id=`[[!+vp.user_id]]`
+]]
