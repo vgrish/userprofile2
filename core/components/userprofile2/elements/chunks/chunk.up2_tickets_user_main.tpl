@@ -6,3 +6,11 @@
     &id=`[[+vp.user_id]]`
     &plSection=`[[+vp.section]]`
 ]]
+
+[[!pdoPage?
+    &element=`getTickets`
+    &user=`[[!+vp.user_id]]`
+    &parents=`0`
+]]
+
+[[!+page.nav]]

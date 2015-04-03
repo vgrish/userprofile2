@@ -6,3 +6,12 @@
     &id=`[[+vp.user_id]]`
     &plSection=`[[+vp.section]]`
 ]]
+
+[[!pdoPage?
+    &element=`TicketLatest`
+    &tpl=`tpl.Tickets.comment.list.row`
+    &user=`[[!+vp.user_id]]`
+    &parents=`0`
+]]
+
+[[!+page.nav]]
