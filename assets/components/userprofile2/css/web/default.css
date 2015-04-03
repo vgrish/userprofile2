@@ -29,3 +29,41 @@
 table.table.up2-user-info td {
 	border: none;
 }
+
+/* tabs left */
+.tab-content {
+	overflow: hidden;
+}
+.tab-pane {
+	min-height: 150px;
+}
+.tabs-left > .nav-tabs {
+	float: left;
+	margin-right: 19px;
+	border-right: 1px solid #DDD;
+}
+.tabs-below > .nav-tabs, .tabs-right > .nav-tabs, .tabs-left > .nav-tabs {
+	border-bottom: 0;
+}
+.tabs-left > .nav-tabs > li, .tabs-right > .nav-tabs > li {
+	float: none;
+}
+.tabs-left > .nav-tabs .active > a, .tabs-left > .nav-tabs .active > a:hover, .tabs-left > .nav-tabs .active > a:focus {
+	border-color: #DDD rgba(0, 0, 0, 0) #DDD #DDD;
+}
+.tabs-left > .nav-tabs > li > a {
+	margin-right: -1px;
+	-webkit-border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+.tabs-left > .nav-tabs > li > a, .tabs-right > .nav-tabs > li > a {
+	min-width: 74px;
+	_margin-right: 0;
+	margin-bottom: 3px;
+}
+
+
+.tabs-left .tab-pane p {
+	min-height: 30px;
+}

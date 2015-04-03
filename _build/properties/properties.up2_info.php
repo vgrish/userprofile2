@@ -18,19 +18,19 @@ $tmp = array(
 	),
 	'tplNavTabsOuter' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <ul class="nav nav-tabs">[[+rows]]</ul>',
+		'value' => '@INLINE <ul class="nav nav-tabs">[[+navrows]]</ul>',
 	),
 	'tplNavTabsRow' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <li class="[[+active]] [[+row_idx]]"><a href="#[[+tabname]]" data-toggle="tab">[[+tabtitle]]</a></li>',
+		'value' => '@INLINE <li class="[[+active]] [[+idx]]"><a href="#[[+tabname]]" data-toggle="tab">[[+tabtitle]]</a></li>',
 	),
 	'tplContentTabsOuter' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <div class="tab-content">[[+content]]</div>',
+		'value' => '@INLINE <div class="tab-content">[[+tabrows]]</div>',
 	),
 	'tplContentTabPane' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <div class="tab-pane [[+active]] [[+row_idx]]" id="[[+tabname]]">[[+rows]]</div>',
+		'value' => '@INLINE <div class="tab-pane [[+active]] [[+idx]]" id="[[+tabname]]">[[+fieldrows]]</div>',
 	),
 	'tplContentTabPaneRow' => array(
 		'type' => 'textfield',

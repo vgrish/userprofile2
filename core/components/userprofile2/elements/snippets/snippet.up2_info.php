@@ -8,6 +8,43 @@ $userprofile2->initialize($modx->context->key, $scriptProperties);
 //
 if(empty($user_id)) {return '';}
 $row = $userprofile2->getUserFields($user_id);
+if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type'])) {
+	$idx = 1;
+	foreach($TabsFields as $tabName => $tab) {
+		if(empty($tab['fields'])
+			|| !is_array($tab['fields'])
+			|| array_key_exists($tabName, explode(',', $excludeTabs))
+		) {continue;}
+		if(empty($activeTab)) {$row['active'] = ($idx == 1) ? 'active' : '';}
+		else {$row['active'] = ($activeTab == $tabName) ? 'active' : '';}
+		$row['tabname'] = $tabName;
+		$row['tabtitle'] = $tab['name_in'];
+		$row['idx'] = $idx ++;
+		$row['navrows'] .= empty($tplNavTabsRow)
+			? $userprofile2->pdoTools->getChunk('', $row)
+			: $userprofile2->pdoTools->getChunk($tplNavTabsRow, $row, $userprofile2->pdoTools->config['fastMode']);
+		$row['fieldrows'] =  '';
+		foreach($tab['fields'] as $fieldName => $field) {
+			$row['value'] = $row['extend'][$tabName][$fieldName];
+			$row['name'] = $field['name_in'];
+			$row['fieldrows'] .= empty($tplContentTabPaneRow)
+				? $userprofile2->pdoTools->getChunk('', $row)
+				: $userprofile2->pdoTools->getChunk($tplContentTabPaneRow, $row, $userprofile2->pdoTools->config['fastMode']);
+		}
+		$row['tabrows'] .= empty($tplContentTabPane)
+			? $userprofile2->pdoTools->getChunk('', $row)
+			: $userprofile2->pdoTools->getChunk($tplContentTabPane, $row, $userprofile2->pdoTools->config['fastMode']);
+	}
+	$row['contenttabs'] = empty($tplContentTabsOuter)
+		? $userprofile2->pdoTools->getChunk('', $row)
+		: $userprofile2->pdoTools->getChunk($tplContentTabsOuter, $row, $userprofile2->pdoTools->config['fastMode']);
+	$row['navtabs'] = empty($tplNavTabsOuter)
+		? $userprofile2->pdoTools->getChunk('', $row)
+		: $userprofile2->pdoTools->getChunk($tplNavTabsOuter, $row, $userprofile2->pdoTools->config['fastMode']);
+	$row['tabs'] = empty($tplTabsOuter)
+		? $userprofile2->pdoTools->getChunk('', $row)
+		: $userprofile2->pdoTools->getChunk($tplTabsOuter, $row, $userprofile2->pdoTools->config['fastMode']);
+}
 // output
 $output = empty($tplUser)
 	? $userprofile2->pdoTools->getChunk('', $row)
