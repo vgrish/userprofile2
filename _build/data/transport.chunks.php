@@ -36,6 +36,10 @@ $tmp = array(
 		'description' => '',
 	),
 	//
+	'up2.favorites.user.main' => array(
+		'file' => 'up2_favorites_user_main',
+		'description' => '',
+	),
 
 	// чанки для сниппетов
 	'tpl.up2User.Row' => array(
