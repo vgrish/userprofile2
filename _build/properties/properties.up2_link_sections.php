@@ -17,7 +17,7 @@ $tmp = array(
 	),
 	'tplSectionOuter' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <ul class="nav nav-tabs">[[+rows]]</ul>',
+		'value' => '@INLINE <ul class="nav nav-tabs">[[+rows]]</ul><br>',
 	),
 	'tplCountWrapper' => array(
 		'type' => 'textfield',
