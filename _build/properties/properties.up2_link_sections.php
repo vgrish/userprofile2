@@ -27,6 +27,10 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => '',
 	),
+	'plCountPrefix' => array(
+		'type' => 'textfield',
+		'value' => 'up2.total.'
+	),
 	'toPlaceholder' => array(
 		'type' => 'combo-boolean',
 		'value' => false,
