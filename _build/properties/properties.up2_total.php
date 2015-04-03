@@ -25,8 +25,8 @@ $tmp = array(
 		'value' => 10
 	),
 	'placeholderPrefix' => array(
-		'type' => 'textfield'
-	,'value' => 'up2.total.'
+		'type' => 'textfield',
+		'value' => 'up2.total.'
 	),
 	'toPlaceholders' => array(
 		'type' => 'combo-boolean',
@@ -39,7 +39,7 @@ $tmp = array(
 
 	'processSection' => array(
 		'type' => 'textfield',
-		'value' => 'tickets,comments,'
+		'value' => 'tickets,comments,favorites'
 	),
 	/*'
 	'toPlaceholder' => array(

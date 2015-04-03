@@ -8,8 +8,8 @@ if (!$userprofile2 = $modx->getService('userprofile2', 'userprofile2', $modx->ge
 //
 $userprofile2->initialize($modx->context->key, $scriptProperties);
 //
+if(empty($user_id)) {return '';}
 if(empty($processSection)) {$processSection = 'tickets,comments,favorites';}
-if(empty($user_id)) {$user_id = $modx->getPlaceholder('user_id');}
 if(empty($pleTickets)) {$pleTickets = 'tickets';}
 if(empty($pleComments)) {$pleComments = 'comments';}
 if(empty($pleFavorites)) {$pleFavorites = 'favorites';}
