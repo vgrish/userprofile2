@@ -13,7 +13,7 @@ $tmp = array(
 
 	'avatar_params' => array(
 		'type' => 'textfield',
-		'value' => '{"w":274,"h":274,"zc":0,"bg":"ffffff","f":"jpg"}',
+		'value' => '{"w":274,"h":274,"zc":1,"q":90,"bg":"ffffff","f":"jpg"}',
 		'area' => 'userprofile2_avatar',
 	),
 	'avatar_path' => array(

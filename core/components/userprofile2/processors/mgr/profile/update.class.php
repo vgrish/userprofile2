@@ -58,7 +58,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		if(strpos($photo, $path) == true) {return false;}
 		$params = $this->modx->fromJSON(trim($this->modx->userprofile2->config['avatarParams']));
 		$file = strtolower(md5($this->getProperty('data').time()). '.' . $params['f']);
-
+		$currentPhoto = $this->object->UserProfile->get('photo');
 
 		$this->modx->log(1, print_r($path ,1));
 		$this->modx->log(1, print_r($params ,1));
@@ -82,16 +82,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			return false;
 		}
 		// Remove image
-		if(empty($photo) && $currentPhoto = $this->object->UserProfile->get('photo')) {
-			$tmp = explode('/', $currentPhoto);
-			if(!empty($tmp[1])) {
-				$cur = MODX_ASSETS_PATH . $path . end($tmp);
-				if(!empty($cur) && file_exists($cur)) {
-					@unlink($cur);
-				}
+		if(empty($photo) && $currentPhoto) {
+			if($this->removeCurrentPhoto($currentPhoto, $path)) {
+				$this->object->UserProfile->set('photo', '');
+				return true;
 			}
-			$this->object->UserProfile->set('photo', '');
-			return true;
 		}
 		// Upload a new from mgr
 		elseif(!empty($photo) && empty($_FILES['photo'])) {
@@ -114,6 +109,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 				if ($phpThumb->renderToFile($dst)) {
 					if (!empty($cur) && file_exists($cur) && !empty($_FILES['photo'])) {@unlink($cur);}
 					$this->object->UserProfile->set('photo', $url);
+					$this->removeCurrentPhoto($currentPhoto, $path);
 				}
 				else {
 					$this->modx->log(1, '[UP2] Could not save rendered image to "'.$dst.'"');
@@ -125,6 +121,18 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		}
 
 		return true;
+	}
+	/** {@inheritDoc} */
+	public function removeCurrentPhoto($currentPhoto, $path) {
+		$tmp = explode('/', $currentPhoto);
+		if(!empty($tmp[1])) {
+			$cur = MODX_ASSETS_PATH . $path . end($tmp);
+			if(!empty($cur) && file_exists($cur)) {
+				@unlink($cur);
+			}
+			return true;
+		}
+		return false;
 	}
 	/** {@inheritDoc} */
 	public function afterSave() {

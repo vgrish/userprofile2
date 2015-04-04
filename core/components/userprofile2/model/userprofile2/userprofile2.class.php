@@ -60,7 +60,7 @@ class userprofile2 {
 			'frontendCss' => $this->modx->getOption('userprofile2_front_css', null, '[[+assetsUrl]]css/web/default.css'),
 			'frontendJs' => $this->modx->getOption('userprofile2_front_js', null, '[[+assetsUrl]]js/web/default.js'),
 
-			'avatarParams' => $this->modx->getOption('userprofile2_avatar_params', null, '{"w":274,"h":274,"zc":0,"bg":"ffffff","f":"jpg"}'),
+			'avatarParams' => $this->modx->getOption('userprofile2_avatar_params', null, '{"w":274,"h":274,"zc":1,"q":90,"bg":"ffffff","f":"jpg"}'),
 			'avatarPath' => $this->modx->getOption('userprofile2_avatar_path', null, 'images/users/'),
 
 
