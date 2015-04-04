@@ -60,6 +60,8 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 		? $userprofile2->pdoTools->getChunk('', $row)
 		: $userprofile2->pdoTools->getChunk($tplTabsOuter, $row, $userprofile2->pdoTools->config['fastMode']);
 }
+// reg js
+$modx->regClientScript(str_replace('[[+assetsUrl]]', $userprofile2->config['assetsUrl'], $js));
 // output
 $output = empty($tplUser)
 	? $userprofile2->pdoTools->getChunk('', $row)

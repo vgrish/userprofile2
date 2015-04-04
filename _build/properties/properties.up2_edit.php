@@ -40,9 +40,6 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><textarea name="[[+nameout]]" class="form-control" value="[[+value]]" [[+disabled]]></textarea><p class="help-block message">[[+error_[[+nameout]]]]</p></div>',
 	),
-
-	// <textarea name="comment" id="comment" placeholder="Комментарий" class="form-control"></textarea>
-
 	'excludeTabs' => array(
 		'type' => 'textfield',
 		'value' => '',
@@ -71,6 +68,11 @@ $tmp = array(
 	'toPlaceholder' => array(
 		'type' => 'combo-boolean',
 		'value' => false,
+	),
+
+	'js' => array(
+		'type' => 'textfield',
+		'value' => '[[+assetsUrl]]js/web/profile.default.js',
 	),
 );
 

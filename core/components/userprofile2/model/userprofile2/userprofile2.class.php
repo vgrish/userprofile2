@@ -34,6 +34,7 @@ class userprofile2 {
 			'jsUrl' => $assetsUrl . 'js/',
 			'imagesUrl' => $assetsUrl . 'images/',
 			'connectorUrl' => $connectorUrl,
+			'actionUrl' => $assetsUrl . 'action.php',
 
 			'corePath' => $corePath,
 			'modelPath' => $corePath . 'model/',
