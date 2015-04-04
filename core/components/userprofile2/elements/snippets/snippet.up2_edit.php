@@ -34,7 +34,7 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 			$row['class'] = $field['css'];
 			$row['type'] = $field['type_out'];
 			$row['required'] = !empty($field['required']) ? $required : '';
-			$row['disabled'] = !empty($field['editable']) ? 'disabled' : '';
+			$row['disabled'] = empty($field['editable']) ? 'disabled' : '';
 			if($row['type'] == 'textarea') {
 				$row['fieldrows'] .= empty($tplContentTabPaneTextareaRow)
 					? $userprofile2->pdoTools->getChunk('', $row)
