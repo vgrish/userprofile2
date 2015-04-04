@@ -44,8 +44,8 @@ class userprofile2 {
 			'snippetsPath' => $corePath . 'elements/snippets/',
 			'processorsPath' => $corePath . 'processors/',
 
-			'cache_key' => $this->namespace.'/',
-			'json_response' => true,
+			'cacheKey' => $this->namespace.'/',
+			'jsonResponse' => true,
 
 			'dateFormat' => 'd F Y, H:i',
 			'dateNow' => 10,
@@ -57,8 +57,11 @@ class userprofile2 {
 			'gravatarSize' => 300,
 			'gravatarIcon' => 'mm',
 
-			'frontend_css' => $this->modx->getOption('userprofile2_front_css', null, '[[+assetsUrl]]css/web/default.css'),
-			'frontend_js' => $this->modx->getOption('userprofile2_front_js', null, '[[+assetsUrl]]js/web/default.js'),
+			'frontendCss' => $this->modx->getOption('userprofile2_front_css', null, '[[+assetsUrl]]css/web/default.css'),
+			'frontendJs' => $this->modx->getOption('userprofile2_front_js', null, '[[+assetsUrl]]js/web/default.js'),
+
+			'avatarParams' => $this->modx->getOption('userprofile2_avatar_params', null, '{"w":274,"h":274,"zc":0,"bg":"ffffff","f":"jpg"}'),
+			'avatarPath' => $this->modx->getOption('userprofile2_avatar_path', null, 'images/users/'),
 
 
 		), $config);
@@ -114,7 +117,7 @@ class userprofile2 {
 				break;
 			default:
 				if (!defined('MODX_API_MODE') || !MODX_API_MODE) {
-					if ($css = trim($this->config['frontend_css'])) {
+					if ($css = trim($this->config['frontendCss'])) {
 						if (preg_match('/\.css/i', $css)) {
 							$this->modx->regClientCSS(str_replace('[[+assetsUrl]]', $this->config['assetsUrl'], $css));
 						}
@@ -130,7 +133,7 @@ class userprofile2 {
 					};
 					');
 					$this->modx->regClientStartupScript("<script type=\"text/javascript\">\n" . $config_js . "\n</script>", true);
-					if ($js = trim($this->config['frontend_js'])) {
+					if ($js = trim($this->config['frontendJs'])) {
 						if (!empty($js) && preg_match('/\.js/i', $js)) {
 							$this->modx->regClientScript(preg_replace(array('/^\n/', '/\t{7}/'), '', '
 							<script type="text/javascript">
@@ -451,7 +454,7 @@ class userprofile2 {
 	public function setCache($key, $data = array(), $lifetime = 0)
 	{
 		if(empty($key)) {return $key;}
-		$cacheKey = $this->config['cache_key'];
+		$cacheKey = $this->config['cacheKey'];
 		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
 		$this->modx->cacheManager->set($key, $data, $lifetime, $cacheOptions);
 
@@ -466,7 +469,7 @@ class userprofile2 {
 	{
 		$cached = '';
 		if(empty($key)) {return $cached;}
-		$cacheKey = $this->config['cache_key'];
+		$cacheKey = $this->config['cacheKey'];
 		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
 		$cached = $this->modx->getCacheManager()->get($key, $cacheOptions);
 
@@ -480,7 +483,7 @@ class userprofile2 {
 	public function clearCache($key)
 	{
 		if(empty($key)) {return $key;}
-		$cacheKey = $this->config['cache_key'];
+		$cacheKey = $this->config['cacheKey'];
 		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
 		$this->modx->cacheManager->clean($cacheOptions);
 
@@ -500,7 +503,7 @@ class userprofile2 {
 			'message' => $this->modx->lexicon($message, $placeholders),
 			'data' => $data,
 		);
-		return $this->config['json_response']
+		return $this->config['jsonResponse']
 			? $this->modx->toJSON($response)
 			: $response;
 	}
@@ -518,7 +521,7 @@ class userprofile2 {
 			'message' => $this->modx->lexicon($message, $placeholders),
 			'data' => $data,
 		);
-		return $this->config['json_response']
+		return $this->config['jsonResponse']
 			? $this->modx->toJSON($response)
 			: $response;
 	}

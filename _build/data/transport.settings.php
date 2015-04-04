@@ -22,7 +22,7 @@ $tmp = array(
 		'area' => 'userprofile2_avatar',
 	),
 
-	
+
 	//временные
 
 					'assets_path' => array(
