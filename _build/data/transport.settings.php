@@ -10,6 +10,19 @@ $tmp = array(
 		'area' => 'userprofile2_main',
 	),
 
+
+	'avatar_params' => array(
+		'type' => 'textfield',
+		'value' => '{"w":274,"h":274,"zc":0,"bg":"ffffff","f":"jpg"}',
+		'area' => 'userprofile2_avatar',
+	),
+	'avatar_path' => array(
+		'type' => 'textfield',
+		'value' => 'images/users/',
+		'area' => 'userprofile2_avatar',
+	),
+
+	
 	//временные
 
 					'assets_path' => array(
