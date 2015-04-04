@@ -1,37 +1,32 @@
 <?php
 //
-if (!empty($_REQUEST['action'])) {
-	@session_cache_limiter('nocache');
-	define('MODX_REQP', false);
+if (empty($_REQUEST['action'])) {
+	@session_write_close();
+	die('Access denied');
 }
-// Load MODX config
-if (file_exists(dirname(dirname(dirname(dirname(__FILE__)))) . '/config.core.php')) {
-	require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/config.core.php';
+$_REQUEST['ctx'] = 'web';
+define('MODX_API_MODE', true);
+if (file_exists(dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/index.php')) {
+	require dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/index.php'; // на время разработки
 } else {
-	require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/config.core.php';
+	require dirname(dirname(dirname(dirname(__FILE__)))).'/index.php'; // на постоянку
 }
-require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
-require_once MODX_CONNECTORS_PATH . 'index.php';
+//
+$modx->getService('error','error.modError');
+$modx->getRequest();
+$modx->setLogLevel(modX::LOG_LEVEL_ERROR);
+$modx->setLogTarget('FILE');
+$modx->error->message = null;
 //
 $isAuthenticated = $modx->user->isAuthenticated($modx->context->key);
 if($isAuthenticated && $user_id = $modx->user->id) {
-
-	$modx->log(1, print_r('======' ,1));
-
-	$modx->log(1, print_r($user_id ,1));
+	$_SERVER['HTTP_MODAUTH']= $modx->user->getUserToken($modx->context->get('key'));
 }
 else {
 	@session_write_close();
 	die('Access denied');
 }
-
-/*if ($modx->user->hasSessionContext($modx->context->get('key'))) {
-	$_SERVER['HTTP_MODAUTH'] = $_SESSION["modx." . $modx->context->get('key') . ".user.token"];
-} else {
-	$_SESSION["modx." . $modx->context->get('key') . ".user.token"] = 0;
-	$_SERVER['HTTP_MODAUTH'] = 0;
-}*/
-
+//
 require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
 require_once MODX_CONNECTORS_PATH . 'index.php';
 //

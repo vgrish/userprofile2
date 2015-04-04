@@ -89,4 +89,4 @@ userprofile2.Profile = {
 
 };
 
-userprofile2.Profile.initialize('#userprofile2-form');
+userprofile2.Profile.initialize('#up2-user-edit');
