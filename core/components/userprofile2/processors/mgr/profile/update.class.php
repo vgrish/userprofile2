@@ -5,6 +5,9 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	public $permission = 'up2setting_save';
 	/** {@inheritDoc} */
 	public function initialize() {
+
+		$this->modx->log(1, print_r($this->getProperties() ,1));
+
 		if (!$this->modx->hasPermission($this->permission)) {
 			return $this->modx->lexicon('access_denied');
 		}
@@ -13,6 +16,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	/** {@inheritDoc} */
 	public function beforeSet() {
 		$realFields = array('lastname','firstname','secondname');
+		$userFields = array('fullname','email','phone','mobilephone','blocked','blockeduntil',
+			'blockedafter','logincount','lastlogin','thislogin','dob','gender','address',
+			'country','city','state','zip','fax','photo','comment','website','extended'
+		);
+
 		$data = $this->getProperty('data');
 		if(empty($data)) {
 			return $this->success();

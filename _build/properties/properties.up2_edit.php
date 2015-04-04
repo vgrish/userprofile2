@@ -34,11 +34,11 @@ $tmp = array(
 	),
 	'tplContentTabPaneInputRow' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><input type="[[+type]]" name="[[+nameout]]" class="form-control" value="[[+value]]" [[+disabled]]><p class="help-block message">[[+error_[[+nameout]]]]</p></div>',
+		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><input type="[[+type_out]]" name="[[+nameout]]" class="form-control" value="[[+value]]" [[+disabled]]><p class="help-block message">[[+error_[[+nameout]]]]</p></div>',
 	),
 	'tplContentTabPaneTextareaRow' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><textarea name="[[+nameout]]" class="form-control" value="[[+value]]" [[+disabled]]></textarea><p class="help-block message">[[+error_[[+nameout]]]]</p></div>',
+		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><textarea name="[[+nameout]]" class="form-control" [[+disabled]]>[[+value]]</textarea><p class="help-block message">[[+error_[[+nameout]]]]</p></div>',
 	),
 	'excludeTabs' => array(
 		'type' => 'textfield',

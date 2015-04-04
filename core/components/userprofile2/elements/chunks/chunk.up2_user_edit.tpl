@@ -3,6 +3,8 @@
 		<small>[[%up2_edit_header]]</small>
 	</div>
 
+	<input type="hidden" name="id" value="[[+id]]" />
+	<input type="hidden" name="type" value="[[+type]]" />
 	<div class="form-group avatar">
 		<label class="col-sm-3 control-label">[[%up2_avatar]]</label>
 		<div class="col-sm-9">
@@ -12,8 +14,7 @@
 				<i class="glyphicon glyphicon-remove"></i>
 			</a>
 			<p class="help-block">[[%up2_avatar_desc]]</p>
-			<input type="hidden" name="photo" value="[[+photo]]" />
-			<input type="file" name="newphoto" id="profile-photo" />
+			<input type="file" name="photo" value="[[+photo]]" />
 		</div>
 	</div>
 	<div class="form-group">

@@ -406,6 +406,8 @@ class userprofile2 {
 		$data['lastactivity_format'] = $this->dateFormat($data['lastactivity']);
 
 		unset(
+			$data['internalKey'],
+			$data['failedlogincount'],
 			$data['password'],
 			$data['cachepwd'],
 			$data['sessionid'],

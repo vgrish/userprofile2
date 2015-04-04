@@ -31,8 +31,9 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 		foreach($tab['fields'] as $fieldName => $field) {
 			$row['value'] = $row['extend'][$tabName][$fieldName];
 			$row['name'] = $field['name_in'];
+			$row['nameout'] = $field['name_out'];
 			$row['class'] = $field['css'];
-			$row['type'] = $field['type_out'];
+			$row['type_out'] = $field['type_out'];
 			$row['required'] = !empty($field['required']) ? $required : '';
 			$row['disabled'] = empty($field['editable']) ? 'disabled' : '';
 			if($row['type'] == 'textarea') {

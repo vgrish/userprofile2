@@ -29,7 +29,7 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 			$row['name'] = $field['name_in'];
 			$row['nameout'] = $field['name_out'];
 			$row['class'] = $field['css'];
-			$row['type'] = $field['type_out'];
+			$row['type_out'] = $field['type_out'];
 			$row['required'] = !empty($field['required']) ? $required : '';
 			$row['fieldrows'] .= empty($tplContentTabPaneRow)
 				? $userprofile2->pdoTools->getChunk('', $row)
