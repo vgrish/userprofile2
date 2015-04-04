@@ -34,6 +34,10 @@ table.table.up2-user-info td {
 	margin-top: 40px;
 }
 
+#up2-user-edit p.help-block.message {
+	min-height: 0px;
+}
+
 /* tabs left */
 .tab-content {
 	overflow: hidden;

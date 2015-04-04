@@ -32,10 +32,16 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => '@INLINE <div class="tab-pane [[+active]] [[+idx]]" id="[[+tabname]]">[[+fieldrows]]</div>',
 	),
-	'tplContentTabPaneRow' => array(
+	'tplContentTabPaneInputRow' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <p class="[[+class]]"><b>[[+name]]</b>:<br> [[+value]]</p>',
+		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><input type="[[+type]]" name="[[+nameout]]" class="form-control" value="[[+value]]"><p class="help-block message">[[+error_[[+nameout]]]]</p></div>',
 	),
+	'tplContentTabPaneTextareaRow' => array(
+		'type' => 'textfield',
+		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><textarea name="[[+nameout]]" class="form-control" value="[[+value]]"></textarea><p class="help-block message">[[+error_[[+nameout]]]]</p></div>',
+	),
+
+	// <textarea name="comment" id="comment" placeholder="Комментарий" class="form-control"></textarea>
 
 	'excludeTabs' => array(
 		'type' => 'textfield',
@@ -45,7 +51,10 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => '',
 	),
-
+	'required' => array(
+		'type' => 'textfield',
+		'value' => '<sup class="red">*</sup>',
+	),
 
 	'dateFormat' => array(
 		'type' => 'textfield',

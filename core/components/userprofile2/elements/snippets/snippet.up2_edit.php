@@ -33,10 +33,17 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 			$row['name'] = $field['name_in'];
 			$row['class'] = $field['css'];
 			$row['type'] = $field['type_out'];
-			$row['required'] = $field['required'];
-			$row['fieldrows'] .= empty($tplContentTabPaneRow)
-				? $userprofile2->pdoTools->getChunk('', $row)
-				: $userprofile2->pdoTools->getChunk($tplContentTabPaneRow, $row, $userprofile2->pdoTools->config['fastMode']);
+			$row['required'] = !empty($field['required']) ? $required : '';
+			if($row['type'] == 'textarea') {
+				$row['fieldrows'] .= empty($tplContentTabPaneTextareaRow)
+					? $userprofile2->pdoTools->getChunk('', $row)
+					: $userprofile2->pdoTools->getChunk($tplContentTabPaneTextareaRow, $row, $userprofile2->pdoTools->config['fastMode']);
+			}
+			else {
+				$row['fieldrows'] .= empty($tplContentTabPaneInputRow)
+					? $userprofile2->pdoTools->getChunk('', $row)
+					: $userprofile2->pdoTools->getChunk($tplContentTabPaneInputRow, $row, $userprofile2->pdoTools->config['fastMode']);
+			}
 		}
 		$row['tabrows'] .= empty($tplContentTabPane)
 			? $userprofile2->pdoTools->getChunk('', $row)

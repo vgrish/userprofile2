@@ -27,9 +27,10 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 		foreach($tab['fields'] as $fieldName => $field) {
 			$row['value'] = $row['extend'][$tabName][$fieldName];
 			$row['name'] = $field['name_in'];
+			$row['nameout'] = $field['name_out'];
 			$row['class'] = $field['css'];
 			$row['type'] = $field['type_out'];
-			$row['required'] = $field['required'];
+			$row['required'] = !empty($field['required']) ? $required : '';
 			$row['fieldrows'] .= empty($tplContentTabPaneRow)
 				? $userprofile2->pdoTools->getChunk('', $row)
 				: $userprofile2->pdoTools->getChunk($tplContentTabPaneRow, $row, $userprofile2->pdoTools->config['fastMode']);
