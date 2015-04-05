@@ -72,15 +72,15 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
         });
     }
 
-    ,getFielValue: function(tabName, fieldName, defaultValue) {
+    ,getFielValue: function(fieldName, defaultValue) {
         var extend = userprofile2.config.extend;
 
-        if(extend[tabName] && extend[tabName][fieldName] && (typeof extend[tabName][fieldName]!== 'object')) {
-            value = extend[tabName][fieldName];
-        }
-        else {
-            value = defaultValue;
-        }
+		if(extend[fieldName] && (typeof extend[fieldName]!== 'object')) {
+			value = extend[fieldName];
+		}
+		else {
+			value = defaultValue;
+		}
 
         return value;
     }
@@ -109,14 +109,14 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
 
                 var field = {
                     xtype: item['type_in'],
-                    name: 'up2[' + tabNameOut + '][' + item['name_out'] + ']',
+					name: 'up2[' + item['name_out'] + ']',
                     id: 'up2-extend-field-' + item['name_out'],
                     fieldLabel: item['name_in'],
                     disabled: !item['editable'],
                     allowBlank: !item['required'],
                     ctCls: 'up2_' + item['type_in'],
                     anchor: '100%',
-                    value: this.getFielValue(tabNameOut, item['name_out'], item['value']) || item['value']
+                    value: this.getFielValue(item['name_out'], item['value']) || item['value']
                 };
                 tabFields.push(field);
             }

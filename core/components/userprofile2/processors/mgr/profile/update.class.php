@@ -42,7 +42,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			$data['photo']
 		);
 		$requiredfields = $this->modx->userprofile2->getRequiredFields($type);
-		foreach($data as $tab) {
+
+		$this->modx->log(1, print_r('req' ,1 ));
+		$this->modx->log(1, print_r($requiredfields ,1 ));
+
+/*		foreach($data as $tab) {
 			foreach($tab as $fieldName => $value) {
 				if(in_array($fieldName, array_values($requiredfields)) && empty($value)) {
 					$this->modx->error->addField($fieldName, $this->modx->lexicon('vp_err_ae'));
@@ -51,7 +55,8 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 					$this->object->set($fieldName, $value);
 				}
 			}
-		}
+		}*/
+
 		if($this->hasErrors()) {
 			//$this->failure();
 			echo $this->modx->userprofile2->error('up2_required_err');

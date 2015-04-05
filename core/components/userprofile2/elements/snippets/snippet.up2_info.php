@@ -25,7 +25,7 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 			: $userprofile2->pdoTools->getChunk($tplNavTabsRow, $row, $userprofile2->pdoTools->config['fastMode']);
 		$row['fieldrows'] =  '';
 		foreach($tab['fields'] as $fieldName => $field) {
-			$row['value'] = $row['extend'][$tabName][$fieldName];
+			$row['value'] = $row['extend'][$fieldName];
 			$row['name'] = $field['name_in'];
 			$row['nameout'] = $field['name_out'];
 			$row['class'] = $field['css'];

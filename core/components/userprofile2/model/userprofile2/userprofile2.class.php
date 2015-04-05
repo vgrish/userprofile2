@@ -16,6 +16,12 @@ class userprofile2 {
 	/* @var pdoTools $pdoTools */
 	public $pdoTools;
 
+	protected $realFields = array(
+		'lastname',
+		'firstname',
+		'secondname'
+	);
+
 	protected $forbiddenFields = array(
 		'id',
 		'cachepwd',
@@ -389,6 +395,7 @@ class userprofile2 {
 					'editable' => $field->get('editable'),
 					'value' => $field->get('value'),
 					'css' => $field->get('css'),
+					'length' => $field->get('length'),
 					'type_in' => $typeField->get('type_in'),
 					'type_out' => $typeField->get('type_out'),
 				);
@@ -486,6 +493,7 @@ class userprofile2 {
 		$allNames = array_keys(array_merge($this->_getUserProfileNamesFields(), $this->_getOutNamesFields()));
 		$fieldsNotAllowed = array_map('trim', explode(',', $this->modx->getOption('userprofile2_fields_not_allowed', null, '')));
 		$fieldsAllowed = array_unique(array_map('trim', explode(',', $this->modx->getOption('userprofile2_fields_not_allowed', null, ''))));
+		$fieldsAllowed = array_unique(array_merge($fieldsAllowed, $this->realFields));
 		$forbiddenFields = array_flip(array_unique(array_merge($this->forbiddenFields, $fieldsNotAllowed)));
 		foreach($allNames as $name) {
 			if(array_key_exists($name, $forbiddenFields)) {continue;}
@@ -560,29 +568,53 @@ class userprofile2 {
 	/**
 	 * @param $key
 	 * @param array $data
-	 * @return mixed
+	 * @param int $lifetime
+	 * @param array $options
+	 *
+	 * @return string
 	 */
-	public function setCache($key, $data = array(), $lifetime = 0)
+	public function setCache($key, $data = array(), $lifetime= 0, $options = array())
 	{
-		if(empty($key)) {return $key;}
 		$cacheKey = $this->config['cacheKey'];
+		if(array_key_exists('path', $options)){
+			$cacheKey .= $options['path'].'/';
+		}
+		if(array_key_exists('hash', $options)){
+			$key = sha1(serialize($options + array($key)));
+		}
 		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
-		$this->modx->cacheManager->set($key, $data, $lifetime, $cacheOptions);
+		if (!empty($key) && !empty($cacheOptions) && $this->modx->getCacheManager()) {
+			$this->modx->cacheManager->set(
+				$key,
+				$data,
+				(integer) $lifetime,
+				$cacheOptions
+			);
+		}
 
 		return $key;
 	}
 
 	/**
 	 * @param $key
+	 * @param array $options
+	 *
 	 * @return mixed|string
 	 */
-	public function getCache($key)
+	public function getCache($key, $options = array())
 	{
-		$cached = '';
-		if(empty($key)) {return $cached;}
 		$cacheKey = $this->config['cacheKey'];
+		if(array_key_exists('path', $options)){
+			$cacheKey .= $options['path'].'/';
+		}
+		if(array_key_exists('hash', $options)){
+			$key = sha1(serialize($options + array($key)));
+		}
 		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
-		$cached = $this->modx->getCacheManager()->get($key, $cacheOptions);
+		$cached = '';
+		if (!empty($key) && !empty($cacheOptions) && $this->modx->getCacheManager()) {
+			$cached = $this->modx->cacheManager->get($key, $cacheOptions);
+		}
 
 		return $cached;
 	}
@@ -591,14 +623,15 @@ class userprofile2 {
 	 * @param $key
 	 * @return mixed
 	 */
-	public function clearCache($key)
+	public function clearCache()
 	{
-		if(empty($key)) {return $key;}
 		$cacheKey = $this->config['cacheKey'];
 		$cacheOptions = array(xPDO::OPT_CACHE_KEY => $cacheKey);
-		$this->modx->cacheManager->clean($cacheOptions);
+		if (!empty($cacheOptions) && $this->modx->getCacheManager()) {
+			$this->modx->cacheManager->clean($cacheOptions);
+		}
 
-		return $key;
+		return true;
 	}
 
 	/**
