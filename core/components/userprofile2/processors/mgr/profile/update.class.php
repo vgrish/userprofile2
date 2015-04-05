@@ -37,6 +37,13 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			echo $this->modx->userprofile2->error('up2_type_profile_err');
 			exit;
 		}
+
+
+
+		$data = $this->modx->userprofile2->sanitizeData($data);
+
+		$this->modx->log(1, print_r($data ,1 ));
+
 		unset(
 			$data['type'],
 			$data['photo']
@@ -44,7 +51,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		$requiredfields = $this->modx->userprofile2->getRequiredFields($type);
 
 		$this->modx->log(1, print_r('req' ,1 ));
-		$this->modx->log(1, print_r($requiredfields ,1 ));
+		//$this->modx->log(1, print_r($requiredfields ,1 ));
+
+
+//		$ngth = $this->modx->userprofile2->_getLengthFields();
+//		$this->modx->log(1, print_r($ngth ,1 ));
 
 /*		foreach($data as $tab) {
 			foreach($tab as $fieldName => $value) {

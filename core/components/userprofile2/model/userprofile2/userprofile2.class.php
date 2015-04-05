@@ -453,18 +453,18 @@ class userprofile2 {
 
 	public function getRequiredFields($type)
 	{
-		$requiredfields = array();
+		$requiredFields = array();
 		$tabsFields = $this->getTabsFields($type);
-		if(count($tabsFields) == 0) {return $requiredfields;}
+		if(count($tabsFields) == 0) {return $requiredFields;}
 		foreach ($tabsFields as $tabs) {
 			if((count($tabs['fields']) == 0)) {continue;}
 			foreach($tabs['fields'] as $field) {
 				if(!empty($field['required'])) {
-					$requiredfields[] = $field['name_out'];
+					$requiredFields[] = $field['name_out'];
 				}
 			}
 		}
-		return $requiredfields;
+		return $requiredFields;
 	}
 
 	public function getProfileTypeDefault()
@@ -500,7 +500,7 @@ class userprofile2 {
 			$names[] = $name;
 		}
 
-		return array_unique(array_merge($names, $fieldsAllowed));
+		return array_flip(array_unique(array_merge($names, $fieldsAllowed)));
 	}
 
 	/**
@@ -530,21 +530,36 @@ class userprofile2 {
 		return array_flip($names);
 	}
 
+	public function _getLengthFields()
+	{
+		$key = 'tabs_fields/length';
+		$lengthFields = $this->getCache($key);
+		if(!empty($lengthFields)) {return $lengthFields;}
+		$q = $this->modx->newQuery('up2Fields');
+		$q->select('name_out,length');
+		$q->limit(0);
+		if ($q->prepare() && $q->stmt->execute()) {
+			while ($row = $q->stmt->fetch(PDO::FETCH_ASSOC)) {
+				$lengthFields[$row['name_out']] = $row['length'];
+			}
+		}
+		$this->setCache($key, $lengthFields);
+
+		return $lengthFields;
+	}
+
 	public function sanitizeData(array $data = array())
 	{
-		foreach($data as $d1) {
-			if(is_array($d1) && !empty($d1)) {
-				foreach($d1 as $d2) {
-
-					/*TODO */
-
-				}
-			}
-			elseif(!is_array($d1)) {
-				/*TODO */
-			}
-
+		$_data = array();
+		$allNamesFields = $this->_getAllNamesFields();
+		$lengthFields = $this->_getLengthFields();
+		foreach($data as $f => $v) {
+			if(is_array($f)) {continue;}
+			if(!array_key_exists($f , $allNamesFields)) {continue;}
+			$_data[$f] = $this->sanitize($v, $lengthFields[$f]);
 		}
+
+		return $_data;
 	}
 
 	/**
