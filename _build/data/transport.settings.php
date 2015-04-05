@@ -23,6 +23,21 @@ $tmp = array(
 	),
 
 
+	// добавить запретить поле
+	// поля разрешенные к изменению
+	'fields_allowed' => array(
+		'type' => 'textfield',
+		'value' => '',
+		'area' => 'userprofile2_editor',
+	),
+	// поля не разрешенные к изменению
+	'fields_not_allowed' => array(
+		'type' => 'textfield',
+		'value' => '',
+		'area' => 'userprofile2_editor',
+	),
+
+
 	//временные
 
 					'assets_path' => array(

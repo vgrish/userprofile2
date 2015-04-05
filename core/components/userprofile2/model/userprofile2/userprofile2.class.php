@@ -16,6 +16,29 @@ class userprofile2 {
 	/* @var pdoTools $pdoTools */
 	public $pdoTools;
 
+	protected $forbiddenFields = array(
+		'id',
+		'cachepwd',
+		'class_key',
+		'active',
+		'remote_key',
+		'remote_data',
+		'hash_class',
+		'salt',
+		'primary_group',
+		'session_stale',
+		'sudo',
+		'internalKey',
+		'blocked',
+		'blockeduntil',
+		'blockedafter',
+		'logincount',
+		'lastlogin',
+		'thislogin',
+		'failedlogincount',
+		'sessionid'
+	);
+
 	/**
 	 * @param modX $modx
 	 * @param array $config
@@ -62,6 +85,9 @@ class userprofile2 {
 
 			'avatarParams' => $this->modx->getOption('userprofile2_avatar_params', null, '{"w":274,"h":274,"zc":1,"q":90,"bg":"ffffff","f":"jpg"}'),
 			'avatarPath' => $this->modx->getOption('userprofile2_avatar_path', null, 'images/users/'),
+
+			'modUserFields' => array(),
+			'modUserProfileFields' => array(),
 
 
 		), $config);
@@ -446,6 +472,89 @@ class userprofile2 {
 			$id = $q->stmt->fetch(PDO::FETCH_COLUMN);
 		}
 		return (int) $id;
+	}
+
+
+	/**
+	 * Вернет массив имен всех действующих полей
+	 *
+	 * @return array
+	 */
+	public function _getAllNamesFields()
+	{
+		$names = array();
+		$allNames = array_keys(array_merge($this->_getUserProfileNamesFields(), $this->_getOutNamesFields()));
+		$fieldsNotAllowed = array_map('trim', explode(',', $this->modx->getOption('userprofile2_fields_not_allowed', null, '')));
+		$fieldsAllowed = array_unique(array_map('trim', explode(',', $this->modx->getOption('userprofile2_fields_not_allowed', null, ''))));
+		$forbiddenFields = array_flip(array_unique(array_merge($this->forbiddenFields, $fieldsNotAllowed)));
+		foreach($allNames as $name) {
+			if(array_key_exists($name, $forbiddenFields)) {continue;}
+			$names[] = $name;
+		}
+
+		return array_unique(array_merge($names, $fieldsAllowed));
+	}
+
+	/**
+	 * @return array
+	 */
+	public function _getUserProfileNamesFields()
+	{
+		$this->config['modUserFields'] = $this->modx->getFields('modUser');
+		$this->config['modUserProfileFields'] = $this->modx->getFields('modUserProfile');
+
+		return array_flip(array_keys(array_merge($this->config['modUserFields'], $this->config['modUserProfileFields'])));
+	}
+
+	/**
+	 * @return array
+	 */
+	public function _getOutNamesFields()
+	{
+		$names = array();
+		$q = $this->modx->newQuery('up2Fields');
+		$q->select('name_out');
+		$q->limit(0);
+		if ($q->prepare() && $q->stmt->execute()) {
+			$names = $q->stmt->fetchAll(PDO::FETCH_COLUMN);
+		}
+
+		return array_flip($names);
+	}
+
+	public function sanitizeData(array $data = array())
+	{
+		foreach($data as $d1) {
+			if(is_array($d1) && !empty($d1)) {
+				foreach($d1 as $d2) {
+
+					/*TODO */
+
+				}
+			}
+			elseif(!is_array($d1)) {
+				/*TODO */
+			}
+
+		}
+	}
+
+	/**
+	 * Sanitizes a string
+	 *
+	 * from https://github.com/bezumkin/Office/blob/master/core/components/office/controllers/profile.class.php#L254
+	 *
+	 * @param string $string The string to sanitize
+	 * @param integer $length The length of sanitized string
+	 * @return string The sanitized string.
+	 */
+	public function sanitize($string = '', $length = 0) {
+		$expr = $this->modx->getOption('userprofile2_sanitize_pcre', null, '/[^-_a-z\p{L}0-9@\s\.\,\:\/\\\]+/iu', true);
+		$string = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
+		$sanitized = trim(preg_replace($expr, '', $string));
+		return !empty($length)
+			? mb_substr($sanitized, 0, $length, 'UTF-8')
+			: $sanitized;
 	}
 
 	/**

@@ -26,6 +26,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			return $this->success();
 		}
 		$data = $this->modx->fromJSON($data);
+
+
+		$this->modx->log(1, print_r($data ,1 ));
+
+
 		$type = $data['type'];
 		$photo = $data['photo'];
 		if(empty($type)) {

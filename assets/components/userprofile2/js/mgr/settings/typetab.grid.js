@@ -294,7 +294,7 @@ userprofile2.grid.Fields = function(config) {
             action: 'mgr/settings/fields/getlist'
             ,tab: config.tab
         }
-        ,fields: ['id','name_in','name_out','tab','type','css','value','required','editable','active','rank']
+        ,fields: ['id','name_in','name_out','tab','type','css','value','length','required','editable','active','rank']
         ,pageSize: Math.round(MODx.config.default_per_page / 2)
         ,autoHeight: true
         ,paging: true
