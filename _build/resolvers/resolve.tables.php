@@ -23,6 +23,15 @@ if ($object->xpdo) {
 			foreach ($objects as $tmp) {
 				$manager->createObjectContainer($tmp);
 			}
+
+			$level = $modx->getLogLevel();
+			$modx->setLogLevel(xPDO::LOG_LEVEL_FATAL);
+
+			$manager->addField('up2Fields', 'length', array('after' => 'value'));
+
+			$modx->setLogLevel($level);
+
+
 			break;
 
 		case xPDOTransport::ACTION_UNINSTALL:

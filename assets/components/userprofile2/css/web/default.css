@@ -1,3 +1,9 @@
+@import url("./lib/jquery.jgrowl.css");
+
+.up2-message-success  {background-color: green !important;}
+.up2-message-error  {background-color: brown !important;}
+.up2-message-info  {background-color: black !important;}
+
 .up2-page .up2-avatar, .up2-list-row .up2-avatar{
 	max-width: 100%;
 	max-height: 100%;

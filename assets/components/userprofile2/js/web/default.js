@@ -19,19 +19,19 @@ userprofile2.Message = {
     success: function(message, sticky) {
         if (sticky == null) {sticky = false;}
         if (message) {
-            $.jGrowl(message, {theme: 'userprofile2-message-success', sticky: sticky});
+            $.jGrowl(message, {theme: 'up2-message-success', sticky: sticky});
         }
     }
     ,error: function(message, sticky) {
         if (sticky == null) {sticky = true;}
         if (message) {
-            $.jGrowl(message, {theme: 'userprofile2-message-error', sticky: sticky});
+            $.jGrowl(message, {theme: 'up2-message-error', sticky: sticky});
         }
     }
     ,info: function(message, sticky) {
         if (sticky == null) {sticky = false;}
         if (message) {
-            $.jGrowl(message, {theme: 'userprofile2-message-info', sticky: sticky});
+            $.jGrowl(message, {theme: 'up2-message-info', sticky: sticky});
         }
     }
     ,close: function() {

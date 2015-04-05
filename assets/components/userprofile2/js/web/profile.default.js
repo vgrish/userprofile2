@@ -61,6 +61,9 @@ userprofile2.Profile = {
                         }
                     }
                     else {
+
+                        console.log('1');
+
                         userprofile2.Message.error(response.message, false);
                         if (response.data) {
                             for (i in response.data) {
