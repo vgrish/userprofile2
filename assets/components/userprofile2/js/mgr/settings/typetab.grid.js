@@ -344,6 +344,7 @@ Ext.extend(userprofile2.grid.Fields,MODx.grid.Grid, {
             ,type: {width: 60, editor: {xtype: 'userprofile2-combo-field-type', allowBlank: false}, renderer: userprofile2.utils.renderType, sortable: true}
             ,css: {width: 35, editor: {xtype: 'textfield', allowBlank: true}, sortable: true}
            // ,value: {width: 35, editor: {xtype: 'textfield', allowBlank: true}, sortable: true}
+            ,length: {width: 35, editor: {xtype: 'numberfield', allowBlank: true}, sortable: true}
             ,required: {width: 35, sortable: true, editor:{xtype:'combo-boolean', renderer:'boolean'}}
             ,editable: {width: 35, sortable: true, editor:{xtype:'combo-boolean', renderer:'boolean'}}
             ,active: {width: 35, sortable: true, editor:{xtype:'combo-boolean', renderer:'boolean'}}
@@ -402,6 +403,7 @@ Ext.extend(userprofile2.grid.Fields,MODx.grid.Grid, {
             active: 1
             ,editable: 1
             ,tab: tab
+            ,length: 50
         });
         this.windows.createField.show(e.target);
     }
@@ -435,6 +437,7 @@ Ext.extend(userprofile2.grid.Fields,MODx.grid.Grid, {
             ,{xtype: 'textfield',fieldLabel: _('up2_name_out'), name: 'name_out', allowBlank: false, anchor: '99%', id: 'userprofile2-field-in-tab-name_out-'+type}
             ,{xtype: 'userprofile2-combo-field-type',fieldLabel: _('up2_type'), name: 'type', allowBlank: false, anchor: '99%', id: 'userprofile2-field-in-tab-type-'+type}
             ,{xtype: 'textfield',fieldLabel: _('up2_css'), name: 'css', allowBlank: true, anchor: '99%', id: 'userprofile2-field-in-tab-css-'+type}
+            ,{xtype: 'numberfield',fieldLabel: _('up2_length'), name: 'length', allowBlank: true, anchor: '99%', id: 'userprofile2-field-in-tab-length-'+type}
             ,{xtype: 'textarea',fieldLabel: _('up2_value'), name: 'value', allowBlank: true, anchor: '99%', id: 'userprofile2-field-in-tab-value-'+type}
         );
 

@@ -17,6 +17,9 @@ $_lang['up2_name_tab_out'] = 'Имя вкладки в форме';
 $_lang['up2_type'] = 'Тип';
 $_lang['up2_css'] = 'Css класс';
 $_lang['up2_value'] = 'Значение';
+$_lang['up2_length'] = 'Длина поля';
+
+
 $_lang['up2_required'] = 'Обязательно';
 $_lang['up2_editable'] = 'Редактируемое';
 $_lang['up2_description'] = 'Описание';
