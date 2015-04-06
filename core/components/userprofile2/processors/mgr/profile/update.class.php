@@ -157,9 +157,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		$this->setProperty('extend', $data);
 		$this->setProperty('type', $this->type);
 
-
-		echo $this->userprofile2->success('up2_profile_success_save');
-		exit;
+		return parent::beforeSet();
 	}
 
 	/** {@inheritDoc} */
@@ -189,7 +187,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 				}
 			}
 			if(!file_exists(MODX_ASSETS_PATH . $path) || !is_dir(MODX_ASSETS_PATH . $path)) {
-				$this->modx->log(modX::LOG_LEVEL_ERROR, '[UP2] Could not create images dir "'.MODX_ASSETS_PATH . $path.'"');
+				$this->modx->log(1, '[UP2] Could not create images dir "'.MODX_ASSETS_PATH . $path.'"');
 				return false;
 			}
 			// upload a new foto from mgr
@@ -300,8 +298,9 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function afterSave() {
-
-		return parent::afterSave();
+		echo $this->userprofile2->success('up2_profile_success_save');
+		exit;
+		//return parent::afterSave();
 	}
 
 }
