@@ -76,6 +76,7 @@ if ($object->xpdo) {
 					'name' => !$lang ? 'подтверждение email' : 'confirm email',
 					'type' => 3,
 					'entry' => $entry,
+					'cache' => 0,
 					'content' => '[[$up2.edit.user.email.confirm]]',
 					'description' => !$lang ? 'подтверждение email' : 'confirm email',
 				),

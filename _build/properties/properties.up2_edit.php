@@ -73,7 +73,7 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => 'tpl.up2User.Edit.change.email',
 	),
-	'resAfterChange' => array(
+	'redirectConfirm' => array(
 		'type' => 'textfield',
 		'value' => '/users/settings/',
 	),

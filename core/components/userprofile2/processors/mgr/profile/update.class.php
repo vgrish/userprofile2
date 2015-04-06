@@ -155,6 +155,9 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	public function changeEmail($email) {
 		$config = $this->config;
 		$userId = $this->object->id;
+		$res = is_numeric($config['redirectConfirm'])
+			? $this->modx->makeUrl($config['redirectConfirm'], '', array(), 'full')
+			: $this->modx->makeUrl($this->modx->getOption('site_start'), '', array(), 'full') . $config['redirectConfirm'];
 		$activationHash = md5(uniqid(md5($this->object->User->get('email') . '/' . $userId), true));
 		/** @var modDbRegister $register */
 		$register = $this->modx->getService('registry', 'registry.modRegistry')->getRegister('user', 'registry.modDbRegister');
@@ -163,11 +166,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		$register->send('/email/change/',
 			array(md5($this->object->User->get('email')) => array(
 				'hash' => $activationHash,
-				'email' => $email
+				'email' => $email,
+				'res' => $res
 			)), array('ttl' => 86400));
 		$request = array(
 			'hash' => $activationHash,
-			'res' => $config['resAfterChange']
 		);
 		$link = $this->modx->makeUrl($this->modx->getOption('site_start'), '', array(), 'full');
 		$link .= 'emailconfirm/?'.http_build_query($request);

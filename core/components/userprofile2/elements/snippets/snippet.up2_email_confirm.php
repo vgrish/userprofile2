@@ -12,5 +12,3 @@ if ($isAuthenticated) {$user_id = $modx->user->id;}
 else {$modx->sendErrorPage();}
 //
 //$row = $userprofile2->getUserFields($user_id);
-
-
