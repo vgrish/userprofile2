@@ -48,6 +48,31 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		if(isset($data['removephoto'])) {
 			$removephoto = true;
 		}
+		// change password
+		if(isset($data['specifiedpassword']) || isset($data['confirmpassword'])) {
+			$params = array(
+				'id' => $this->object->id,
+				'username' => $this->object->User->get('username'),
+				'email' => $this->object->UserProfile->get('email'),
+				'specifiedpassword' => $data['specifiedpassword'],
+				'confirmpassword' => $data['confirmpassword'],
+				'passwordnotifymethod' => 's',
+				'passwordgenmethod' => 'spec',
+				'newpassword' => '',
+			);
+			if(!$response = $this->modx->runProcessor('update',
+				$params
+				, array(
+					'processors_path' => MODX_CORE_PATH .'model/modx/processors/security/user/',
+				))) {
+				return '';
+			}
+			$response = $response->getResponse();
+			if($response['success']) {
+				$this->modx->error->reset();
+			}
+		}
+		//
 		$data = $this->userprofile2->sanitizeData($data); // first
 		$realFields = $this->userprofile2->_getRealFields();
 		$modUserFields = $this->userprofile2->config['modUserFields'];
@@ -56,7 +81,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		// required
 		foreach($data as $f => $v) {
 			if(empty($v) && array_key_exists($f, $requiredFields)) {
-				$this->modx->error->addField($f, $this->modx->lexicon('vp_err_ae')); // !
+				$this->modx->error->addField($f, $this->modx->lexicon('up2_required_field')); // !
 			}
 		}
 		if($this->hasErrors()) {
@@ -128,12 +153,12 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		if($changePhoto) {
 			$change = $this->changePhoto($photo);
 		}
-		// change password
-
-
 		$data = $this->modx->toJSON($data);
 		$this->setProperty('extend', $data);
 		$this->setProperty('type', $this->type);
+
+
+		$this->modx->log(1, '[UP2] ' . print_r('==3423423432=', true));
 
 		return parent::beforeSet();
 	}
@@ -226,7 +251,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	 * @return bool
 	 */
 	public function changeEmail($email) {
-		if($this->modx->getCount('modUserProfile', array('email' => $email, 'id:!=' => $this->object->id))) {
+		if($this->modx->getCount('modUserProfile', array('email' => $email, 'internalKey:!=' => $this->object->id))) {
 			echo $this->userprofile2->error('up2_email_already_exists');
 			exit;
 		}
