@@ -49,7 +49,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			$removephoto = true;
 		}
 		// change password
-		if(isset($data['specifiedpassword']) || isset($data['confirmpassword'])) {
+		if(!empty($data['specifiedpassword']) || !empty($data['confirmpassword'])) {
 			$params = array(
 				'id' => $this->object->id,
 				'username' => $this->object->User->get('username'),
@@ -158,9 +158,8 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		$this->setProperty('type', $this->type);
 
 
-		$this->modx->log(1, '[UP2] ' . print_r('==3423423432=', true));
-
-		return parent::beforeSet();
+		echo $this->userprofile2->success('up2_profile_success_save');
+		exit;
 	}
 
 	/** {@inheritDoc} */
