@@ -3,14 +3,9 @@
 $properties = array();
 
 $tmp = array(
-
-	'id' => array(
+	'redirectConfirm' => array(
 		'type' => 'textfield',
 		'value' => '',
-	),
-	'tplSectionRow' => array(
-		'type' => 'textfield',
-		'value' => '@INLINE <li class="[[+section]] [[+active]]"><a href="[[+link]]">[[+title]] [[+count]]</a></li>',
 	),
 
 );

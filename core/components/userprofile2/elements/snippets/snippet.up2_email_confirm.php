@@ -7,8 +7,26 @@ if (!$userprofile2 = $modx->getService('userprofile2', 'userprofile2', $modx->ge
 $userprofile2->initialize($modx->context->key, $scriptProperties);
 //
 $isAuthenticated = $modx->user->isAuthenticated($modx->context->key);
+$hash = !empty($_REQUEST['hash']) ? $_REQUEST['hash'] : '';
 $user_id = 0;
-if ($isAuthenticated) {$user_id = $modx->user->id;}
+if ($isAuthenticated && !empty($hash)) {$user_id = $modx->user->id;}
 else {$modx->sendErrorPage();}
 //
-//$row = $userprofile2->getUserFields($user_id);
+$register = $modx->getService('registry', 'registry.modRegistry')->getRegister('user', 'registry.modDbRegister');
+$register->connect();
+$register->subscribe('/email/change/' . md5($modx->user->Profile->get('email')));
+$msgs = $register->read(array('poll_limit' => 1));
+if (!empty($msgs[0])) {
+	$msgs = reset($msgs);
+	if (@$hash === @$msgs['hash'] && !empty($msgs['email'])) {
+		$modx->user->getOne('Profile')->set('email', $msgs['email']);
+		$modx->user->save();
+	}
+}
+$redirectConfirm = !empty($redirectConfirm)
+	? $this->modx->makeUrl($redirectConfirm, '', array(), 'full')
+	: $msgs['res'];
+if(!empty($redirectConfirm)) {
+	$modx->sendRedirect(@$msgs['res']);
+}
+return '';
