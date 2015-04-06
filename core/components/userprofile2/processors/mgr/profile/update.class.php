@@ -5,37 +5,57 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	public $permission = 'up2setting_save';
 
 	public $userprofile2;
+	public $config;
+	public $type;
+	public $ctx;
+	public $message;
+
 	/** {@inheritDoc} */
 	public function initialize() {
 		if (!$this->modx->hasPermission($this->permission)) {
 			return $this->modx->lexicon('access_denied');
 		}
 		$this->userprofile2 = $this->modx->userprofile2;
+		$this->userprofile2->initialize($this->modx->context->key);
+		$this->config = $this->userprofile2->config;
+		// get data
+		$data = $this->getProperty('data');
+		if(empty($data)) {return $this->success();}
+		$data = $this->modx->fromJSON($data);
+		if(!$this->type = $data['type']) {
+			echo $this->userprofile2->error('up2_type_profile_err');
+			exit;
+		}
+		// get properties
+		if(isset($data['form_key'])) {$formKey = $data['form_key'];}
+		if(!empty($formKey) && isset($_SESSION['up2form'][$formKey])) {
+			$this->config = array_merge($this->config, $_SESSION['up2form'][$formKey]);
+		}
+		$this->ctx = $this->config['ctx'];
 
 		return parent::initialize();
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
 		$data = $this->getProperty('data');
-		if(empty($data)) {return $this->success();}
 		$data = $this->modx->fromJSON($data);
-		if(!$type = $data['type']) {
-			echo $this->userprofile2->error('up2_type_profile_err');
-			exit;
-		}
 		$data = $this->userprofile2->sanitizeData($data); // first
 		$realFields = $this->userprofile2->_getRealFields();
 		$modUserFields = $this->userprofile2->config['modUserFields'];
 		$modUserProfileFields = $this->userprofile2->config['modUserProfileFields'];
-		$requiredFields = $this->userprofile2->getRequiredFields($type);
+		$requiredFields = $this->userprofile2->getRequiredFields($this->type);
 		// required
 		foreach($data as $f => $v) {
 			if(empty($v) && array_key_exists($f, $requiredFields)) {
-				$this->modx->error->addField($f, $this->modx->lexicon('vp_err_ae'));
+				$this->modx->error->addField($f, $this->modx->lexicon('vp_err_ae')); // !
 			}
 		}
 		if($this->hasErrors()) {
-			echo $this->userprofile2->error('up2_required_err');
+			$_errFields = array();
+			foreach($this->modx->error->errors as $err) {
+				$_errFields[$err['id']] = $err['msg'];
+			}
+			echo $this->userprofile2->error('up2_required_err', $_errFields);
 			exit;
 		}
 
@@ -77,6 +97,27 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		$this->modx->log(1, print_r('=====----',1 ));
 		$this->modx->log(1, print_r($data ,1 ));
 
+		// change email
+		$changeEmail = false;
+		if(!empty($email) && ($this->ctx!='mgr')) {
+			$currentEmail = $this->object->UserProfile->get('email');
+			$newEmail = trim($email);
+			$changeEmail = strtolower($currentEmail) != strtolower($newEmail);
+		}
+		if($changeEmail && !empty($newEmail)) {
+			$change = $this->changeEmail($newEmail);
+
+
+			$this->modx->log(1, print_r($change ,1));
+
+			$this->message = ($change === true)
+				? $this->modx->lexicon('up2_msg_save_email')
+				: $this->modx->lexicon('up2_msg_save_noemail', array('errors' => $change));
+		}
+		//$this->success($message
+
+
+
 	/*	$this->modx->log(1, print_r($realFields,1 ));
 		$this->modx->log(1, print_r($modUserFields,1 ));
 		$this->modx->log(1, print_r($modUserProfileFields,1 ));*/
@@ -84,7 +125,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 
 
 		// special fields
-/*		$photo = $data['photo'];
+/*		$photo = $data['photo'];p2
 		$email = $data['email'];
 		$password = $data['password'];
 		$fullname = $data['fullname'];
@@ -93,11 +134,70 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 
 		$data = $this->modx->toJSON($data);
 		$this->setProperty('extend', $data);
-		$this->setProperty('type', $type);
+		$this->setProperty('type', $this->type);
 		//$this->setPhoto($photo);
+
 
 		return parent::beforeSet();
 	}
+
+
+	/**
+	 * Method for change email of user
+	 *
+	 * from https://github.com/bezumkin/Office/blob/97d3e6112aa9868e7d848efd4345052ed103850b/core/components/office/controllers/profile.class.php#L273
+	 *
+	 * @param $email
+	 * @param $id
+	 *
+	 * @return bool
+	 */
+	public function changeEmail($email) {
+		$config = $this->config;
+		$userId = $this->object->id;
+		$activationHash = md5(uniqid(md5($this->object->User->get('email') . '/' . $userId), true));
+		/** @var modDbRegister $register */
+		$register = $this->modx->getService('registry', 'registry.modRegistry')->getRegister('user', 'registry.modDbRegister');
+		$register->connect();
+		$register->subscribe('/email/change/');
+		$register->send('/email/change/',
+			array(md5($this->object->User->get('email')) => array(
+				'hash' => $activationHash,
+				'email' => $email
+			)), array('ttl' => 86400));
+		$request = array(
+			'hash' => $activationHash,
+			'res' => $config['resAfterChange']
+		);
+		$link = $this->modx->makeUrl($this->modx->getOption('site_start'), '', array(), 'full');
+		$link .= 'emailconfirm/?'.http_build_query($request);
+		$chunk = $this->modx->getChunk($config['tplChangeEmail'],
+			array_merge(
+				$this->userprofile2->getUserFields($userId)
+				,array('link' => $link)
+			)
+		);
+		/** @var modPHPMailer $mail */
+		$mail = $this->modx->getService('mail', 'mail.modPHPMailer');
+		$mail->set(modMail::MAIL_BODY, $chunk);
+		$mail->set(modMail::MAIL_FROM, $this->modx->getOption('emailsender'));
+		$mail->set(modMail::MAIL_FROM_NAME, $this->modx->getOption('site_name'));
+		$mail->set(modMail::MAIL_SENDER, $this->modx->getOption('emailsender'));
+		$mail->set(modMail::MAIL_SUBJECT, $this->modx->lexicon('up2_email_subject'));
+		$mail->address('to', $email);
+		$mail->address('reply-to', $this->modx->getOption('emailsender'));
+		$mail->setHTML(true);
+		$response = !$mail->send()
+			? $mail->mailer->ErrorInfo
+			: true;
+		$mail->reset();
+
+		return $response;
+	}
+
+
+
+
 	/** {@inheritDoc} */
 	public function setPhoto($photo) {
 		if(strpos($photo, '://') == true) {return false;}
@@ -181,6 +281,10 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		}
 		return false;
 	}
+
+
+
+
 	/** {@inheritDoc} */
 	public function afterSave() {
 

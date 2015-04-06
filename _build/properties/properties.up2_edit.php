@@ -69,6 +69,14 @@ $tmp = array(
 		'type' => 'combo-boolean',
 		'value' => false,
 	),
+	'tplChangeEmail' => array(
+		'type' => 'textfield',
+		'value' => 'tpl.up2User.Edit.change.email',
+	),
+	'resAfterChange' => array(
+		'type' => 'textfield',
+		'value' => '/users/settings/',
+	),
 
 	'js' => array(
 		'type' => 'textfield',

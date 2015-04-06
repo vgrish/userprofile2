@@ -774,8 +774,6 @@ class userprofile2 {
 		if(!$this->isModeEventNew($sp)) {return '';};
 		$user = $sp['user'];
 		$user->getOne('up2Profile');
-
-		$this->modx->log(1, print_r($user->toArray() ,1));
 	}
 
 	/**

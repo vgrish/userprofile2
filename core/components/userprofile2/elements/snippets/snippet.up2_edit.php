@@ -70,6 +70,9 @@ $output = empty($tplUser)
 if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
 	$output = $userprofile2->pdoTools->getChunk($tplWrapper, array('output' => $output), $userprofile2->pdoTools->config['fastMode']);
 }
+$key = md5($modx->toJSON($userprofile2->config));
+$_SESSION['up2form'][$key] = $userprofile2->config;
+$output = str_ireplace('</form>', "\n<input type=\"hidden\" name=\"form_key\" value=\"{$key}\" class=\"disable-sisyphus\" />\n</form>", $output);
 if (!empty($toPlaceholder)) {
 	$modx->setPlaceholder($toPlaceholder, $output);
 } else {

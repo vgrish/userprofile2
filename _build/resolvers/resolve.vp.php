@@ -118,6 +118,14 @@ if ($object->xpdo) {
 					'route' => '/users/settings/',
 					'properties' => '{"section":"settings"}'
 				),
+				'6' => array(
+					'description' => !$lang ? 'подтверждение email' : 'confirm email',
+					'metod' => 'GET,POST',
+					'route' => '/emailconfirm/',
+					'properties' => '{"section":"emailconfirm"}'
+				),
+
+				//emailconfirm/
 
 			);
 

@@ -63,7 +63,11 @@ $tmp = array(
 		'file' => 'up2_user_edit',
 		'description' => '',
 	),
-	//
+	'tpl.up2User.Edit.change.email' => array(
+		'file' => 'up2_user_edit_change_email',
+		'description' => '',
+	),
+
 
 );
 
