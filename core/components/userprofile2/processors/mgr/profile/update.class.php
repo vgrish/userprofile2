@@ -23,7 +23,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			echo $this->userprofile2->error('up2_type_profile_err');
 			exit;
 		}
-		$data = $this->userprofile2->sanitizeData($data);
+		$data = $this->userprofile2->sanitizeData($data); // first
 		$realFields = $this->userprofile2->_getRealFields();
 		$modUserFields = $this->userprofile2->config['modUserFields'];
 		$modUserProfileFields = $this->userprofile2->config['modUserProfileFields'];
@@ -47,12 +47,12 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		if(isset($data['photo'])) {$photo = $data['photo'];}
 		if(isset($data['email'])) {$email = $data['email'];}
 		if(isset($data['password'])) {$password = $data['password'];}
-		if(isset($data['fullname'])) {$fullname = $data['fullname'];}
+		if(isset($data['username'])) {$username = $data['username'];}
 		unset(
 			$data['photo'],
 			$data['email'],
 			$data['password'],
-			$data['fullname']
+			$data['username']
 		);
 		//
 		foreach($data as $f => $v) {

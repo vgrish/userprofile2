@@ -774,6 +774,8 @@ class userprofile2 {
 		if(!$this->isModeEventNew($sp)) {return '';};
 		$user = $sp['user'];
 		$user->getOne('up2Profile');
+
+		$this->modx->log(1, print_r($user->toArray() ,1));
 	}
 
 	/**
@@ -787,4 +789,12 @@ class userprofile2 {
 		}
 	}
 
+	public function OnUserRemove($sp)
+	{
+		$user = $sp['user'];
+		$id = $user->get('id');
+		$this->modx->removeCollection('up2Profile', array(
+			'id:=' => $id,
+		));
+	}
 }

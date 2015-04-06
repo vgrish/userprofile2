@@ -8,6 +8,7 @@ $tmp = array(
 		'description' => '',
 		'events' => array(
 			'OnUserSave' => array(),
+			'OnUserRemove' => array(),
 			'OnUserFormPrerender' => array(),
 			'OnBeforeCacheUpdate' => array(),
 		)
