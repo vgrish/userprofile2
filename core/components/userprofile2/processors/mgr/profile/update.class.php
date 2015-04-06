@@ -96,7 +96,6 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		// special fields
 		if(isset($data['email'])) {$email = $data['email'];}
 		if(isset($data['username'])) {$username = $data['username'];}
-		if(isset($data['password'])) {$password = $data['password'];}
 		unset(
 			$data['email'],
 			$data['username'],
@@ -225,7 +224,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 				}
 			}
 		}
-		if(!array_key_exists('removeavatar', $this->message['data'])) {
+		if(!isset($this->message['data']['removeavatar'])) {
 			$this->message = array('data' => array('removeavatar' => $url));
 		}
 
