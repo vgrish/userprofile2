@@ -25,8 +25,8 @@ if (!empty($msgs[0])) {
 }
 $redirectConfirm = !empty($redirectConfirm)
 	? $this->modx->makeUrl($redirectConfirm, '', array(), 'full')
-	: $msgs['res'];
+	: @$msgs['res'];
 if(!empty($redirectConfirm)) {
-	$modx->sendRedirect(@$msgs['res']);
+	$modx->sendRedirect($redirectConfirm);
 }
 return '';
