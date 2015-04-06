@@ -44,6 +44,10 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			$photo = $data['photo'];
 			unset($data['photo']);
 		}
+		$removephoto = false;
+		if(isset($data['removephoto'])) {
+			$removephoto = true;
+		}
 		$data = $this->userprofile2->sanitizeData($data); // first
 		$realFields = $this->userprofile2->_getRealFields();
 		$modUserFields = $this->userprofile2->config['modUserFields'];
@@ -65,12 +69,12 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		}
 		// special fields
 		if(isset($data['email'])) {$email = $data['email'];}
-		if(isset($data['password'])) {$password = $data['password'];}
 		if(isset($data['username'])) {$username = $data['username'];}
+		if(isset($data['password'])) {$password = $data['password'];}
 		unset(
 			$data['email'],
-			$data['password'],
-			$data['username']
+			$data['username'],
+			$data['password']
 		);
 		//
 		foreach($data as $f => $v) {
@@ -85,6 +89,9 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 				continue;
 			}
 			if(array_key_exists($f, $modUserProfileFields)) {
+				if($f == 'extended') {
+					$v = array_merge($this->object->UserProfile->get('extended'), $v);
+				}
 				$this->object->UserProfile->set($f, $v);
 				unset($data[$f]);
 				continue;
@@ -108,15 +115,20 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		if(isset($photo) && ($this->ctx == 'mgr')) {
 			$changePhoto = strtolower($this->object->UserProfile->get('photo')) != strtolower(trim($photo));
 		}
-		elseif(isset($photo) && ($this->ctx!== 'mgr')) {
-			$photo = 'foto';
-			$changePhoto = true;
+		elseif(isset($photo) && ($this->ctx!= 'mgr')) {
+			if(isset($photo['name'])) {
+				$photo = $photo['name'];
+				$changePhoto = true;
+			}
+			elseif(!isset($photo['name']) && $removephoto) {
+				$photo = '';
+				$changePhoto = true;
+			}
 		}
 		if($changePhoto) {
 			$change = $this->changePhoto($photo);
-
 		}
-
+		// change password
 
 
 		$data = $this->modx->toJSON($data);
@@ -164,7 +176,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 				}
 			}
 			// upload a new foto from web
-			elseif(($this->ctx !== 'mgr') && !empty($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
+			elseif(($this->ctx != 'mgr') && !empty($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
 				move_uploaded_file($_FILES['photo']['tmp_name'], $dst);
 			}
 			if(!empty($dst)) {
