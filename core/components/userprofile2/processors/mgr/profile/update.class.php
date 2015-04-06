@@ -39,6 +39,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	public function beforeSet() {
 		$data = $this->getProperty('data');
 		$data = $this->modx->fromJSON($data);
+		// special fields
+		if(isset($data['photo'])) {
+			$photo = $data['photo'];
+			unset($data['photo']);
+		}
 		$data = $this->userprofile2->sanitizeData($data); // first
 		$realFields = $this->userprofile2->_getRealFields();
 		$modUserFields = $this->userprofile2->config['modUserFields'];
@@ -58,18 +63,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			echo $this->userprofile2->error('up2_required_err', $_errFields);
 			exit;
 		}
-
-
-		$this->modx->log(1, print_r('=====----',1 ));
-		$this->modx->log(1, print_r($data ,1 ));
-
 		// special fields
-		if(isset($data['photo'])) {$photo = $data['photo'];}
 		if(isset($data['email'])) {$email = $data['email'];}
 		if(isset($data['password'])) {$password = $data['password'];}
 		if(isset($data['username'])) {$username = $data['username'];}
 		unset(
-			$data['photo'],
 			$data['email'],
 			$data['password'],
 			$data['username']
@@ -92,11 +90,6 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 				continue;
 			}
 		}
-
-
-		$this->modx->log(1, print_r('=====----',1 ));
-		$this->modx->log(1, print_r($data ,1 ));
-
 		// change email
 		$changeEmail = false;
 		if(!empty($email) && ($this->ctx!='mgr')) {
@@ -106,42 +99,110 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		}
 		if($changeEmail && !empty($newEmail)) {
 			$change = $this->changeEmail($newEmail);
-
-
-			$this->modx->log(1, print_r($change ,1));
-
 			$this->message = ($change === true)
 				? $this->modx->lexicon('up2_msg_save_email')
 				: $this->modx->lexicon('up2_msg_save_noemail', array('errors' => $change));
 		}
-		//$this->success($message
+		// change photo
+		$changePhoto = false;
+		if(isset($photo) && ($this->ctx == 'mgr')) {
+			$changePhoto = strtolower($this->object->UserProfile->get('photo')) != strtolower(trim($photo));
+		}
+		elseif(isset($photo) && ($this->ctx!== 'mgr')) {
+			$photo = 'foto';
+			$changePhoto = true;
+		}
+		if($changePhoto) {
+			$change = $this->changePhoto($photo);
 
+		}
 
-
-	/*	$this->modx->log(1, print_r($realFields,1 ));
-		$this->modx->log(1, print_r($modUserFields,1 ));
-		$this->modx->log(1, print_r($modUserProfileFields,1 ));*/
-
-
-
-		// special fields
-/*		$photo = $data['photo'];p2
-		$email = $data['email'];
-		$password = $data['password'];
-		$fullname = $data['fullname'];
-		*/
 
 
 		$data = $this->modx->toJSON($data);
 		$this->setProperty('extend', $data);
 		$this->setProperty('type', $this->type);
-		//$this->setPhoto($photo);
-
 
 		return parent::beforeSet();
 	}
 
+	/** {@inheritDoc} */
+	public function changePhoto($photo) {
+		$currentPhoto = $this->object->UserProfile->get('photo');
+		$params = $this->modx->fromJSON(trim($this->config['avatarParams']));
+		$path = trim($this->config['avatarPath']);
+		if(empty($photo) && strpos($currentPhoto, '://')) {
+			$this->object->UserProfile->set('photo', '');
+		}
+		elseif(empty($photo) && !strpos($currentPhoto, '://')) {
+			$this->object->UserProfile->set('photo', '');
+			$this->removeCurrentPhoto($currentPhoto, $path);
+		}
+		elseif(!empty($photo)) {
+			$file = strtolower(md5($this->getProperty('data').time()). '.' . $params['f']);
+			$url = MODX_ASSETS_URL . $path . $file;
+			$dst = MODX_ASSETS_PATH . $path . $file;
+			// Check image dir
+			$tmp = explode('/', str_replace(MODX_BASE_PATH, '', MODX_ASSETS_PATH . $path));
+			$dir = rtrim(MODX_BASE_PATH, '/');
+			foreach ($tmp as $v) {
+				if (empty($v)) {continue;}
+				$dir .= '/' . $v;
+				if (!file_exists($dir) || !is_dir($dir)) {
+					@mkdir($dir);
+				}
+			}
+			if(!file_exists(MODX_ASSETS_PATH . $path) || !is_dir(MODX_ASSETS_PATH . $path)) {
+				$this->modx->log(modX::LOG_LEVEL_ERROR, '[UP2] Could not create images dir "'.MODX_ASSETS_PATH . $path.'"');
+				return false;
+			}
+			// upload a new foto from mgr
+			if($this->ctx == 'mgr') {
+				$cur = MODX_BASE_PATH . $photo ;
+				if(!empty($cur) && file_exists($cur)) {
+					copy($cur, $dst);
+				}
+			}
+			// upload a new foto from web
+			elseif(($this->ctx !== 'mgr') && !empty($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
+				move_uploaded_file($_FILES['photo']['tmp_name'], $dst);
+			}
+			if(!empty($dst)) {
+				$phpThumb = $this->modx->getService('modphpthumb','modPhpThumb', MODX_CORE_PATH . 'model/phpthumb/', array());
+				$phpThumb->setSourceFilename($dst);
+				foreach ($params as $k => $v) {
+					$phpThumb->setParameter($k, $v);
+				}
+				if ($phpThumb->GenerateThumbnail()) {
+					if ($phpThumb->renderToFile($dst)) {
+						if (!empty($cur) && file_exists($cur) && !empty($_FILES['photo'])) {@unlink($cur);}
+						$this->object->UserProfile->set('photo', $url);
+						$this->removeCurrentPhoto($currentPhoto, $path);
+					}
+					else {
+						$this->modx->log(1, '[UP2] Could not save rendered image to "'.$dst.'"');
+					}
+				}
+				else {
+					$this->modx->log(1, '[UP2] ' . print_r($phpThumb->debugmessages, true));
+				}
+			}
+		}
 
+		return true;
+	}
+	/** {@inheritDoc} */
+	public function removeCurrentPhoto($currentPhoto, $path) {
+		$tmp = explode('/', $currentPhoto);
+		if(!empty($tmp[1])) {
+			$cur = MODX_ASSETS_PATH . $path . end($tmp);
+			if(!empty($cur) && file_exists($cur)) {
+				@unlink($cur);
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * Method for change email of user
 	 *
@@ -153,6 +214,10 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	 * @return bool
 	 */
 	public function changeEmail($email) {
+		if($this->modx->getCount('modUserProfile', array('email' => $email, 'id:!=' => $this->object->id))) {
+			echo $this->userprofile2->error('up2_email_already_exists');
+			exit;
+		}
 		$config = $this->config;
 		$userId = $this->object->id;
 		$res = is_numeric($config['redirectConfirm'])
@@ -197,97 +262,6 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 
 		return $response;
 	}
-
-
-
-
-	/** {@inheritDoc} */
-	public function setPhoto($photo) {
-		if(strpos($photo, '://') == true) {return false;}
-		$path = trim($this->modx->userprofile2->config['avatarPath']);
-		if(strpos($photo, $path) == true) {return false;}
-		$params = $this->modx->fromJSON(trim($this->modx->userprofile2->config['avatarParams']));
-		$file = strtolower(md5($this->getProperty('data').time()). '.' . $params['f']);
-		$currentPhoto = $this->object->UserProfile->get('photo');
-
-		$this->modx->log(1, print_r($path ,1));
-		$this->modx->log(1, print_r($params ,1));
-		$this->modx->log(1, print_r($file ,1));
-		$this->modx->log(1, print_r($_FILES ,1));
-
-		$url = MODX_ASSETS_URL . $path . $file;
-		$dst = MODX_ASSETS_PATH . $path . $file;
-		// Check image dir
-		$tmp = explode('/', str_replace(MODX_BASE_PATH, '', MODX_ASSETS_PATH . $path));
-		$dir = rtrim(MODX_BASE_PATH, '/');
-		foreach ($tmp as $v) {
-			if (empty($v)) {continue;}
-			$dir .= '/' . $v;
-			if (!file_exists($dir) || !is_dir($dir)) {
-				@mkdir($dir);
-			}
-		}
-		if(!file_exists(MODX_ASSETS_PATH . $path) || !is_dir(MODX_ASSETS_PATH . $path)) {
-			$this->modx->log(modX::LOG_LEVEL_ERROR, '[UP2] Could not create images dir "'.MODX_ASSETS_PATH . $path.'"');
-			return false;
-		}
-		// Remove image
-		if(empty($photo) && $currentPhoto) {
-			if($this->removeCurrentPhoto($currentPhoto, $path)) {
-				$this->object->UserProfile->set('photo', '');
-				return true;
-			}
-		}
-		// Upload a new from mgr
-		elseif(!empty($photo) && empty($_FILES['photo'])) {
-			$cur = MODX_BASE_PATH . $photo ;
-			if(!empty($cur) && file_exists($cur)) {
-				copy($cur, $dst);
-			}
-		}
-		// Upload a new one
-		elseif(!empty($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
-			move_uploaded_file($_FILES['photo']['tmp_name'], $dst);
-		}
-		if(!empty($dst)) {
-			$phpThumb = $this->modx->getService('modphpthumb','modPhpThumb', MODX_CORE_PATH . 'model/phpthumb/', array());
-			$phpThumb->setSourceFilename($dst);
-			foreach ($params as $k => $v) {
-				$phpThumb->setParameter($k, $v);
-			}
-			if ($phpThumb->GenerateThumbnail()) {
-				if ($phpThumb->renderToFile($dst)) {
-					if (!empty($cur) && file_exists($cur) && !empty($_FILES['photo'])) {@unlink($cur);}
-					$this->object->UserProfile->set('photo', $url);
-					$this->removeCurrentPhoto($currentPhoto, $path);
-				}
-				else {
-					$this->modx->log(1, '[UP2] Could not save rendered image to "'.$dst.'"');
-				}
-			}
-			else {
-				$this->modx->log(1, '[UP2] ' . print_r($phpThumb->debugmessages, true));
-			}
-		}
-
-		return true;
-	}
-	/** {@inheritDoc} */
-	public function removeCurrentPhoto($currentPhoto, $path) {
-		$tmp = explode('/', $currentPhoto);
-		if(!empty($tmp[1])) {
-			$cur = MODX_ASSETS_PATH . $path . end($tmp);
-			if(!empty($cur) && file_exists($cur)) {
-				@unlink($cur);
-			}
-			return true;
-		}
-		return false;
-	}
-
-
-
-
 	/** {@inheritDoc} */
 	public function afterSave() {
 

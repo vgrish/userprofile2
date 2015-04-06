@@ -44,6 +44,6 @@ $_lang['up2_confirmpassword_desc'] = 'Нужно повторить новый �
 
 
 $_lang['up2_email_subject'] = 'Проверка email';
-
+$_lang['up2_email_already_exists'] = 'Email уже существует';
 
 
