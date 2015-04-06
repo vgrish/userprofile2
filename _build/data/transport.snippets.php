@@ -35,6 +35,13 @@ $tmp = array(
 		'description' => '',
 	),
 
+	// подтверждение email
+	'up2EmailConfirm' => array(
+		'file' => 'up2_email_confirm',
+		'description' => '',
+	),
+
+
 );
 
 foreach ($tmp as $k => $v) {

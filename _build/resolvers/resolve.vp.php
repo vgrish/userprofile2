@@ -72,6 +72,13 @@ if ($object->xpdo) {
 					'content' => '[[$up2.edit.user.main?]]',
 					'description' => !$lang ? 'Мои настройки' : 'My settings',
 				),
+				'6' => array(
+					'name' => !$lang ? 'подтверждение email' : 'confirm email',
+					'type' => 3,
+					'entry' => $entry,
+					'content' => '[[$up2.edit.user.email.confirm]]',
+					'description' => !$lang ? 'подтверждение email' : 'confirm email',
+				),
 
 			);
 
@@ -124,8 +131,6 @@ if ($object->xpdo) {
 					'route' => '/emailconfirm/',
 					'properties' => '{"section":"emailconfirm"}'
 				),
-
-				//emailconfirm/
 
 			);
 

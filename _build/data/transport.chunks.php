@@ -46,6 +46,16 @@ $tmp = array(
 		'description' => '',
 	),
 
+	// вспомогательные
+	'up2.edit.user.email.confirm' => array(
+		'file' => 'up2_edit_user_email_confirm',
+		'description' => '',
+	),
+	//
+
+
+
+
 	// чанки для сниппетов
 	'tpl.up2User.Row' => array(
 		'file' => 'up2_user_row',
