@@ -10,9 +10,9 @@ userprofile2.Profile = {
             .ajaxStop(function() {
                 elem.find('.tmp-disabled').attr('disabled', false);
             });
-        $(document).on('click', '#userprofile2-user-photo-remove', function(e) {
+        $(document).on('click', '#up2-remove-avatar', function(e) {
             e.preventDefault();
-            userprofile2.Profile.clearPhoto(elem);
+			userprofile2.Profile.clearPhoto(elem);
             elem.submit();
             return false;
         });
@@ -27,27 +27,27 @@ userprofile2.Profile = {
                     $(selector + ' .message').text('');
                     $(selector + ' .has-error').removeClass('has-error');
                     data.push({name: 'action', value:'profile/update'});
-                    //data.push({name: 'pageId', value: userprofile2Config.pageId});
                 }
                 ,success: function(response) {
                     var i;
                     if (response.success) {
                         userprofile2.Message.success(response.message);
-                        userprofile2.Profile.clearPhoto(elem);
+                        //userprofile2.Profile.clearPhoto(elem);
                         if (response.data) {
                             for (i in response.data) {
                                 if (response.data.hasOwnProperty(i)) {
                                     $(selector + ' [name="'+i+'"]').val(response.data[i]);
-                                    if (i == 'photo') {
-                                        var $photo = $('#profile-user-photo');
-                                        if (response.data[i] != '') {
-                                            $photo.prop('src', response.data[i]);
-                                            $('#userprofile2-user-photo-remove').show();
-                                        }
-                                        else {
-                                            $photo.prop('src', $photo.data('gravatar'));
-                                            $('#userprofile2-user-photo-remove').hide();
-                                        }
+                                    if (i == 'removeavatar') {
+										var $photo = $('#up2-avatar');
+										if (response.data[i] == '1') {
+											$photo.prop('src', $photo.data('gravatar'));
+											$('#up2-remove-avatar').hide();
+										}
+										if (response.data[i] != '1') {
+											$photo.prop('src', response.data[i]);
+											$('#up2-remove-avatar').show();
+											$('input[name="removephoto"]').attr('value', '');
+										}
                                     }
                                     else if (i == 'extended') {
                                         for (var i2 in response.data[i]) {
@@ -61,10 +61,7 @@ userprofile2.Profile = {
                         }
                     }
                     else {
-
-                        console.log('1');
-
-                        userprofile2.Message.error(response.message, false);
+						userprofile2.Message.error(response.message, false);
                         if (response.data) {
                             for (i in response.data) {
                                 if (response.data.hasOwnProperty(i)) {
@@ -85,9 +82,7 @@ userprofile2.Profile = {
     }
 
     ,clearPhoto: function(elem) {
-        var $newphoto = elem.find('input[name="newphoto"]');
-        $newphoto.val('').replaceWith($newphoto.clone(true));
-        elem.find('input[name="photo"]').attr('value', '');
+        elem.find('input[name="removephoto"]').attr('value', 1);
     }
 
 };

@@ -48,5 +48,7 @@ $_lang['up2_email_already_exists'] = 'Email уже существует';
 $_lang['up2_required_field'] = 'Обязательно для заполнения';
 $_lang['up2_profile_success_save'] = 'Профиль успешно сохранен';
 
-
+$_lang['up2_msg_save_email'] = 'Изменения были успешно сохранены. Ваш email не изменится, пока вы его не подтвердите.';
+$_lang['up2_msg_save_noemail'] = 'Изменения были успешно сохранены, но мы не смогли отправить ссылку на новый email.';
+$_lang['up2_msg_avatar_is_remove'] = 'Аватар был удален.';
 

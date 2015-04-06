@@ -45,8 +45,9 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 			unset($data['photo']);
 		}
 		$removephoto = false;
-		if(isset($data['removephoto'])) {
+		if($data['removephoto'] == 1) {
 			$removephoto = true;
+			$this->message = array('msg' => 'up2_msg_avatar_is_remove', 'data' => array('removeavatar' => 1));
 		}
 		// change password
 		if(!empty($data['specifiedpassword']) || !empty($data['confirmpassword'])) {
@@ -131,9 +132,11 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		}
 		if($changeEmail && !empty($newEmail)) {
 			$change = $this->changeEmail($newEmail);
-			$this->message = ($change === true)
-				? $this->modx->lexicon('up2_msg_save_email')
-				: $this->modx->lexicon('up2_msg_save_noemail', array('errors' => $change));
+			$this->message = array(
+				'msg' => ($change === true)
+					? 'up2_msg_save_email'
+					: 'up2_msg_save_noemail'
+			, 'data' => array('changeemail' => 1));
 		}
 		// change photo
 		$changePhoto = false;
@@ -222,6 +225,9 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 				}
 			}
 		}
+		if(!array_key_exists('removeavatar', $this->message['data'])) {
+			$this->message = array('data' => array('removeavatar' => $url));
+		}
 
 		return true;
 	}
@@ -298,7 +304,10 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	}
 	/** {@inheritDoc} */
 	public function afterSave() {
-		echo $this->userprofile2->success('up2_profile_success_save');
+		$msg = !empty($this->message['msg'])
+			? $this->message['msg']
+			: 'up2_profile_success_save';
+		echo $this->userprofile2->success($msg, $this->message['data']);
 		exit;
 		//return parent::afterSave();
 	}
