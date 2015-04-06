@@ -74,10 +74,14 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
 
     ,getFielValue: function(fieldName, defaultValue) {
         var extend = userprofile2.config.extend;
+        var data =userprofile2.config.data;
 
 		if(extend[fieldName] && (typeof extend[fieldName]!== 'object')) {
 			value = extend[fieldName];
 		}
+        else if(data[fieldName] && (typeof data[fieldName]!== 'object')) {
+            value = data[fieldName];
+        }
 		else {
 			value = defaultValue;
 		}
@@ -116,7 +120,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                     allowBlank: !item['required'],
                     ctCls: 'up2_' + item['type_in'],
                     anchor: '100%',
-                    value: this.getFielValue(item['name_out'], item['value']) || item['value']
+                    value: this.getFielValue(item['name_out'], item['value'])
                 };
                 tabFields.push(field);
             }

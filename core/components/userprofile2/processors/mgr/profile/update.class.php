@@ -3,80 +3,98 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 	public $classKey = 'up2Profile';
 	public $languageTopics = array('userprofile2');
 	public $permission = 'up2setting_save';
+
+	public $userprofile2;
 	/** {@inheritDoc} */
 	public function initialize() {
-
-		$this->modx->log(1, print_r($this->getProperties() ,1));
-
 		if (!$this->modx->hasPermission($this->permission)) {
 			return $this->modx->lexicon('access_denied');
 		}
+		$this->userprofile2 = $this->modx->userprofile2;
+
 		return parent::initialize();
 	}
 	/** {@inheritDoc} */
 	public function beforeSet() {
-		$realFields = array('lastname','firstname','secondname');
-		$userFields = array('fullname','email','phone','mobilephone','blocked','blockeduntil',
-			'blockedafter','logincount','lastlogin','thislogin','dob','gender','address',
-			'country','city','state','zip','fax','photo','comment','website','extended'
-		);
-
 		$data = $this->getProperty('data');
-		if(empty($data)) {
-			return $this->success();
-		}
+		if(empty($data)) {return $this->success();}
 		$data = $this->modx->fromJSON($data);
-
-
-		$this->modx->log(1, print_r($data ,1 ));
-
-
-		$type = $data['type'];
-		$photo = $data['photo'];
-		if(empty($type)) {
-			echo $this->modx->userprofile2->error('up2_type_profile_err');
+		if(!$type = $data['type']) {
+			echo $this->userprofile2->error('up2_type_profile_err');
 			exit;
 		}
-
-
-
-		$data = $this->modx->userprofile2->sanitizeData($data);
-
-		$this->modx->log(1, print_r($data ,1 ));
-
-		unset(
-			$data['type'],
-			$data['photo']
-		);
-		$requiredfields = $this->modx->userprofile2->getRequiredFields($type);
-
-		$this->modx->log(1, print_r('req' ,1 ));
-		//$this->modx->log(1, print_r($requiredfields ,1 ));
-
-
-//		$ngth = $this->modx->userprofile2->_getLengthFields();
-//		$this->modx->log(1, print_r($ngth ,1 ));
-
-/*		foreach($data as $tab) {
-			foreach($tab as $fieldName => $value) {
-				if(in_array($fieldName, array_values($requiredfields)) && empty($value)) {
-					$this->modx->error->addField($fieldName, $this->modx->lexicon('vp_err_ae'));
-				}
-				if(in_array($fieldName, array_values($realFields)) && !empty($value)) {
-					$this->object->set($fieldName, $value);
-				}
+		$data = $this->userprofile2->sanitizeData($data);
+		$realFields = $this->userprofile2->_getRealFields();
+		$modUserFields = $this->userprofile2->config['modUserFields'];
+		$modUserProfileFields = $this->userprofile2->config['modUserProfileFields'];
+		$requiredFields = $this->userprofile2->getRequiredFields($type);
+		// required
+		foreach($data as $f => $v) {
+			if(empty($v) && array_key_exists($f, $requiredFields)) {
+				$this->modx->error->addField($f, $this->modx->lexicon('vp_err_ae'));
 			}
-		}*/
-
+		}
 		if($this->hasErrors()) {
-			//$this->failure();
-			echo $this->modx->userprofile2->error('up2_required_err');
+			echo $this->userprofile2->error('up2_required_err');
 			exit;
 		}
+
+
+		$this->modx->log(1, print_r('=====----',1 ));
+		$this->modx->log(1, print_r($data ,1 ));
+
+		// special fields
+		if(isset($data['photo'])) {$photo = $data['photo'];}
+		if(isset($data['email'])) {$email = $data['email'];}
+		if(isset($data['password'])) {$password = $data['password'];}
+		if(isset($data['fullname'])) {$fullname = $data['fullname'];}
+		unset(
+			$data['photo'],
+			$data['email'],
+			$data['password'],
+			$data['fullname']
+		);
+		//
+		foreach($data as $f => $v) {
+			if(array_key_exists($f, $realFields)) {
+				$this->object->set($f, $v);
+				unset($data[$f]);
+				continue;
+			}
+			if(array_key_exists($f, $modUserFields)) {
+				$this->object->User->set($f, $v);
+				unset($data[$f]);
+				continue;
+			}
+			if(array_key_exists($f, $modUserProfileFields)) {
+				$this->object->UserProfile->set($f, $v);
+				unset($data[$f]);
+				continue;
+			}
+		}
+
+
+		$this->modx->log(1, print_r('=====----',1 ));
+		$this->modx->log(1, print_r($data ,1 ));
+
+	/*	$this->modx->log(1, print_r($realFields,1 ));
+		$this->modx->log(1, print_r($modUserFields,1 ));
+		$this->modx->log(1, print_r($modUserProfileFields,1 ));*/
+
+
+
+		// special fields
+/*		$photo = $data['photo'];
+		$email = $data['email'];
+		$password = $data['password'];
+		$fullname = $data['fullname'];
+		*/
+
+
 		$data = $this->modx->toJSON($data);
 		$this->setProperty('extend', $data);
 		$this->setProperty('type', $type);
-		$this->setPhoto($photo);
+		//$this->setPhoto($photo);
 
 		return parent::beforeSet();
 	}

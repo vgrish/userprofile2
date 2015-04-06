@@ -16,13 +16,13 @@ class userprofile2 {
 	/* @var pdoTools $pdoTools */
 	public $pdoTools;
 
-	protected $realFields = array(
+	public $realFields = array(
 		'lastname',
 		'firstname',
 		'secondname'
 	);
 
-	protected $forbiddenFields = array(
+	public $forbiddenFields = array(
 		'id',
 		'cachepwd',
 		'class_key',
@@ -348,9 +348,10 @@ class userprofile2 {
 	}
 
 
-
-
-
+	/**
+	 * @param $type
+	 * @return array|mixed|string
+	 */
 	public function getTabsFields($type)
 	{
 		$key = 'tabs_fields/' . $type;
@@ -414,6 +415,10 @@ class userprofile2 {
 		return $data;
 	}
 
+	/**
+	 * @param $id
+	 * @return array
+	 */
 	public function getUserFields($id) {
 		$data = array();
 		if(!is_array($id)) {
@@ -451,6 +456,10 @@ class userprofile2 {
 		return $data;
 	}
 
+	/**
+	 * @param $type
+	 * @return array
+	 */
 	public function getRequiredFields($type)
 	{
 		$requiredFields = array();
@@ -460,13 +469,16 @@ class userprofile2 {
 			if((count($tabs['fields']) == 0)) {continue;}
 			foreach($tabs['fields'] as $field) {
 				if(!empty($field['required'])) {
-					$requiredFields[] = $field['name_out'];
+					$requiredFields[$field['name_out']] = 1;
 				}
 			}
 		}
 		return $requiredFields;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getProfileTypeDefault()
 	{
 		$id = 0;
@@ -481,6 +493,11 @@ class userprofile2 {
 		return (int) $id;
 	}
 
+
+	public function _getRealFields()
+	{
+		return array_flip($this->realFields);
+	}
 
 	/**
 	 * Вернет массив имен всех действующих полей
@@ -530,6 +547,9 @@ class userprofile2 {
 		return array_flip($names);
 	}
 
+	/**
+	 * @return mixed|string
+	 */
 	public function _getLengthFields()
 	{
 		$key = 'tabs_fields/length';
@@ -548,6 +568,10 @@ class userprofile2 {
 		return $lengthFields;
 	}
 
+	/**
+	 * @param array $data
+	 * @return array
+	 */
 	public function sanitizeData(array $data = array())
 	{
 		$_data = array();
