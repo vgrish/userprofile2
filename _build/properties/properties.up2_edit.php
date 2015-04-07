@@ -11,7 +11,7 @@ $tmp = array(
 		'type' => 'numberfield',
 		'value' => '',
 	),
-	'tplTabsOuter' => array(
+	/*'tplTabsOuter' => array(
 		'type' => 'textfield',
 		'value' => '@INLINE <div class="tabbable tabs-left" id="up2-tabs">[[+navtabs]][[+contenttabs]]</div>',
 	),
@@ -38,7 +38,7 @@ $tmp = array(
 	'tplContentTabPaneTextareaRow' => array(
 		'type' => 'textfield',
 		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><textarea name="[[+nameout]]" class="form-control" [[+disabled]]>[[+value]]</textarea><p class="help-block message"></p></div>',
-	),
+	),*/
 	'excludeTabs' => array(
 		'type' => 'textfield',
 		'value' => '',
