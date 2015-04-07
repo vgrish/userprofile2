@@ -6,12 +6,19 @@ if (!$userprofile2 = $modx->getService('userprofile2', 'userprofile2', $modx->ge
 }
 $userprofile2->initialize($modx->context->key, $scriptProperties);
 //
-if(empty($user_id)) {return '';}
-$row = $userprofile2->getUserFields($user_id);
-// output
-$output = empty($tplUser)
-	? $userprofile2->pdoTools->getChunk('', $row)
-	: $userprofile2->pdoTools->getChunk($tplUser, $row, $userprofile2->pdoTools->config['fastMode']);
+if(empty($user_id) && empty($tplNoUser)) {return '';}
+elseif(empty($user_id) && !empty($tplNoUser)) {
+	$row = array();
+	$output = empty($tplNoUser)
+		? $userprofile2->pdoTools->getChunk('', $row)
+		: $userprofile2->pdoTools->getChunk($tplNoUser, $row, $userprofile2->pdoTools->config['fastMode']);
+}
+elseif(!empty($user_id)) {
+	$row = $userprofile2->getUserFields($user_id);
+	$output = empty($tplUser)
+		? $userprofile2->pdoTools->getChunk('', $row)
+		: $userprofile2->pdoTools->getChunk($tplUser, $row, $userprofile2->pdoTools->config['fastMode']);
+}
 if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
 	$output = $userprofile2->pdoTools->getChunk($tplWrapper, array('output' => $output), $userprofile2->pdoTools->config['fastMode']);
 }

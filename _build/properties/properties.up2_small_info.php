@@ -7,6 +7,10 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => 'tpl.up2User.small.Info',
 	),
+	'tplNoUser' => array(
+		'type' => 'textfield',
+		'value' => '@INLINE <p>No User</p>',
+	),
 	'user_id' => array(
 		'type' => 'numberfield',
 		'value' => '',
