@@ -509,7 +509,7 @@ class userprofile2 {
 		$names = array();
 		$allNames = array_keys(array_merge($this->_getUserProfileNamesFields(), $this->_getOutNamesFields()));
 		$fieldsNotAllowed = array_map('trim', explode(',', $this->modx->getOption('userprofile2_fields_not_allowed', null, '')));
-		$fieldsAllowed = array_unique(array_map('trim', explode(',', $this->modx->getOption('userprofile2_fields_not_allowed', null, ''))));
+		$fieldsAllowed = array_unique(array_map('trim', explode(',', $this->modx->getOption('userprofile2_fields_allowed', null, ''))));
 		$fieldsAllowed = array_unique(array_merge($fieldsAllowed, $this->realFields));
 		$forbiddenFields = array_flip(array_unique(array_merge($this->forbiddenFields, $fieldsNotAllowed)));
 		foreach($allNames as $name) {

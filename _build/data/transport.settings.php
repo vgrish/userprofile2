@@ -39,7 +39,7 @@ $tmp = array(
 
 
 	//временные
-
+/*
 					'assets_path' => array(
 						'xtype' => 'textfield',
 						'value' => '{base_path}userprofile2/assets/components/userprofile2/',
@@ -55,7 +55,7 @@ $tmp = array(
 						'value' => '{base_path}userprofile2/core/components/userprofile2/',
 						'area' => 'userprofile2_temp',
 					),
-
+*/
 
 	//временные
 
