@@ -171,7 +171,7 @@ Ext.extend(userprofile2.combo.Browser,Ext.form.TriggerField,{
 					'select': {fn: function(data) {
 						this.setValue(data.fullRelativeUrl);
 						this.fireEvent('select',data);
-						Ext.get('up2-avatar').update('<img src="'+MODx.config.connectors_url+'system/phpthumb.php?h=193&w=308&zc=1&src='+data.fullRelativeUrl+'&wctx=MODx.ctx&source=1" class="up2-avatar" alt="" />');
+						Ext.get('up2-avatar').update('<img src="'+MODx.config.connectors_url+'system/phpthumb.php?h=274&w=274&zc=1&src='+data.fullRelativeUrl+'&wctx=MODx.ctx&source=1" class="up2-avatar" alt="" />');
 					},scope:this}
 				}
 			});
