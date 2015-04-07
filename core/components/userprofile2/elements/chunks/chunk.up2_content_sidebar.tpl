@@ -22,7 +22,7 @@
             </div>
             <div style="margin-top:10px;">
                 <i class="black glyphicon glyphicon-off"></i>
-                <a href="/?action=auth/logout">Выход</a>
+                <a href="/?up2action=auth_logout">Выход</a>
             </div>
         </div>
         <div class="col-md-4">
