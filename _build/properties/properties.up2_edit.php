@@ -35,10 +35,10 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><input type="[[+type_out]]" name="[[+nameout]]" class="form-control" value="[[+value]]" [[+disabled]]><p class="help-block message"></p></div>',
 	),
-	/*'tplContentTabPaneTextareaRow' => array(
+	'tplContentTabPaneTextareaRow' => array(
 		'type' => 'textfield',
 		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><textarea name="[[+nameout]]" class="form-control" [[+disabled]]>[[+value]]</textarea><p class="help-block message"></p></div>',
-	),*/
+	),
 	'excludeTabs' => array(
 		'type' => 'textfield',
 		'value' => '',
