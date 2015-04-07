@@ -800,7 +800,7 @@ class userprofile2 {
 	public function OnLoadWebDocument($sp)
 	{
 		if($this->modx->user->isAuthenticated($this->modx->context->get('key'))) {
-			if(!$this->modx->user->active || $this->modx->user->Profile->blocked) {
+			if(!$this->modx->user->active || $this->modx->user->Profile->blocked || $_REQUEST['up2action'] == 'auth_logout') {
 				$this->logOut();
 			}
 			elseif($up2Profile = $this->modx->user->getOne('up2Profile')) {
