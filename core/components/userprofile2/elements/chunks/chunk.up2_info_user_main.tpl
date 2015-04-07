@@ -7,7 +7,7 @@
 ]]
 
 [[!up2UserLinkSections?
-    &id=`[[!+vp.user_id]]`
+    &user_id=`[[!+vp.user_id]]`
     &plSection=`[[!+vp.section]]`
 ]]
 
