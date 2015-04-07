@@ -11,6 +11,7 @@ $tmp = array(
 			'OnUserRemove' => array(),
 			'OnUserFormPrerender' => array(),
 			'OnBeforeCacheUpdate' => array(),
+			'OnLoadWebDocument' => array(),
 		)
 	)
 

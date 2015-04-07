@@ -306,6 +306,7 @@ class up2ProfileUpdateProcessor extends modObjectUpdateProcessor {
 		$msg = !empty($this->message['msg'])
 			? $this->message['msg']
 			: 'up2_profile_success_save';
+
 		echo $this->userprofile2->success($msg, $this->message['data']);
 		exit;
 		//return parent::afterSave();

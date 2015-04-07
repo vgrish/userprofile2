@@ -673,6 +673,27 @@ class userprofile2 {
 		return true;
 	}
 
+	public function logout($params = array(), $id = 0)
+	{
+		if($user = $this->modx->getAuthenticatedUser($this->modx->context->key)) {
+			$this->modx->user = $user;
+			$this->modx->getUser($this->modx->context->key);
+		}
+		if(!$user) {return '';}
+		if(!$response = $this->modx->runProcessor('logout',
+			$params
+			, array(
+				'processors_path' => MODX_CORE_PATH .'model/modx/processors/security/',
+			))) {
+			return '';
+		}
+		if($response->isError()) {
+			$this->modx->log(1, '[UP2] logout error. Username: ' . $this->modx->user->get('username') . ', uid: ' . $this->modx->user->get('id'));
+		}
+		$this->modx->sendRedirect($this->modx->makeUrl((!empty($id)) ? $id : $this->modx->getOption('site_start'), '', '', 'full'));
+
+	}
+	
 	/**
 	 * @param string $message
 	 * @param array $data
@@ -776,6 +797,21 @@ class userprofile2 {
 		$user->getOne('up2Profile');
 	}
 
+	public function OnLoadWebDocument($sp)
+	{
+		if($this->modx->user->isAuthenticated($this->modx->context->get('key'))) {
+			if(!$this->modx->user->active || $this->modx->user->Profile->blocked) {
+				$this->logOut();
+			}
+			elseif($up2Profile = $this->modx->user->getOne('up2Profile')) {
+				$ip = $this->modx->request->getClientIp();
+				$up2Profile->set('lastactivity', time());
+				$up2Profile->set('ip', $ip['ip']);
+				$up2Profile->save();
+			}
+		}
+	}
+
 	/**
 	 * @param $sp
 	 */
@@ -795,4 +831,5 @@ class userprofile2 {
 			'id:=' => $id,
 		));
 	}
+
 }
