@@ -438,7 +438,7 @@ Ext.extend(userprofile2.grid.Fields,MODx.grid.Grid, {
             ,{xtype: 'userprofile2-combo-field-type',fieldLabel: _('up2_type'), name: 'type', allowBlank: false, anchor: '99%', id: 'userprofile2-field-in-tab-type-'+type}
             ,{xtype: 'textfield',fieldLabel: _('up2_css'), name: 'css', allowBlank: true, anchor: '99%', id: 'userprofile2-field-in-tab-css-'+type}
             ,{xtype: 'numberfield',fieldLabel: _('up2_length'), name: 'length', allowBlank: true, anchor: '99%', id: 'userprofile2-field-in-tab-length-'+type}
-            ,{xtype: 'textarea',fieldLabel: _('up2_value'), name: 'value', allowBlank: true, anchor: '99%', id: 'userprofile2-field-in-tab-value-'+type}
+            ,{xtype: 'textfield',fieldLabel: _('up2_value'), name: 'value', allowBlank: true, anchor: '99%', id: 'userprofile2-field-in-tab-value-'+type}
         );
 
         fields.push(

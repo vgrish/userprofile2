@@ -40,6 +40,7 @@ $_lang['up2_email_subject'] = 'Проверка email';
 $_lang['up2_email_already_exists'] = 'Email уже существует';
 $_lang['up2_required_field'] = 'Обязательно для заполнения';
 $_lang['up2_profile_success_save'] = 'Профиль успешно сохранен';
+$_lang['up2_message_close_all'] = 'Закрыть все';
 
 $_lang['up2_msg_save_email'] = 'Изменения были успешно сохранены. Ваш email не изменится, пока вы его не подтвердите.';
 $_lang['up2_msg_save_noemail'] = 'Изменения были успешно сохранены, но мы не смогли отправить ссылку на новый email.';

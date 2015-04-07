@@ -137,9 +137,6 @@ class userprofile2 {
 			$this->loadPdoTools();
 		}
 		$this->pdoTools->setConfig($this->config);
-
-		//$this->modx->log(1, print_r($this->config ,1));
-
 		$this->config['ctx'] = $ctx;
 		if (!empty($this->initialized[$ctx])) {
 			return true;
@@ -184,8 +181,6 @@ class userprofile2 {
 		return true;
 	}
 
-
-
 	/**
 	 * from https://github.com/bezumkin/Tickets/blob/9c09152ae4a1cdae04fb31d2bc0fa57be5e0c7ea/core/components/tickets/model/tickets/tickets.class.php#L1120
 	 *
@@ -227,126 +222,6 @@ class userprofile2 {
 		}
 		return $this->pdoTools->getChunk($name, $properties, $fastMode);
 	}
-
-	/**
-	 * Formats date to "10 minutes ago" or "Yesterday in 22:10"
-	 * This algorithm taken from https://github.com/livestreet/livestreet/blob/7a6039b21c326acf03c956772325e1398801c5fe/engine/modules/viewer/plugs/function.date_format.php
-	 * @param string $date Timestamp to format
-	 * @param string $dateFormat
-	 *
-	 * @return string
-	 */
-	public function dateFormat($date, $dateFormat = null)
-	{
-		$date = preg_match('/^\d+$/', $date) ? $date : strtotime($date);
-		$dateFormat = !empty($dateFormat) ? $dateFormat : $this->config['dateFormat'];
-		$current = time();
-		$delta = $current - $date;
-		if ($this->config['dateNow']) {
-			if ($delta < $this->config['dateNow']) {
-				return $this->modx->lexicon('up2_date_now');
-			}
-		}
-		if ($this->config['dateMinutes']) {
-			$minutes = round(($delta) / 60);
-			if ($minutes < $this->config['dateMinutes']) {
-				if ($minutes > 0) {
-					return $this->declension($minutes, $this->modx->lexicon('up2_date_minutes_back', array('minutes' => $minutes)));
-				} else {
-					return $this->modx->lexicon('up2_date_minutes_back_less');
-				}
-			}
-		}
-		if ($this->config['dateHours']) {
-			$hours = round(($delta) / 3600);
-			if ($hours < $this->config['dateHours']) {
-				if ($hours > 0) {
-					return $this->declension($hours, $this->modx->lexicon('up2_date_hours_back', array('hours' => $hours)));
-				} else {
-					return $this->modx->lexicon('up_date_hours_back_less');
-				}
-			}
-		}
-		if ($this->config['dateDay']) {
-			switch (date('Y-m-d', $date)) {
-				case date('Y-m-d'):
-					$day = $this->modx->lexicon('up2_date_today');
-					break;
-				case date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') - 1, date('Y'))):
-					$day = $this->modx->lexicon('up2_date_yesterday');
-					break;
-				case date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 1, date('Y'))):
-					$day = $this->modx->lexicon('up2_date_tomorrow');
-					break;
-				default:
-					$day = null;
-			}
-			if ($day) {
-				$format = str_replace("day", preg_replace("#(\w{1})#", '\\\${1}', $day), $this->config['dateDay']);
-				return date($format, $date);
-			}
-		}
-		$m = date("n", $date);
-		$month_arr = $this->modx->fromJSON($this->modx->lexicon('up2_date_months'));
-		$month = $month_arr[$m - 1];
-		$format = preg_replace("~(?<!\\\\)F~U", preg_replace('~(\w{1})~u', '\\\${1}', $month), $dateFormat);
-		return date($format, $date);
-	}
-
-	/**
-	 * Declension of words
-	 * This algorithm taken from https://github.com/livestreet/livestreet/blob/eca10c0186c8174b774a2125d8af3760e1c34825/engine/modules/viewer/plugs/modifier.declension.php
-	 *
-	 * @param int $count
-	 * @param string $forms
-	 * @param string $lang
-	 *
-	 * @return string
-	 */
-	public function declension($count, $forms, $lang = null)
-	{
-		if (empty($lang)) {
-			$lang = $this->modx->getOption('cultureKey', null, 'en');
-		}
-		$forms = $this->modx->fromJSON($forms);
-		if ($lang == 'ru') {
-			$mod100 = $count % 100;
-			switch ($count % 10) {
-				case 1:
-					if ($mod100 == 11) {
-						$text = $forms[2];
-					} else {
-						$text = $forms[0];
-					}
-					break;
-				case 2:
-				case 3:
-				case 4:
-					if (($mod100 > 10) && ($mod100 < 20)) {
-						$text = $forms[2];
-					} else {
-						$text = $forms[1];
-					}
-					break;
-				case 5:
-				case 6:
-				case 7:
-				case 8:
-				case 9:
-				case 0:
-				default:
-					$text = $forms[2];
-			}
-		} else {
-			if ($count == 1) {
-				$text = $forms[0];
-			} else {
-				$text = $forms[1];
-			}
-		}
-		return $text;
-	}
-
 
 	/**
 	 * @param $type
@@ -493,7 +368,9 @@ class userprofile2 {
 		return (int) $id;
 	}
 
-
+	/**
+	 * @return array
+	 */
 	public function _getRealFields()
 	{
 		return array_flip($this->realFields);
@@ -673,6 +550,11 @@ class userprofile2 {
 		return true;
 	}
 
+	/**
+	 * @param array $params
+	 * @param int $id
+	 * @return string
+	 */
 	public function logout($params = array(), $id = 0)
 	{
 		if($user = $this->modx->getAuthenticatedUser($this->modx->context->key)) {
@@ -692,6 +574,125 @@ class userprofile2 {
 		}
 		$this->modx->sendRedirect($this->modx->makeUrl((!empty($id)) ? $id : $this->modx->getOption('site_start'), '', '', 'full'));
 
+	}
+
+	/**
+	 * Formats date to "10 minutes ago" or "Yesterday in 22:10"
+	 * This algorithm taken from https://github.com/livestreet/livestreet/blob/7a6039b21c326acf03c956772325e1398801c5fe/engine/modules/viewer/plugs/function.date_format.php
+	 * @param string $date Timestamp to format
+	 * @param string $dateFormat
+	 *
+	 * @return string
+	 */
+	public function dateFormat($date, $dateFormat = null)
+	{
+		$date = preg_match('/^\d+$/', $date) ? $date : strtotime($date);
+		$dateFormat = !empty($dateFormat) ? $dateFormat : $this->config['dateFormat'];
+		$current = time();
+		$delta = $current - $date;
+		if ($this->config['dateNow']) {
+			if ($delta < $this->config['dateNow']) {
+				return $this->modx->lexicon('up2_date_now');
+			}
+		}
+		if ($this->config['dateMinutes']) {
+			$minutes = round(($delta) / 60);
+			if ($minutes < $this->config['dateMinutes']) {
+				if ($minutes > 0) {
+					return $this->declension($minutes, $this->modx->lexicon('up2_date_minutes_back', array('minutes' => $minutes)));
+				} else {
+					return $this->modx->lexicon('up2_date_minutes_back_less');
+				}
+			}
+		}
+		if ($this->config['dateHours']) {
+			$hours = round(($delta) / 3600);
+			if ($hours < $this->config['dateHours']) {
+				if ($hours > 0) {
+					return $this->declension($hours, $this->modx->lexicon('up2_date_hours_back', array('hours' => $hours)));
+				} else {
+					return $this->modx->lexicon('up_date_hours_back_less');
+				}
+			}
+		}
+		if ($this->config['dateDay']) {
+			switch (date('Y-m-d', $date)) {
+				case date('Y-m-d'):
+					$day = $this->modx->lexicon('up2_date_today');
+					break;
+				case date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') - 1, date('Y'))):
+					$day = $this->modx->lexicon('up2_date_yesterday');
+					break;
+				case date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 1, date('Y'))):
+					$day = $this->modx->lexicon('up2_date_tomorrow');
+					break;
+				default:
+					$day = null;
+			}
+			if ($day) {
+				$format = str_replace("day", preg_replace("#(\w{1})#", '\\\${1}', $day), $this->config['dateDay']);
+				return date($format, $date);
+			}
+		}
+		$m = date("n", $date);
+		$month_arr = $this->modx->fromJSON($this->modx->lexicon('up2_date_months'));
+		$month = $month_arr[$m - 1];
+		$format = preg_replace("~(?<!\\\\)F~U", preg_replace('~(\w{1})~u', '\\\${1}', $month), $dateFormat);
+		return date($format, $date);
+	}
+
+	/**
+	 * Declension of words
+	 * This algorithm taken from https://github.com/livestreet/livestreet/blob/eca10c0186c8174b774a2125d8af3760e1c34825/engine/modules/viewer/plugs/modifier.declension.php
+	 *
+	 * @param int $count
+	 * @param string $forms
+	 * @param string $lang
+	 *
+	 * @return string
+	 */
+	public function declension($count, $forms, $lang = null)
+	{
+		if (empty($lang)) {
+			$lang = $this->modx->getOption('cultureKey', null, 'en');
+		}
+		$forms = $this->modx->fromJSON($forms);
+		if ($lang == 'ru') {
+			$mod100 = $count % 100;
+			switch ($count % 10) {
+				case 1:
+					if ($mod100 == 11) {
+						$text = $forms[2];
+					} else {
+						$text = $forms[0];
+					}
+					break;
+				case 2:
+				case 3:
+				case 4:
+					if (($mod100 > 10) && ($mod100 < 20)) {
+						$text = $forms[2];
+					} else {
+						$text = $forms[1];
+					}
+					break;
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 0:
+				default:
+					$text = $forms[2];
+			}
+		} else {
+			if ($count == 1) {
+				$text = $forms[0];
+			} else {
+				$text = $forms[1];
+			}
+		}
+		return $text;
 	}
 
 	/**
@@ -797,6 +798,9 @@ class userprofile2 {
 		$user->getOne('up2Profile');
 	}
 
+	/**
+	 * @param $sp
+	 */
 	public function OnLoadWebDocument($sp)
 	{
 		if($this->modx->user->isAuthenticated($this->modx->context->get('key'))) {
