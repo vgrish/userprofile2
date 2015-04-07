@@ -70,7 +70,12 @@ $_lang['userprofile2_prop_tplConfirm'] = 'Чанк для оформления �
 
 $_lang['userprofile2_prop_tplUser'] = 'Общий чанк оформления информации о пользователе.';
 $_lang['userprofile2_prop_tplNoUser'] = 'Общий чанк оформления если пользователе не указан';
-
 $_lang['userprofile2_prop_redirectConfirm'] = 'Идентификатор ресурса, на который отправлять юзера после подтверждения.';
 
-
+$_lang['userprofile2_prop_tplTabsOuter'] = 'Чанк-обертка для секции табов.';
+$_lang['userprofile2_prop_tplNavTabsOuter'] = 'Чанк-обертка для секции ссылок табов.';
+$_lang['userprofile2_prop_tplNavTabsRow'] = 'Чанк оформления для ссылки на секцию.';
+$_lang['userprofile2_prop_tplContentTabsOuter'] = 'Чанк-обертка для секции вкладок.';
+$_lang['userprofile2_prop_tplContentTabPane'] = 'Чанк-обертка для секции.';
+$_lang['userprofile2_prop_tplContentTabPaneInputRow'] = 'Чанк для поля ввода.';
+$_lang['userprofile2_prop_tplContentTabPaneTextareaRow'] = 'Чанк для текстовой области ввода.';
