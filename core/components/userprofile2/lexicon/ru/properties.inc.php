@@ -79,3 +79,10 @@ $_lang['userprofile2_prop_tplContentTabsOuter'] = 'Чанк-обертка дл�
 $_lang['userprofile2_prop_tplContentTabPane'] = 'Чанк-обертка для секции.';
 $_lang['userprofile2_prop_tplContentTabPaneInputRow'] = 'Чанк для поля ввода.';
 $_lang['userprofile2_prop_tplContentTabPaneTextareaRow'] = 'Чанк для текстовой области ввода.';
+
+$_lang['userprofile2_prop_Sections'] = 'Список секций в формате "tickets:/users/[id]/tickets/". Наименование секции: ссылка на секцию. Параметр "[id]" будет заменен на id пользователя.';
+$_lang['userprofile2_prop_tplSectionOuter'] = 'Чанк-обертка для секции ссылок.';
+$_lang['userprofile2_prop_tplSectionRow'] = 'Чанк для ссылки.';
+$_lang['userprofile2_prop_tplCountWrapper'] = 'Чанк-обертка для счетчика.';
+$_lang['userprofile2_prop_plSection'] = 'Плейсходер активной секции.';
+$_lang['userprofile2_prop_plCountPrefix'] = 'Плейсходер счетчиков для секций.';
