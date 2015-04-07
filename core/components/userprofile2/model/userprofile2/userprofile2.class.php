@@ -693,7 +693,7 @@ class userprofile2 {
 		$this->modx->sendRedirect($this->modx->makeUrl((!empty($id)) ? $id : $this->modx->getOption('site_start'), '', '', 'full'));
 
 	}
-	
+
 	/**
 	 * @param string $message
 	 * @param array $data
@@ -815,21 +815,18 @@ class userprofile2 {
 	/**
 	 * @param $sp
 	 */
-	public function OnBeforeCacheUpdate($sp)
-	{
-		$key = '/';
-		if($this->clearCache($key)) {
-			$this->modx->log(modX::LOG_LEVEL_INFO, '[UP2] Clearing the cache. Path: ' . $key  );
-		}
-	}
-
 	public function OnUserRemove($sp)
 	{
 		$user = $sp['user'];
 		$id = $user->get('id');
-		$this->modx->removeCollection('up2Profile', array(
-			'id:=' => $id,
-		));
+		$this->modx->removeCollection('up2Profile', array('id:=' => $id));
 	}
 
+	/**
+	 * @param $sp
+	 */
+	public function OnBeforeCacheUpdate($sp)
+	{
+		$this->clearCache();
+	}
 }
