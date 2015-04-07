@@ -23,7 +23,7 @@ if ($object->xpdo) {
 				),
 				'VirtualPage' => array(
 					'version_major' => 1,
-					'version_minor:>=' => 0,
+					'version_minor:>=' => 5,
 					//'service_url' => 'modstore.pro'
 				),
 /*				'Theme.Bootstrap' => array(
