@@ -79,7 +79,7 @@ userprofile2.panel.Settings = function(config) {
                     , bodyCssClass: 'panel-desc'
                     , bodyStyle: 'margin-bottom: 10px'
                 }, {
-                    //xtype: 'userprofile2-grid-lexicon'
+                    xtype: 'userprofile2-grid-lexicon'
                 }]
             }
 
