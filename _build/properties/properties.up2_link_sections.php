@@ -7,7 +7,7 @@ $tmp = array(
 		'type' => 'textarea',
 		'value' => 'info:/users/[id]/,tickets:/users/[id]/tickets/,comments:/users/[id]/comments/,favorites:/users/[id]/favorites/,'
 	),
-	'id' => array(
+	'user_id' => array(
 		'type' => 'textfield',
 		'value' => '',
 	),

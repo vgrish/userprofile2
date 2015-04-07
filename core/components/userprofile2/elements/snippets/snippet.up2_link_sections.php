@@ -6,14 +6,14 @@ if (!$userprofile2 = $modx->getService('userprofile2', 'userprofile2', $modx->ge
 }
 $userprofile2->initialize($modx->context->key, $scriptProperties);
 //
-if(empty($id)) {return '';}
+if(empty($user_id)) {return '';}
 if(empty($Sections)) {return '';}
 //
 $Sections = array_map('trim', explode(',', $Sections));
 $row = array();
 foreach($Sections as $section) {
 	if(empty($section)) {continue;}
-	$section = str_replace('[id]', $id, $section);
+	$section = str_replace('[id]', $user_id, $section);
 	$section = explode(':', $section);
 	if(count($section) !== 2) {continue;}
 	$row['link'] = $section[1];
