@@ -10,6 +10,17 @@ $tmp = array(
 		'area' => 'userprofile2_main',
 	),
 
+	'front_css' => array(
+		'type' => 'textfield',
+		'value' => '[[+assetsUrl]]css/web/default.css',
+		'area' => 'userprofile2_script',
+	),
+	'front_js' => array(
+		'type' => 'textfield',
+		'value' => '[[+assetsUrl]]js/web/default.js',
+		'area' => 'userprofile2_script',
+	),
+
 
 	'avatar_params' => array(
 		'type' => 'textfield',
