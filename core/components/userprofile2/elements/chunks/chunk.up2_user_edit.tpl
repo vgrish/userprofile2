@@ -5,6 +5,7 @@
 
 	<input type="hidden" name="id" value="[[+id]]" />
 	<input type="hidden" name="type" value="[[+type]]" />
+	<input type="hidden" name="removephoto" value="" />
 	<div class="form-group avatar">
 		<label class="col-sm-3 control-label">[[%up2_avatar]]</label>
 		<div class="col-sm-9">

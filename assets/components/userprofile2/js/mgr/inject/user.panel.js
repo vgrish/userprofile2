@@ -241,7 +241,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                 labelAlign: 'left',
                 preventRender: true,
                 //items: this.getTabs(config)
-                items: {
+                items: [{
                     xtype: 'modx-tabs',
                     autoHeight: true,
                     deferredRender: false,
@@ -260,7 +260,10 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                         labelAlign: 'top'
                     },
                     items: []
-                }
+                },{
+                    html:'<div id="up2-extend-userfiles"></div>'
+                }]
+
             }
         );
 
