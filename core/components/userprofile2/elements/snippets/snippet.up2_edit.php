@@ -13,8 +13,9 @@ else {$modx->sendErrorPage();}
 //
 $row = $userprofile2->getUserFields($user_id);
 $realFields = $userprofile2->_getRealFields();
+$allowedType = explode(',', $allowedType);
 $row['type'] = !empty($type) ? $type : $row['type'];
-if (!empty($_REQUEST['type']) && in_array($_REQUEST['type'], explode(',', $allowedType))) {
+if (!empty($_REQUEST['type']) && in_array($_REQUEST['type'], $allowedType)) {
 	$row['type'] = $_REQUEST['type'];
 }
 if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type'])) {
