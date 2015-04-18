@@ -13,7 +13,7 @@ else {$modx->sendErrorPage();}
 //
 $row = $userprofile2->getUserFields($user_id);
 $realFields = $userprofile2->_getRealFields();
-$type = !empty($type) ? $type : $row['type'];
+$type = !empty($type) ? $type : $row['type']; 
 if(!empty($type) && $TabsFields = $userprofile2->getTabsFields($type)) {
 	$idx = 1;
 	foreach($TabsFields as $tabName => $tab) {
