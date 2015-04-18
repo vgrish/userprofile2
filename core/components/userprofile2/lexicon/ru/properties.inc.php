@@ -86,3 +86,4 @@ $_lang['userprofile2_prop_tplSectionRow'] = 'Чанк для ссылки.';
 $_lang['userprofile2_prop_tplCountWrapper'] = 'Чанк-обертка для счетчика.';
 $_lang['userprofile2_prop_plSection'] = 'Плейсходер активной секции.';
 $_lang['userprofile2_prop_plCountPrefix'] = 'Плейсходер счетчиков для секций.';
+$_lang['userprofile2_prop_type'] = 'Идентификатор профиля.';
