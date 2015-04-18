@@ -11,6 +11,10 @@ $tmp = array(
 		'type' => 'numberfield',
 		'value' => '',
 	),
+	'type' => array(
+		'type' => 'numberfield',
+		'value' => '',
+	),
 	'tplTabsOuter' => array(
 		'type' => 'textfield',
 		'value' => '@INLINE <div class="tabbable tabs-left" id="up2-tabs">[[+navtabs]][[+contenttabs]]</div>',
