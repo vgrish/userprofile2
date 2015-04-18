@@ -87,3 +87,5 @@ $_lang['userprofile2_prop_tplCountWrapper'] = 'Чанк-обертка для с
 $_lang['userprofile2_prop_plSection'] = 'Плейсходер активной секции.';
 $_lang['userprofile2_prop_plCountPrefix'] = 'Плейсходер счетчиков для секций.';
 $_lang['userprofile2_prop_type'] = 'Идентификатор профиля.';
+$_lang['userprofile2_prop_allowedType'] = 'Идентификатор доступного к смене профиля.';
+$_lang['userprofile2_prop_tplTypeRow'] = 'Чанк оформления для типа профиля.';

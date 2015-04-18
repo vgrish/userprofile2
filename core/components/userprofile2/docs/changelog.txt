@@ -1,5 +1,9 @@
 Changelog for userprofile2.
 
+1.0.3-beta
+==============
+- add change user profile
+
 1.0.2-beta
 ==============
 - fix add/remove avatar.
