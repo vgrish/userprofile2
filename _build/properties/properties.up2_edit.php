@@ -49,7 +49,7 @@ $tmp = array(
 	),
 	'tplTypeRow' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <option value="[[+id]]" [[+selected]]>[[+nametype]]</option>',
+		'value' => '@INLINE <option value="[[+id]]" [[+selected]]>[[+name]]</option>',
 	),
 	'excludeTabs' => array(
 		'type' => 'textfield',

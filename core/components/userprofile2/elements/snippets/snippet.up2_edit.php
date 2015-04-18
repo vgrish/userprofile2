@@ -67,6 +67,22 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 		? $userprofile2->pdoTools->getChunk('', $row)
 		: $userprofile2->pdoTools->getChunk($tplTabsOuter, $row, $userprofile2->pdoTools->config['fastMode']);
 }
+// type profile
+$q = $modx->newQuery('up2TypeProfile');
+$q->where(array('id:IN' => $allowedType, 'active' => 1));
+$q->sortby('rank', 'ASC');
+$q->select('id,name,description');
+$q->limit(0);
+if ($q->prepare() && $q->stmt->execute()) {
+	$typeProfile = $q->stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+else {$typeProfile = array();}
+foreach ($typeProfile as $v) {
+	$v['selected'] = $row['type'] == $v['id']
+		? 'selected'
+		: '';
+	$row['typerow'] .= $userprofile2->pdoTools->getChunk($tplTypeRow, $v);
+}
 // reg js
 $modx->regClientScript(str_replace('[[+assetsUrl]]', $userprofile2->config['assetsUrl'], $js));
 // output
