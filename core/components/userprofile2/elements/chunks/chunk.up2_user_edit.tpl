@@ -54,6 +54,16 @@
 		</div>
 	</div>
 	<hr/>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" for="up2-user-profile">[[%up2_profile]]</label>
+		<div class="col-sm-9">
+			<select name="user-profile" class="form-control" id="up2-user-profile">
+				[[+typerow]]
+			</select>
+			<span class="error"></span>
+		</div>
+	</div>
+	<hr/>
 
 	[[+tabs]]
 

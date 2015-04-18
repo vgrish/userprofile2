@@ -11,6 +11,22 @@ userprofile2 = {
         $(document).ready(function() {
             $.jGrowl.defaults.closerTemplate = '<div>[ '+userprofile2Config.close_all_message+' ]</div>';
         });
+
+        $(document).ready(function() {
+            $('#up2-user-profile').on('change', function() {
+                var params = userprofile2.Hash.get();
+                var type = $(this).find(':selected').data('type');
+                if (type) {
+                    params['type'] = type;
+                } else {
+                    params = {
+                        "type": type
+                    };
+                }
+                userprofile2.Hash.set(params);
+                document.location.reload();
+            });
+        });
     }
 
 };
