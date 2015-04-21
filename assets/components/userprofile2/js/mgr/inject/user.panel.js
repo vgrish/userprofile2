@@ -262,6 +262,8 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                     items: []
                 },{
                     html:'<div id="up2-extend-userfiles"></div>'
+                },{
+                    html:'<div id="up2-extend-mlmscript"></div>'
                 }]
 
             }
