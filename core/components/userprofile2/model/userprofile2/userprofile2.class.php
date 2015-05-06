@@ -268,6 +268,7 @@ class userprofile2 {
 					'name_in' => $field->get('name_in'),
 					'name_out' => $field->get('name_out'),
 					'required' => $field->get('required'),
+					'readonly' => $field->get('readonly'),
 					'editable' => $field->get('editable'),
 					'value' => $field->get('value'),
 					'css' => $field->get('css'),
