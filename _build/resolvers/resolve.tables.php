@@ -28,6 +28,7 @@ if ($object->xpdo) {
 			$modx->setLogLevel(xPDO::LOG_LEVEL_FATAL);
 
 			$manager->addField('up2Fields', 'length', array('after' => 'value'));
+			$manager->addField('up2Fields', 'readonly', array('after' => 'required'));
 
 			$modx->setLogLevel($level);
 

@@ -75,6 +75,7 @@
 		<field key="value" dbtype="varchar" precision="100" phptype="string" null="false" />
 		<field key="length" dbtype="smallint" precision="5" phptype="integer" null="true" default="50" />
 		<field key="required" dbtype="tinyint" precision="1" phptype="integer" null="true" default="0" />
+		<field key="readonly" dbtype="tinyint" precision="1" phptype="integer" null="true" default="0" />
 		<field key="editable" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
 		<field key="active" dbtype="tinyint" precision="1" phptype="integer" null="true" default="1" />
 		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="0" />

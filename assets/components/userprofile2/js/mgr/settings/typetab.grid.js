@@ -294,7 +294,7 @@ userprofile2.grid.Fields = function(config) {
             action: 'mgr/settings/fields/getlist'
             ,tab: config.tab
         }
-        ,fields: ['id','name_in','name_out','tab','type','css','value','length','required','editable','active','rank']
+        ,fields: ['id','name_in','name_out','tab','type','css','value','length','required','readonly','editable','active','rank']
         ,pageSize: Math.round(MODx.config.default_per_page / 2)
         ,autoHeight: true
         ,paging: true
@@ -441,11 +441,23 @@ Ext.extend(userprofile2.grid.Fields,MODx.grid.Grid, {
             ,{xtype: 'textfield',fieldLabel: _('up2_value'), name: 'value', allowBlank: true, anchor: '99%', id: 'userprofile2-field-in-tab-value-'+type}
         );
 
-        fields.push(
+     /*   fields.push(
             {xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_required'), name: 'required', id: 'userprofile2-field-in-tab-required-'+type}
             ,{xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_editable'), name: 'editable', id: 'userprofile2-field-in-tab-editable-'+type}
             ,{xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_active'), name: 'active', id: 'userprofile2-field-in-tab-active-'+type}
-        );
+        );*/
+
+
+        fields.push({xtype: 'checkboxgroup'
+            ,columns: 2
+            ,items: [
+                {xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_required'), name: 'required', id: 'userprofile2-field-in-tab-required-'+type}
+                ,{xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_editable'), name: 'editable', id: 'userprofile2-field-in-tab-editable-'+type}
+                ,{xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_active'), name: 'active', id: 'userprofile2-field-in-tab-active-'+type}
+                ,{xtype: 'xcheckbox', fieldLabel: '', boxLabel: _('up2_readonly'), name: 'readonly', id: 'userprofile2-field-in-tab-readonly-'+type}
+            ]
+            ,id: 'userprofile2-field-in-tab-option-group-'+type
+        });
 
         return fields;
     }
