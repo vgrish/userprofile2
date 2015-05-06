@@ -41,7 +41,7 @@ $tmp = array(
 	),
 	'tplContentTabPaneInputRow' => array(
 		'type' => 'textfield',
-		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><input type="[[+type_out]]" name="[[+nameout]]" class="form-control" value="[[+value]]" [[+disabled]] [[+readonly]]><p class="help-block message"></p></div>',
+		'value' => '@INLINE <div class="form-group col-sm-12 [[+class]]"><label for="[[+nameout]]">[[+name]][[+required]]</label><input type="[[+type_out]]" name="[[+nameout]]" class="form-control [[+class]]" value="[[+value]]" [[+disabled]] [[+readonly]]><p class="help-block message"></p></div>',
 	),
 	'tplContentTabPaneTextareaRow' => array(
 		'type' => 'textfield',
