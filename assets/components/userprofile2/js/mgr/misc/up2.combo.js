@@ -25,24 +25,6 @@ userprofile2.combo.TypeIn = function(config) {
 Ext.extend(userprofile2.combo.TypeIn,MODx.combo.ComboBox);
 Ext.reg('userprofile2-combo-type-in',userprofile2.combo.TypeIn);
 
-
-userprofile2.combo.DateTime = function(config) {
-	config = config || {};
-	Ext.applyIf(config,{
-		timePosition:'right'
-		,allowBlank: true
-		,hiddenFormat:'Y-m-d H:i:s'
-		,dateFormat: MODx.config.manager_date_format
-		,timeFormat: MODx.config.manager_time_format
-		,dateWidth: 120
-		,timeWidth: 120
-	});
-	userprofile2.combo.DateTime.superclass.constructor.call(this,config);
-};
-Ext.extend(userprofile2.combo.DateTime,Ext.ux.form.DateTime);
-Ext.reg('userprofile2-xdatetime',userprofile2.combo.DateTime);
-
-
 userprofile2.combo.TypeOut = function(config) {
 	config = config || {};
 	Ext.applyIf(config,{
