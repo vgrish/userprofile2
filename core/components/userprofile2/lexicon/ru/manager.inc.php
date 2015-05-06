@@ -13,7 +13,7 @@ $_lang['up2_value'] = 'Значение';
 $_lang['up2_length'] = 'Длина поля';
 $_lang['up2_required'] = 'Обязательно';
 $_lang['up2_editable'] = 'Редактируемое';
-$_lang['up2_readonly'] = 'Для чтения';
+$_lang['up2_readonly'] = 'Для чтения'; 
 
 $_lang['up2_description'] = 'Описание';
 $_lang['up2_default'] = 'По-умолчанию';
