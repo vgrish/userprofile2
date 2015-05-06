@@ -67,6 +67,9 @@ class up2FieldsGetListProcessor extends modObjectGetListProcessor {
 	}
 	/** {@inheritDoc} */
 	public function prepareArray(array $data) {
+		$data['required'] = (int) $data['required'];
+		$data['readonly'] = (int) $data['readonly'];
+		$data['editable'] = (int) $data['editable'];
 		$data['active'] = (int) $data['active'];
 
 		return $data;

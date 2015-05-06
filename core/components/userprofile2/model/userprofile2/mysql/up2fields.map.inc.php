@@ -14,6 +14,7 @@ $xpdo_meta_map['up2Fields']= array (
     'value' => NULL,
     'length' => 50,
     'required' => 0,
+    'readonly' => 0,
     'editable' => 1,
     'active' => 1,
     'rank' => 0,
@@ -75,6 +76,14 @@ $xpdo_meta_map['up2Fields']= array (
       'default' => 50,
     ),
     'required' => 
+    array (
+      'dbtype' => 'tinyint',
+      'precision' => '1',
+      'phptype' => 'integer',
+      'null' => true,
+      'default' => 0,
+    ),
+    'readonly' => 
     array (
       'dbtype' => 'tinyint',
       'precision' => '1',
