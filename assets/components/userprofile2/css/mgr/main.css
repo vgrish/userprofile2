@@ -80,6 +80,23 @@ a.x-menu-item .x-menu-item-text .icon {
 	margin: 10px 0px 0px 0px;
 }
 
+.up2_xdatetime .ux-datetime-time .x-form-field-trigger-wrap {
+	width: 140px!important;
+}
+
+.up2_xdatetime .ux-datetime-date .x-form-field-trigger-wrap {
+	width: 140px!important;
+}
+.up2_xdatetime .ux-datetime-date .x-form-field-trigger-wrap input {
+	width: 130px!important;
+}
+.up2_datefield .x-form-field-trigger-wrap {
+	width: 140px!important;
+}
+
+
+
+
 
 /*
 ul.userprofile2-row-actions .actions-menu {width: 40px;}

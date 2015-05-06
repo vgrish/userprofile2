@@ -113,7 +113,7 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
 
                 var field = {
                     xtype: item['type_in'],
-					name: 'up2[' + item['name_out'] + ']',
+                    name: 'up2[' + item['name_out'] + ']',
                     id: 'up2-extend-field-' + item['name_out'],
                     fieldLabel: item['name_in'],
                     disabled: !item['editable'],
@@ -122,6 +122,29 @@ Ext.extend(userprofile2.panel.User,MODx.Panel, {
                     anchor: '100%',
                     value: this.getFielValue(item['name_out'], item['value'])
                 };
+
+                switch (field.xtype) {
+                    case 'datefield':
+                        field.anchor = '20%';
+                        field.format = MODx.config.manager_date_format
+
+                        break;
+                    case 'xdatetime':
+                        field.dateFormat = MODx.config.manager_date_format;
+                        field.timeFormat = MODx.config.manager_time_format;
+                        field.hiddenFormat = 'Y-m-d H:i:s';
+                        field.anchor = '50%';
+                        field.cls += ' date-combo';
+                        field.ctCls += ' date-combo';
+                        field.dateFormat = 'Y-m-d';
+                        field.timeFormat = 'H:i';
+
+                        break;
+                    default:
+
+                        break;
+                }
+
                 tabFields.push(field);
             }
             if(typeof tabFields!== 'object') {continue;}
