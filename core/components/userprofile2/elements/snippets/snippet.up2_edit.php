@@ -42,6 +42,7 @@ if(!empty($row['type']) && $TabsFields = $userprofile2->getTabsFields($row['type
 			$row['class'] = $field['css'];
 			$row['type_out'] = $field['type_out'];
 			$row['required'] = !empty($field['required']) ? $required : '';
+			$row['readonly'] = !empty($field['readonly']) ? 'readonly' : '';
 			$row['disabled'] = empty($field['editable']) ? 'disabled' : '';
 			if($row['type'] == 'textarea') {
 				$row['fieldrows'] .= empty($tplContentTabPaneTextareaRow)
