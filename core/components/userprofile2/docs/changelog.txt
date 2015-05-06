@@ -1,5 +1,11 @@
 Changelog for userprofile2.
 
+1.0.4-beta
+==============
+- add readonly for fields
+- add xtype datefield
+- add xtype xdatetime
+
 1.0.3-beta
 ==============
 - add change user profile
