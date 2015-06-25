@@ -19,7 +19,7 @@ class up2Profile extends xPDOObject {
 	}
 	
 	/** {@inheritdoc} */
-	public function save(array $ancestors= array ()) {
+	public function save($cacheFlag = null) {
 		if($this->isNew()) {
 			$ip = $this->xpdo->request->getClientIp();
 			$this->set('registration', time());
@@ -28,6 +28,7 @@ class up2Profile extends xPDOObject {
 			$this->set('ip', $ip['ip']);
 		}
 
-		return parent::save();
+		return parent :: save($cacheFlag);
 	}
+
 }
