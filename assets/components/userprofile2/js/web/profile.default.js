@@ -4,9 +4,9 @@ userprofile2.Profile = {
         var elem = $(selector);
         if (!elem.length) {return false;}
         // Disable elements during ajax request
-        $(document).ajaxStart(function() {
+        /* $(document).ajaxStart(function() {
             elem.find('button, a, input, select, textarea').attr('disabled', true).addClass('tmp-disabled');
-        })
+        }) */
             .ajaxStop(function() {
                 elem.find('.tmp-disabled').attr('disabled', false);
             });
