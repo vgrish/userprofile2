@@ -298,10 +298,16 @@ class userprofile2 {
 	public function getUserFields($id) {
 		$data = array();
 		if(!is_array($id)) {
-			if(!$user = $this->modx->getObject('modUser', $id)) {return $data;}
-			$Profile = $user->getOne('Profile')->toArray();
-			$up2Profile = $user->getOne('up2Profile')->toArray();
-			$data = array_merge($Profile, $up2Profile);
+			if(!$user = $this->modx->getObject('modUser', $id)) {
+				return $data;
+			}
+			$data = $user->toArray();
+			if ($Profile = $user->getOne('Profile')) {
+				$data = array_merge($data, $Profile->toArray());
+			}
+			if ($up2Profile = $user->getOne('up2Profile')) {
+				$data = array_merge($data, $up2Profile->toArray());
+			}
 		}
 		else {$data = $id;}
 		$data['extend'] = (array) $data['extend'];

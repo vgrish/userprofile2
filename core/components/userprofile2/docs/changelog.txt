@@ -1,5 +1,9 @@
 Changelog for userprofile2.
 
+1.0.6-beta
+==============
+- fix getUserFields
+
 1.0.5-beta
 ==============
 - fix up2Profile::save()
