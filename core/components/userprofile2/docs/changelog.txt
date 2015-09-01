@@ -1,5 +1,9 @@
 Changelog for userprofile2.
 
+1.0.7-beta
+==============
+- Improved installation script for MODX 2.4.
+
 1.0.6-beta
 ==============
 - fix getUserFields
