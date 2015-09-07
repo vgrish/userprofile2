@@ -50,6 +50,8 @@ define('BUILD_CHUNK_STATIC', false);
 define('BUILD_SNIPPET_STATIC', false);
 define('BUILD_PLUGIN_STATIC', false);
 
+//define('BUILD_MODEL_UPDATE', false);
+
 $BUILD_RESOLVERS = array(
 	'tables',
 
