@@ -2,7 +2,7 @@
 //
 if (empty($_REQUEST['action'])) {
 	@session_write_close();
-	die('Access denied');
+	die('Access denied: Action is empty');
 }
 $_REQUEST['ctx'] = 'web';
 define('MODX_API_MODE', true);
@@ -24,7 +24,7 @@ if($isAuthenticated && $user_id = $modx->user->id) {
 }
 else {
 	@session_write_close();
-	die('Access denied');
+	die('Access denied: User is not logged in the context');
 }
 //
 require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
