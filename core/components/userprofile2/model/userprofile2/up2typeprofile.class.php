@@ -1,2 +1,5 @@
 <?php
-class up2TypeProfile extends xPDOSimpleObject {}
+
+class up2TypeProfile extends xPDOSimpleObject
+{
+}

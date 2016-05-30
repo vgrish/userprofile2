@@ -1,5 +1,10 @@
 Changelog for userprofile2.
 
+1.0.8-beta-(30.05.2016)
+==============
+- Reformate code
+- Merge PR
+
 1.0.7-beta
 ==============
 - Improved installation script for MODX 2.4.

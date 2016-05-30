@@ -1,2 +1,5 @@
 <?php
-class up2Fields extends xPDOSimpleObject {}
+
+class up2Fields extends xPDOSimpleObject
+{
+}

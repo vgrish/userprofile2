@@ -1,2 +1,5 @@
 <?php
-class up2TypeTab extends xPDOSimpleObject {}
+
+class up2TypeTab extends xPDOSimpleObject
+{
+}
